@@ -15,6 +15,7 @@ Servers/
 *.classpath
 /target/
 /bin/
+MapperConfig.xml
 
 # Mac
 .DS_Store
