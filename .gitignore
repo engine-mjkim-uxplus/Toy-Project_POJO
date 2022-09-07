@@ -16,6 +16,8 @@ Servers/
 /target/
 /bin/
 MapperConfig.xml
+/toyprj/target/
+
 
 # Mac
 .DS_Store

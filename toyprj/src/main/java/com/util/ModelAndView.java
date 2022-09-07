@@ -31,7 +31,6 @@ public class ModelAndView {
 		logger.info(name+","+obj);
 		Map<String,Object> pMap = new HashMap<>();
 		pMap.put(name, obj);
-
 		req.setAttribute(name, obj);
 		reqList.add(pMap);
 	}

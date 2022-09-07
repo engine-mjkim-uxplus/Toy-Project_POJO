@@ -5,10 +5,8 @@
   <head>
     <title>Login V8</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
     <%@ include file="../../common/common.jsp" %>
-    
     <style>
       a {
         text-decoration: none;
@@ -20,6 +18,7 @@
     </style>
   </head>
   <body>
+  <!-- form 데이터 getParameter로 꺼내기 -->
     <!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
     <!-- nav end -->
@@ -35,11 +34,12 @@
                     Please enter your login and password!
                   </p>
                   <!-- ==================== Form 태그 시작 ==================== -->
-                  <form action="#">
+                  <form action="login.do" method="post"> 
                     <div class="form-outline form-black mb-4">
                       <label class="form-label" for="typeEmailX">ID</label>
                       <input
                         type="ID"
+                        name="mem_id"
                         id="typeEmailX"
                         class="form-control form-control-lg"
                       />
@@ -50,6 +50,7 @@
                       >
                       <input
                         type="password"
+                        name="mem_pw"
                         id="typePasswordX"
                         class="form-control form-control-lg"
                       />

@@ -23,193 +23,199 @@ public class OrderController implements Controller {
 	}
 
 	@Override
-	public Object loginForm(HttpServletRequest req) {
+	public Object loginForm(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object login(HttpServletRequest req) {
+	public Object login(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object productList(HttpServletRequest req) {
+	public Object productList(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object productDetail(HttpServletRequest req) {
+	public Object productDetail(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object productSearch(HttpServletRequest req) {
+	public Object productSearch(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object productInsertReview(HttpServletRequest req) {
+	public Object productInsertReview(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object productUpdateReview(HttpServletRequest req) {
+	public Object productUpdateReview(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object productUpdateCount(HttpServletRequest req) {
+	public Object productUpdateCount(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object productInsertLike(HttpServletRequest req) {
+	public Object productInsertLike(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object productDeleteLike(HttpServletRequest req) {
+	public Object productDeleteLike(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object registerForm(HttpServletRequest req) {
+	public Object registerForm(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object registerSelect(HttpServletRequest req) {
+	public Object registerSelect(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object registerInsert(HttpServletRequest req) {
+	public Object registerInsert(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberListPayment(HttpServletRequest req) {
+	public Object memberListPayment(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberListLike(HttpServletRequest req) {
+	public Object memberListLike(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberListReview(HttpServletRequest req) {
+	public Object memberListReview(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberListCoupon(HttpServletRequest req) {
+	public Object memberListCoupon(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberListP(HttpServletRequest req) {
+	public Object memberListP(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberInsertCoupon(HttpServletRequest req) {
+	public Object memberInsertCoupon(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberInsertAddress(HttpServletRequest req) {
+	public Object memberInsertAddress(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberUpdateP(HttpServletRequest req) {
+	public Object memberUpdateP(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberUpdateState(HttpServletRequest req) {
+	public Object memberUpdateState(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object memberDelete(HttpServletRequest req) {
+	public Object memberDelete(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object orderList(HttpServletRequest req) {
+	public Object orderList(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object orderInsert(HttpServletRequest req) {
+	public Object orderInsert(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object orderUpdateCoupon(HttpServletRequest req) {
+	public Object orderUpdateCoupon(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object orderUpdatePoint(HttpServletRequest req) {
+	public Object orderUpdatePoint(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object orderDelete(HttpServletRequest req) {
+	public Object orderDelete(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object cartList(HttpServletRequest req) {
+	public Object cartList(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object cartInsert(HttpServletRequest req) {
+	public Object cartInsert(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object cartUpdate(HttpServletRequest req) {
+	public Object cartUpdate(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object cartDelete(HttpServletRequest req) {
+	public Object cartDelete(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object logout(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}

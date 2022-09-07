@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- nav start -->
+<c:set var="loginOutLink" value="${sessionScope.mem_id == null ? '/login/loginForm.do' : '/login/logout.do' }"/>
+<c:set var="loginOut" value="${sessionScope.mem_id == null ? '로그인' : '로그아웃' }"/>
+
 <nav
   class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-bottom"
 >
@@ -33,7 +37,7 @@
       <a href="./mypage.jsp" class="nav-link px-2 text-muted">마이페이지</a>
     </li>
     <li class="nav-item">
-      <a href="./loginform.jsp" class="nav-link px-2 text-muted">로그인</a>
+      <a href="${loginOutLink}" class="nav-link px-2 text-muted">${loginOut}</a>
     </li>
   </ul>
 </nav>
