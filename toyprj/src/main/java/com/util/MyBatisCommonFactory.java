@@ -11,7 +11,7 @@ public class MyBatisCommonFactory {
 	public static SqlSessionFactory sqlSessionFactory = null;
 	public static void init() {
 		try {
-			String resource = "com/mybatis/MapperConfig.xml";
+			String resource = "com/util/MapperConfig.xml";
 			Reader reader = Resources.getResourceAsReader(resource);
 			logger.info("before sqlSessionFactory : "+sqlSessionFactory);
 			if(sqlSessionFactory == null) { 
