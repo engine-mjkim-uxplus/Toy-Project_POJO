@@ -5,11 +5,42 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.shopping.toyprj.Controller;
+import com.shopping.toyprj.DispatcherServlet;
 import com.util.ModelAndView;
-
 public class CartController implements Controller {
-
+	Logger logger = Logger.getLogger(DispatcherServlet.class);
+	@Override
+	public Object cartList(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("CartController => cart/cartList.do 호출 ");
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("cart");
+		
+		
+		
+		return mv;
+		
+	}
+	
+	@Override
+	public Object cartInsert(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Object cartUpdate(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Object cartDelete(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> pMap) {
 		// TODO Auto-generated method stub
@@ -190,29 +221,6 @@ public class CartController implements Controller {
 		return null;
 	}
 
-	@Override
-	public Object cartList(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object cartInsert(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object cartUpdate(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object cartDelete(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Object logout(HttpServletRequest req, HttpServletResponse res) {

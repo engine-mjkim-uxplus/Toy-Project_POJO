@@ -314,7 +314,7 @@ public class HandlerMapping {
 		///////////////////////////////////////////
 		// 카트 분기(CartController)
 		else if("cart".equals(upmu[0])) {
-			controller = new MemberController();
+			controller = new CartController();
 			// 장바구니 페이지 조회
 			if("cartList".equals(upmu[1])) {
 				obj = controller.cartList(req,res);

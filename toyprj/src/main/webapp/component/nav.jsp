@@ -31,7 +31,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a href="./cart.jsp" class="nav-link px-2 text-muted">장바구니(3)</a>
+      <a href="/cart/cartList.do" class="nav-link px-2 text-muted">장바구니(3)</a>
     </li>
     <li class="nav-item">
       <a href="./mypage.jsp" class="nav-link px-2 text-muted">마이페이지</a>

@@ -50,7 +50,6 @@ public class DispatcherServlet extends HttpServlet {
 			}
 		} // end of 출력페이지 호출 URL패턴 조립하기
 	} ///// end of 컨트롤 계층 리턴결과
-
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		logger.info("doGet 호출 성공");
