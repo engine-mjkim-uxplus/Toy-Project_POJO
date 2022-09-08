@@ -11,12 +11,12 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.101.0" />
-    <title>WorksOut Home</title>
+    <title>Footers · Bootstrap v5.2</title>
     <link
       rel="canonical"
       href="https://getbootstrap.com/docs/5.2/examples/footers/"
     />
-	<%@ include file="../../common/common.jsp" %>
+	<%@ include file="../common/common.jsp" %>
     <meta name="theme-color" content="#712cf9" />
     <style>
       .product-grid {
@@ -134,7 +134,7 @@
   </head>
   <body>
     <!-- nav start -->
-	<%@ include file="../../component/nav.jsp" %>
+	<%@ include file="../component/nav.jsp" %>
     <!-- nav end -->
 
     <!-- 상풍 분류 컨테이너 시작 -->
@@ -142,31 +142,47 @@
     <!-- 상풍 분류 컨테이너 끝 -->
 
     <!-- product content start -->
-    <div class="row mt-5">
-		<c:forEach var="item" items="${productList}">
-			<div class="col-md-3 col-sm-6" style="width: 10%">
-		        <div class="product-grid">
-		          <div class="product-image">
-			        <c:if test="${ item.getProduct_no() == 101 }">
-			        	<span class="product-discount-label">-20%</span>
-					</c:if>
-		            <a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}" class="image">
-		              <img
-		                src="${item.getProduct_img()}"
-		              />
-		            </a>
-		            <ul class="product-links">
-		              <li>
-		                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
-		              </li>
-		              <li>
-		                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
-		              </li>
-		            </ul>
-		          </div>
-		        </div>
-	    	</div>
-		</c:forEach>
+    <div class="row">
+      <div class="col-md-3 col-sm-6" style="width: 20%">
+        <div class="product-grid">
+          <div class="product-image">
+            <a href="./detail.jsp" class="image">
+              <img
+                src="https://media.worksout.co.kr/uploads/live/VS22FWHEBC10539001/VS22FWHEBC10539001-1.jpg"
+              />
+            </a>
+            <span class="product-discount-label">-23%</span>
+            <ul class="product-links">
+              <li>
+                <a href="#"><i class="fa fa-heart"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-shopping-cart"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-6" style="width: 20%">
+        <div class="product-grid">
+          <div class="product-image">
+            <a href="./detail.jsp" class="image">
+              <img
+                src="https://media.worksout.co.kr/uploads/live/AC22SSHECH09904001/AC22SSHECH09904001-1.jpg"
+              />
+            </a>
+            <ul class="product-links">
+              <li>
+                <a href="#"><i class="fa fa-heart"></i></a>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-shopping-cart"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- product content end -->
 
@@ -175,7 +191,7 @@
     <!-- 추가할 기능 컨테이너 끝 -->
 
     <!-- footer start -->
-	<%@ include file="../../component/footer.jsp" %>
+	<%@ include file="../component/footer.jsp" %>
     <!-- footer end -->
   </body>
 </html>

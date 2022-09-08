@@ -11,17 +11,14 @@ import com.shopping.toyprj.Controller;
 import com.shopping.toyprj.DispatcherServlet;
 import com.util.ModelAndView;
 public class CartController implements Controller {
-	Logger logger = Logger.getLogger(DispatcherServlet.class);
+	Logger logger = Logger.getLogger(CartController.class);
+	
 	@Override
 	public Object cartList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("CartController => cart/cartList.do 호출 ");
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("cart");
-		
-		
-		
 		return mv;
-		
 	}
 	
 	@Override

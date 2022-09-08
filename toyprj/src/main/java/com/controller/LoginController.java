@@ -16,7 +16,7 @@ import com.util.HashMapBinder;
 import com.util.ModelAndView;
 
 public class LoginController implements Controller {
-	Logger logger = Logger.getLogger(DispatcherServlet.class);
+	Logger logger = Logger.getLogger(LoginController.class);
 	LoginLogic loginLogic = null;
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> pMap) {
