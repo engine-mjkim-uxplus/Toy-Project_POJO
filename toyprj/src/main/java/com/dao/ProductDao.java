@@ -89,4 +89,20 @@ public class ProductDao {
 		return productList;
 	}
 
+	public List<ProductVO> productSearch(Map<String, Object> pMap) {
+		logger.info("ProductDao: productSearch 호출 성공");
+
+		List<ProductVO> productList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			productList = sqlSession.selectList("Searchproduct",pMap); //List<ProductVO>
+			// insert here
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return productList;
+	}
+
 }

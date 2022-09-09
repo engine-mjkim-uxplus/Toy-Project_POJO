@@ -10,6 +10,11 @@
 		SELECT * FROM PRODUCT WHERE product_no = #{product_no}
 	</select>
 	
+	<select id="Searchproduct" parameterType="map" resultType="com.vo.ProductVO">
+		SELECT * FROM PRODUCT
+		WHERE PRODUCT_NAME LIKE '%'||#{search}||'%'
+	</select>
+	
 	<select id="getRelatedProducts" parameterType="map" resultType="com.vo.ProductVO">
  		select * from (
 			select * from PRODUCT 
