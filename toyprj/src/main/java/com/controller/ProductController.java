@@ -76,6 +76,30 @@ public class ProductController implements Controller {
 		String path = "product/"+page;
 		return path;
 	}
+	
+	@Override
+	public Object productSearch(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("ProductController: productSearch 호출");
+		
+		try {
+			req.setCharacterEncoding("UTF-8");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		
+		List<ProductVO> productList = null;
+		productList = productLogic.productSearch(pMap);
+		
+		ModelAndView mav = new ModelAndView(req);
+		mav.addObject("productList", productList);
+		mav.setViewName("home");
+		
+		return mav;
+	}
 
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> pMap) {
@@ -97,12 +121,6 @@ public class ProductController implements Controller {
 
 	@Override
 	public Object login(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object productSearch(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}

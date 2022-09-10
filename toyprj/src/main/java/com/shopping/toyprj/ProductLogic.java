@@ -39,4 +39,11 @@ public class ProductLogic {
 		productList = productDao.getRelatedProducts(pMap);
 		return productList;
 	}
+
+	public List<ProductVO> productSearch(Map<String, Object> pMap) {
+		logger.info("ProductLogic: productSearch 호출");
+		List<ProductVO> productList = null;
+		productList = productDao.productSearch(pMap);
+		return productList;
+	}
 }

@@ -138,41 +138,164 @@
     <!-- nav end -->
 
     <!-- 상풍 분류 컨테이너 시작 -->
+	<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+	  <li class="nav-item" role="presentation">
+	    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">전체</button>
+	  </li>
+	  <li class="nav-item" role="presentation">
+	    <button class="nav-link" id="pills-cap-tab" data-bs-toggle="pill" data-bs-target="#pills-cap" type="button" role="tab" aria-controls="pills-cap" aria-selected="false">모자</button>
+	  </li>
+	  <li class="nav-item" role="presentation">
+	    <button class="nav-link" id="pills-shirt-tab" data-bs-toggle="pill" data-bs-target="#pills-shirt" type="button" role="tab" aria-controls="pills-shirt" aria-selected="false">상의</button>
+	  </li>
+	  <li class="nav-item" role="presentation">
+	    <button class="nav-link" id="pills-pants-tab" data-bs-toggle="pill" data-bs-target="#pills-pants" type="button" role="tab" aria-controls="pills-pants" aria-selected="false">하의</button>
+	  </li>
+	  <li class="nav-item" role="presentation">
+	    <button class="nav-link" id="pills-pants-tab" data-bs-toggle="pill" data-bs-target="#pills-pants" type="button" role="tab" aria-controls="pills-pants" aria-selected="false" disabled>신발</button>
+	  </li>
+	</ul>
+	<!-- 상풍 분류 컨테이너 끝 -->
+	
+	<!-- product content start -->
+	<div class="tab-content" id="pills-tabContent">
+	
+	  <!-- 전체 상품 시작 -->
+	  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+	  	<div class="row mt-5">
+			<c:forEach var="item" items="${productList}">
+				<div class="col-md-3 col-sm-6 border border-secondary rounded-1 border-opacity-50" style="width: 10%">
+			        <div class="product-grid">
+			          <div class="product-image">
+				        <c:if test="${ item.getProduct_no() == 101 }">
+				        	<span class="product-discount-label">-20%</span>
+						</c:if>
+			            <a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}" class="image">
+			              <img
+			                src="${item.getProduct_img()}"
+			              />
+			            </a>
+			            <ul class="product-links">
+			              <li>
+			                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+			              </li>
+			              <li>
+			                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
+			              </li>
+			            </ul>
+			          </div>
+			        </div>
+		    	</div>
+			</c:forEach>
+	    </div>
+	  </div>
+	  <!-- 전체 상품 끝 -->
+	  
+	  <!-- 모자 상품 끝 -->
+	  <div class="tab-pane fade" id="pills-cap" role="tabpanel" aria-labelledby="pills-cap-tab" tabindex="0">
+	  	  	<div class="row mt-5">
+				<c:forEach var="item" items="${productList}">
+					<c:if test="${ item.getProduct_category() eq 'cap' }">
+						<div class="col-md-3 col-sm-6 border border-secondary rounded-1 border-opacity-50" style="width: 10%">
+					        <div class="product-grid">
+					          <div class="product-image">
+						        <c:if test="${ item.getProduct_no() == 101 }">
+						        	<span class="product-discount-label">-20%</span>
+								</c:if>
+					            <a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}" class="image">
+					              <img
+					                src="${item.getProduct_img()}"
+					              />
+					            </a>
+					            <ul class="product-links">
+					              <li>
+					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+					              </li>
+					              <li>
+					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
+					              </li>
+					            </ul>
+					          </div>
+					        </div>
+				    	</div>
+			    	</c:if>
+				</c:forEach>
+		    </div>
+	  </div>
+	  <!-- 모자 상품 끝 -->
+	  
+	  <!-- 상의 상품 시작 -->
+	  <div class="tab-pane fade" id="pills-shirt" role="tabpanel" aria-labelledby="pills-shirt-tab" tabindex="0">
+	  	  	<div class="row mt-5">
+				<c:forEach var="item" items="${productList}">
+					<c:if test="${ item.getProduct_category() eq 't-shirt' }">
+						<div class="col-md-3 col-sm-6 border border-secondary rounded-1 border-opacity-50" style="width: 10%">
+					        <div class="product-grid">
+					          <div class="product-image">
+						        <c:if test="${ item.getProduct_no() == 101 }">
+						        	<span class="product-discount-label">-20%</span>
+								</c:if>
+					            <a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}" class="image">
+					              <img
+					                src="${item.getProduct_img()}"
+					              />
+					            </a>
+					            <ul class="product-links">
+					              <li>
+					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+					              </li>
+					              <li>
+					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
+					              </li>
+					            </ul>
+					          </div>
+					        </div>
+				    	</div>
+			    	</c:if>
+				</c:forEach>
+		    </div>
+	  </div>
+	  <!-- 상의 상품 끝 -->
+	  
+	  <!-- 하의 상품 시작 -->
+	  <div class="tab-pane fade" id="pills-pants" role="tabpanel" aria-labelledby="pills-pants-tab" tabindex="0">
+	  	  	<div class="row mt-5">
+				<c:forEach var="item" items="${productList}">
+					<c:if test="${ item.getProduct_category() eq 'pants' }">
+						<div class="col-md-3 col-sm-6 border border-secondary rounded-1 border-opacity-50" style="width: 10%">
+					        <div class="product-grid">
+					          <div class="product-image">
+						        <c:if test="${ item.getProduct_no() == 101 }">
+						        	<span class="product-discount-label">-20%</span>
+								</c:if>
+					            <a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}" class="image">
+					              <img
+					                src="${item.getProduct_img()}"
+					              />
+					            </a>
+					            <ul class="product-links">
+					              <li>
+					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+					              </li>
+					              <li>
+					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
+					              </li>
+					            </ul>
+					          </div>
+					        </div>
+				    	</div>
+			    	</c:if>
+				</c:forEach>
+		    </div>
+	  </div>
+	  <!-- 하의 상품 끝 -->
+	  
+	</div>
+	<!-- product content end -->
 
-    <!-- 상풍 분류 컨테이너 끝 -->
+    <!-- 추가할 레이아웃 시작 -->
 
-    <!-- product content start -->
-    <div class="row mt-5">
-		<c:forEach var="item" items="${productList}">
-			<div class="col-md-3 col-sm-6" style="width: 10%">
-		        <div class="product-grid">
-		          <div class="product-image">
-			        <c:if test="${ item.getProduct_no() == 101 }">
-			        	<span class="product-discount-label">-20%</span>
-					</c:if>
-		            <a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}" class="image">
-		              <img
-		                src="${item.getProduct_img()}"
-		              />
-		            </a>
-		            <ul class="product-links">
-		              <li>
-		                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
-		              </li>
-		              <li>
-		                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
-		              </li>
-		            </ul>
-		          </div>
-		        </div>
-	    	</div>
-		</c:forEach>
-    </div>
-    <!-- product content end -->
-
-    <!-- 추가할 기능 컨테이너 시작 -->
-
-    <!-- 추가할 기능 컨테이너 끝 -->
+    <!-- 추가할 레이아웃 끝 -->
 
     <!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>
