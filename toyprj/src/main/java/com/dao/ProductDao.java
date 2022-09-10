@@ -21,7 +21,7 @@ public class ProductDao {
 	}
 	
 	public List<ProductVO> productList() {
-		logger.info("ProductDao: productList 호출 성공");
+		logger.info("ProductDao : productList 호출 성공");
 		
 		List<ProductVO> productList = null;
 		
@@ -38,7 +38,7 @@ public class ProductDao {
 	}
 	
 	public int addLike(Map<String,Object> pMap) {
-		logger.info("ProductDao: addLike 호출 성공");
+		logger.info("ProductDao : addLike 호출 성공");
 		
 		int result = 0;
 		

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.cart">
+	<select id="getCartList" parameterType="String" resultType="com.vo.CartVO">
+		SELECT P.PRODUCT_CATEGORY,P.PRODUCT_NAME
+	           ,P.PRODUCT_PRICE,P.PRODUCT_IMG, C.PRODUCT_COUNT
+	           FROM PRODUCT P , 
+				(
+				SELECT PRODUCT_NO, PRODUCT_COUNT FROM CART 
+					WHERE MEMBER_ID= #{mem_id}
+				) C
+			WHERE P.PRODUCT_NO = C.PRODUCT_NO	
+	</select>
+</mapper>

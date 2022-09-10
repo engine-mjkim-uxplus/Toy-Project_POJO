@@ -143,7 +143,7 @@
         transition: none;
       }
       .btn:hover {
-        color: white;
+        color: black;
       }
       a {
         color: black;
@@ -172,9 +172,10 @@
   	<!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
     <!-- nav end -->
-    <div class="card">
+    <!-- cart-list start -->
+  <div class="card">
       <div class="row">
-        <div class="col-md-8 cart">
+        <div class="col-md-12 cart">
           <div class="title">
             <div class="row">
               <div class="col">
@@ -182,100 +183,61 @@
               </div>
             </div>
           </div>
-          <div class="row border-top border-bottom">
-            <div class="row main align-items-center">
-              <div class="col-2">
-                <img class="img-fluid" src="https://image.msscdn.net/images/goods_img/20210906/2112059/2112059_1_500.jpg?t=20210909113606" />
-              </div>
-              <div class="col">
-                <div class="row text-muted">Shirt</div>
-                <div class="row">Cotton T-shirt</div>
-              </div>
-              <div class="col">
-                <a href="#"><i class="fas fa-minus-circle"></i></a
-                ><a href="#" class="border">1</a
-                ><a href="#"><i class="fas fa-plus-circle"></i></a>
-              </div>
-              <div class="col">
-                44,000원
-                <button class="close"><i class="fas fa-times"></i></butt>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="row main align-items-center">
-              <div class="col-2">
-                <img class="img-fluid" src="https://image.msscdn.net/images/goods_img/20180703/810034/810034_2_500.jpg?t=20200416120416" />
-              </div>
-              <div class="col">
-                <div class="row text-muted">Shirt</div>
-                <div class="row">Cotton T-shirt</div>
-              </div>
-              <div class="col">
-                <a href="#"><i class="fas fa-minus-circle"></i></a
-                ><a href="#" class="border">1</a
-                ><a href="#"><i class="fas fa-plus-circle"></i></a>
-              </div>
-              <div class="col">
-                44,000원
-                <button class="close"><i class="fas fa-times"></i></button>
-              </div>
-            </div>
-          </div>
-          <div class="row border-top border-bottom">
-            <div class="row main align-items-center">
-              <div class="col-2">
-                <img class="img-fluid" src="https://image.msscdn.net/images/goods_img/20180703/810034/810034_2_500.jpg?t=20200416120416" />
-              </div>
-              <div class="col">
-                <div class="row text-muted">Shirt</div>
-                <div class="row">Cotton T-shirt</div>
-              </div>
-              <div class="col">
-                <a href="#"><i class="fas fa-minus-circle"></i></a
-                ><a href="#" class="border">1</a
-                ><a href="#"><i class="fas fa-plus-circle"></i></a>
-              </div>
-              <div class="col">
-                42,000원
-                <button class="close"><i class="fas fa-times"></i></button>
+          <!-- 장바구니 아이템 목록 시작 -->
+          <c:forEach var="item" items="${requestScope.cartList}">
+	          <section class="cart_table">
+	            <div class="row border-top">
+	              <div class="row main align-items-center">
+	                <div class="col-2">
+	                  <img class="img-fluid product_img" src="${item.getProduct_img()}" />
+	                </div>
+	                <div class="col">
+	                  <div class="row text-muted product_category">${item.getProduct_category()}</div>
+	                  <div class="row product-name">${item.getProduct_name()}</div>
+	                </div>
+	                <div class="col d-flex">
+	                  <button onClick="cart/cartUpdate.do"><i class="fas fa-minus-circle"></i></button>
+	                  <div class="border col-3 text-center product_count">${item.getProduct_count()}</div>
+	                  <button class="plust"><i class="fas fa-plus-circle"></i></button>
+	                </div>
+	                <div class="col product_price">
+	                  ${item.getProduct_price()}
+	                  <button class="minus"><i class="fas fa-times"></i></butt>
+	                </div>
+	              </div>
+	            </div>
+	            </section>
+			</c:forEach>
+<!--           <section class="cart_table">
+            <div class="row border-top">
+              <div class="row main align-items-center">
+                <div class="col-2">
+                  <img class="img-fluid product_img" src="https://image.msscdn.net/images/goods_img/20210906/2112059/2112059_1_500.jpg?t=20210909113606" />
+                </div>
+                <div class="col">
+                  <div class="row text-muted product_category">Shirt</div>
+                  <div class="row product-name">Cotton T-shirt</div>
+                </div>
+                <div class="col d-flex">
+                  <button onClick="cart/cartUpdate.do"><i class="fas fa-minus-circle"></i></button>
+                  <div class="border col-3 text-center product_count">1</div>
+                  <button class="plust"><i class="fas fa-plus-circle"></i></button>
+                </div>
+                <div class="col product_price">
+                  44,000원
+                  <button class="minus"><i class="fas fa-times"></i></butt>
+                </div>
               </div>
             </div>
+            </section> -->
+            <!-- 장바구니 아이템 목록 끝 -->
+            <div class="col mt-4">총 가격 <span class="ms-5"id="total_price">130,000</span></div>
+            <button class="btn">주문하기</button>
           </div>
-          <div class="back-to-shop">
-            <a href="#">&leftarrow;</a
-            ><span class="text-muted">Back to shop</span>
-          </div>
-        </div>
-        <div class="col-md-4 summary">
-          <div>
-            <h5><b>Summary</b></h5>
-          </div>
-          <hr />
-          <div class="row">
-            <div class="col" style="padding-left: 0">ITEMS 3</div>
-            <div class="col text-right">130,000</div>
-          </div>
-          <form>
-            <p>SHIPPING</p>
-            <select>
-              <option class="text-muted">Standard-Delivery- 5.00</option>
-            </select>
-            <p>쿠폰코드</p>
-            <input id="code" placeholder="Enter your code" />
-          </form>
-          <div
-            class="row"
-            style="border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 2vh 0"
-          >
-            <div class="col">총 가격</div>
-            <div class="col text-right">130,000원</div>
-          </div>
-          <button class="btn">주문하기</button>
-          <a href="./payment.jsp">주문하기</a>
         </div>
       </div>
     </div>
+    <!-- cart-list end -->
     <!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>
     <!-- footer end -->
