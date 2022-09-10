@@ -1,23 +1,35 @@
 package com.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.shopping.toyprj.CartLogic;
 import com.shopping.toyprj.Controller;
-import com.shopping.toyprj.DispatcherServlet;
 import com.util.ModelAndView;
+import com.vo.CartVO;
 public class CartController implements Controller {
 	Logger logger = Logger.getLogger(CartController.class);
+	CartLogic cartLogic = new CartLogic();
 	
 	@Override
 	public Object cartList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("CartController => cart/cartList.do 호출 ");
-		ModelAndView mv = new ModelAndView();
+		List<CartVO> cartList = null;
+		ModelAndView mv = new ModelAndView(req); // req넘겨줘야 mv.addObject 사용가능
 		mv.setViewName("cart");
+		HttpSession session = req.getSession();
+		String mem_id = (String)session.getAttribute("mem_id");
+		// 회원일 경우 db에서 카트조회
+		if(mem_id != null) {
+			cartList = cartLogic.cartList(mem_id);
+			mv.addObject("cartList", cartList);
+		}
 		return mv;
 	}
 	
@@ -29,7 +41,11 @@ public class CartController implements Controller {
 	
 	@Override
 	public Object cartUpdate(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
+		
+		
+		
+		
+		
 		return null;
 	}
 	

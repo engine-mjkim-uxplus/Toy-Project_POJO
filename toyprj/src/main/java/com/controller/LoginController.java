@@ -42,7 +42,6 @@ public class LoginController implements Controller {
 	public Object login(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("LoginController => login/login.do 호출 ");
 		loginLogic = new LoginLogic();
-		Object result = null;
 		String mem_id = null;
 		HttpSession session = null;
 		String path = null;
@@ -53,15 +52,12 @@ public class LoginController implements Controller {
 		mem_id = (String) loginLogic.login(pMap);
 		if(mem_id == null) {
 			path = "login/loginForm";
-			result= path;
 		}else {
 		session = req.getSession();
 		session.setAttribute("mem_id", mem_id);
-		mv.setViewName("home");
-		logger.info(mv.getViewName());
-		result = mv;
+		path = "product/productList";
 		}
-		return result;
+		return path;
 	}
 	@Override
 	public Object logout(HttpServletRequest req, HttpServletResponse res) {
