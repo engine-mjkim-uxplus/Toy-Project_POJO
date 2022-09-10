@@ -4,7 +4,6 @@
 <!-- nav start -->
 <c:set var="loginOutLink" value="${sessionScope.mem_id == null ? '/login/loginForm.do' : '/login/logout.do' }"/>
 <c:set var="loginOut" value="${sessionScope.mem_id == null ? '로그인' : '로그아웃' }"/>
-
 <nav
   class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-bottom border-secondary"
 >
@@ -31,7 +30,7 @@
       </button>
     </li>
     <li class="nav-item">
-      <a href="/cart/cartList.do" class="nav-link px-2 text-muted">장바구니(3)</a>
+      <a href="/cart/cartList.do" class="nav-link px-2 text-muted">장바구니</a>
     </li>
     <li class="nav-item">
       <a href="./mypage.jsp" class="nav-link px-2 text-muted">마이페이지</a>

@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.shopping.toyprj.CartLogic;
 import com.shopping.toyprj.Controller;
+import com.util.HashMapBinder;
 import com.util.ModelAndView;
 import com.vo.CartVO;
 public class CartController implements Controller {
@@ -35,24 +37,48 @@ public class CartController implements Controller {
 	
 	@Override
 	public Object cartInsert(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
+		
+		
+		
 		return null;
 	}
 	
 	@Override
 	public Object cartUpdate(HttpServletRequest req, HttpServletResponse res) {
-		
-		
-		
-		
-		
-		return null;
+		logger.info("CartController => cart/cartUpdate.do 호출 ");
+		int result = 0;
+		String path = "cart/cartList";
+		HttpSession session = req.getSession();
+		String mem_id = (String)session.getAttribute("mem_id");
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req); //product_no=${cart.getProduct_no()}&btn=plus
+		hmb.bind(pMap);
+		int product_no = Integer.valueOf((String) pMap.get("product_no"));
+		pMap.put("product_no", product_no);
+		pMap.put("mem_id", mem_id);
+		if(mem_id != null) {
+			result = cartLogic.cartUpdate(pMap);
+		}
+		return path;
 	}
 	
 	@Override
 	public Object cartDelete(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("CartController => cart/cartDelete.do 호출 ");
+		int result = 0;
+		String path = "cart/cartList";
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		HttpSession session = req.getSession();
+		String mem_id = (String)session.getAttribute("mem_id");
+		int product_no = Integer.valueOf((String) pMap.get("product_no"));
+		pMap.put("product_no", product_no);
+		pMap.put("mem_id", mem_id);
+		if(mem_id != null) {
+			result = cartLogic.cartDelete(pMap);
+		}
+		return path;
 	}
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> pMap) {
