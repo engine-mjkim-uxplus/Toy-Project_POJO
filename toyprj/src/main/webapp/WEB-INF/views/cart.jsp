@@ -183,55 +183,35 @@
               </div>
             </div>
           </div>
+          <c:set var ="total_price" value = "0" />
           <!-- 장바구니 아이템 목록 시작 -->
-          <c:forEach var="item" items="${requestScope.cartList}">
+          <c:forEach var="cart" items="${cartList}">
 	          <section class="cart_table">
 	            <div class="row border-top">
 	              <div class="row main align-items-center">
 	                <div class="col-2">
-	                  <img class="img-fluid product_img" src="${item.getProduct_img()}" />
+	                  <img class="img-fluid product_img" src="${cart.getProduct_img()}" />
 	                </div>
 	                <div class="col">
-	                  <div class="row text-muted product_category">${item.getProduct_category()}</div>
-	                  <div class="row product-name">${item.getProduct_name()}</div>
+	                  <div class="row text-muted product_category">${cart.getProduct_category()}</div>
+	                  <div class="row product-name">${cart.getProduct_name()}</div>
 	                </div>
 	                <div class="col d-flex">
 	                  <button onClick="cart/cartUpdate.do"><i class="fas fa-minus-circle"></i></button>
-	                  <div class="border col-3 text-center product_count">${item.getProduct_count()}</div>
+	                  <div class="border col-3 text-center product_count">${cart.getProduct_count()}</div>
 	                  <button class="plust"><i class="fas fa-plus-circle"></i></button>
 	                </div>
 	                <div class="col product_price">
-	                  ${item.getProduct_price()}
+	                  ${cart.getProduct_price()}원
 	                  <button class="minus"><i class="fas fa-times"></i></butt>
 	                </div>
 	              </div>
 	            </div>
 	            </section>
+	        <c:set var= "total_price" value="${total_price + cart.getProduct_price()}"/>
 			</c:forEach>
-<!--           <section class="cart_table">
-            <div class="row border-top">
-              <div class="row main align-items-center">
-                <div class="col-2">
-                  <img class="img-fluid product_img" src="https://image.msscdn.net/images/goods_img/20210906/2112059/2112059_1_500.jpg?t=20210909113606" />
-                </div>
-                <div class="col">
-                  <div class="row text-muted product_category">Shirt</div>
-                  <div class="row product-name">Cotton T-shirt</div>
-                </div>
-                <div class="col d-flex">
-                  <button onClick="cart/cartUpdate.do"><i class="fas fa-minus-circle"></i></button>
-                  <div class="border col-3 text-center product_count">1</div>
-                  <button class="plust"><i class="fas fa-plus-circle"></i></button>
-                </div>
-                <div class="col product_price">
-                  44,000원
-                  <button class="minus"><i class="fas fa-times"></i></butt>
-                </div>
-              </div>
-            </div>
-            </section> -->
             <!-- 장바구니 아이템 목록 끝 -->
-            <div class="col mt-4">총 가격 <span class="ms-5"id="total_price">130,000</span></div>
+            <div class="col mt-4">총 가격 <span class="ms-5"id="total_price"><c:out value="${total_price}"/>원</span></div>
             <button class="btn">주문하기</button>
           </div>
         </div>
