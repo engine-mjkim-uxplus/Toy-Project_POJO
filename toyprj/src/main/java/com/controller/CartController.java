@@ -37,10 +37,21 @@ public class CartController implements Controller {
 	
 	@Override
 	public Object cartInsert(HttpServletRequest req, HttpServletResponse res) {
-		
-		
-		
-		return null;
+		logger.info("CartController => cart/carInsert 호출 ");
+		int result = 0;
+		String path = "product/productDetail";
+		HttpSession session = req.getSession();
+		String mem_id = (String)session.getAttribute("mem_id");
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req); //product_no=${cart.getProduct_no()}
+		hmb.bind(pMap);
+		int product_no = Integer.valueOf((String) pMap.get("product_no"));
+		pMap.put("product_no", product_no);
+		pMap.put("mem_id", mem_id);
+		if(mem_id != null) {
+			result = cartLogic.cartInsert(pMap);
+		}
+		return path;
 	}
 	
 	@Override

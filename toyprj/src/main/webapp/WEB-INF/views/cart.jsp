@@ -255,12 +255,10 @@
     			location.href=`cartUpdate.do?product_no=${'${product_no}'}&btn=minus`;
     		}
     	}
-    	
     	function deleteItem(product_no){
     		alert("상품이 삭제 되었습니다.");
     		location.href=`cartDelete.do?product_no=${'${product_no}'}`;
     	}
     </script>
-    
   </body>
 </html>

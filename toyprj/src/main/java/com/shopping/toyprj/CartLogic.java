@@ -33,4 +33,11 @@ public class CartLogic {
 		result = cartDao.cartDelete(pMap);
 		return result;
 	}
+
+	public int cartInsert(Map<String, Object> pMap) {
+		logger.info("CartLogic ===> cartInsert 호출");
+		int result = 0;
+		result = cartDao.cartInsert(pMap);
+		return result;
+	}
 }

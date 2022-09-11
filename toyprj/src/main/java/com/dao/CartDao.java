@@ -84,5 +84,28 @@ public class CartDao {
 		}
 		return result;
 	}
+	// 장바구니 담기
+	public int cartInsert(Map<String, Object> pMap) {
+		logger.info("CartDao ===> cartInsert 호출 성공");
+		String select = null;
+		int result =0;
+		
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			select = sqlSession.selectOne("cartSearch", pMap);
+			if (select == null) {
+				result = sqlSession.update("cart");
+			} else {
+				sqlSession.rollback();
+			}
+			
+		} catch (Exception e) {
+			sqlSession.rollback();
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return null;
+	}
 
 }

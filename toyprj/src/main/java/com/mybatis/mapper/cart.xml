@@ -13,6 +13,11 @@
 			WHERE P.PRODUCT_NO = C.PRODUCT_NO	
 	</select>
 	
+	<select id="cartSearch" parameterType="Map">
+		SELECT 1 FROM CART WHERE MEMBER_ID='mjey54' AND PRODUCT_NO=202
+	</select>
+	
+	
 	<select id="cartUpdate" parameterType="Map">
 		UPDATE (
               SELECT PRODUCT_COUNT FROM CART
