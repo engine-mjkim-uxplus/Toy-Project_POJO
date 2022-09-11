@@ -30,7 +30,11 @@
 		function addLike(no,category){
 			alert("좋아요를 눌렀습니다.")
 			location.href = "./productInsertLike.do?page=productDetail.do&product_no="+no+"&product_category="+category;
-		}  	
+		}
+		function addCart(product_no){
+			alert("장바구니에 담았습니다.");
+			location.href=`/cart/cartInsert.do?product_no=${'${product_no}'}`;
+		}
   	</script>
     <!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
@@ -72,7 +76,7 @@
               <button onclick="cartCount('+')" class="btn btn-outline-dark me-1" type="button"><i class="fas fa-plus-circle"></i></button>
               <button onclick="cartCount('-')" class="btn btn-outline-dark" type="button"><i class="fas fa-minus-circle"></i></button>
             </div>
-            <button onclick="alert('장바구니 담기')" class="btn btn-outline-dark flex-shrink-0" type="button">
+            <button onclick=addCart(${item.getProduct_no()}) class="btn btn-outline-dark flex-shrink-0" type="button">
               <i class="bi-cart-fill me-1"></i>
               Add to cart
             </button>

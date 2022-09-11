@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
     <%@ include file="../../common/common.jsp" %>
     <style>
 /*       body {
@@ -166,6 +165,16 @@
       button{
         border:none;
       }
+      .count{
+      	background-color:transparent;
+      }
+      .delete{
+     	 background-color:transparent;
+      }
+      .noItem {
+      	color: gray;
+      	margin-bottom: 30rem;
+      }
     </style>
   </head>
   <body>
@@ -185,41 +194,71 @@
           </div>
           <c:set var ="total_price" value = "0" />
           <!-- 장바구니 아이템 목록 시작 -->
-          <c:forEach var="cart" items="${cartList}">
-	          <section class="cart_table">
-	            <div class="row border-top">
-	              <div class="row main align-items-center">
-	                <div class="col-2">
-	                  <img class="img-fluid product_img" src="${cart.getProduct_img()}" />
-	                </div>
-	                <div class="col">
-	                  <div class="row text-muted product_category">${cart.getProduct_category()}</div>
-	                  <div class="row product-name">${cart.getProduct_name()}</div>
-	                </div>
-	                <div class="col d-flex">
-	                  <button onClick="cart/cartUpdate.do"><i class="fas fa-minus-circle"></i></button>
-	                  <div class="border col-3 text-center product_count">${cart.getProduct_count()}</div>
-	                  <button class="plust"><i class="fas fa-plus-circle"></i></button>
-	                </div>
-	                <div class="col product_price">
-	                  ${cart.getProduct_price()}원
-	                  <button class="minus"><i class="fas fa-times"></i></butt>
-	                </div>
-	              </div>
-	            </div>
-	            </section>
-	        <c:set var= "total_price" value="${total_price + cart.getProduct_price()}"/>
-			</c:forEach>
+          <c:choose>
+          	<c:when test="${cartList != null}">
+	          <c:forEach var="cart" items="${cartList}">
+		          <section class="cart_table">
+		            <div class="row border-top">
+		              <div class="row main align-items-center">
+		                <div class="col-2">
+		                  <img class="img-fluid product_img" src="${cart.getProduct_img()}" />
+		                </div>
+		                <div class="col">
+		                  <div class="row text-muted product_category">${cart.getProduct_category()}</div>
+		                  <div class="row product-name">${cart.getProduct_name()}</div>
+		                </div>
+		                <div class="col d-flex">
+		                <c:choose>
+		                <c:when test="${cart.getProduct_count() eq 1}">
+		                	 <button class="count" disabled><i class="fas fa-minus-circle"></i></button>	                
+		                </c:when>
+		                <c:otherwise>
+		                  <button class="count" onClick=countChange('minus',${cart.getProduct_no()});><i class="fas fa-minus-circle"></i></button>	                
+		                </c:otherwise>
+		                </c:choose>	                
+		                  <div class="border col-3 text-center product_count">${cart.getProduct_count()}</div>
+		                  <button class="count" onClick=countChange('plus',${cart.getProduct_no()});><i class="fas fa-plus-circle"></i></button>
+		                </div>
+		                <div class="col product_price">
+		                  <fmt:formatNumber value="${cart.getProduct_price()*cart.getProduct_count()}" type="number"/>원 
+		                  <button class="delete" onClick=deleteItem(${cart.getProduct_no()});><i class="fas fa-times"></i></button>
+		                </div>
+		              </div>
+		            </div>
+		            </section>
+		        	<c:set var= "total_price" value="${total_price + cart.getProduct_price()*cart.getProduct_count()}"/>
+				</c:forEach>
             <!-- 장바구니 아이템 목록 끝 -->
-            <div class="col mt-4">총 가격 <span class="ms-5"id="total_price"><c:out value="${total_price}"/>원</span></div>
+            <div class="col mt-4">총 가격 <span class="ms-5"id="total_price"><fmt:formatNumber value="${total_price}" type="number"/>원</span></div>
             <button class="btn">주문하기</button>
           </div>
         </div>
       </div>
     </div>
+    </c:when>
+   	<c:otherwise>
+   		<div class="border-top"></div>
+   		<h5 class="text-center noItem">장바구니에 담긴 상품이 없습니다</h5>
+   	</c:otherwise>
+    </c:choose>
     <!-- cart-list end -->
     <!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>
     <!-- footer end -->
+    <script type="text/javascript">
+    	function countChange(gubun, product_no){
+    		if(gubun == "plus"){
+    			alert("수량을 변경하였습니다");
+    			location.href=`cartUpdate.do?product_no=${'${product_no}'}&btn=plus`;
+    		} else{
+    			alert("수량을 변경하였습니다");
+    			location.href=`cartUpdate.do?product_no=${'${product_no}'}&btn=minus`;
+    		}
+    	}
+    	function deleteItem(product_no){
+    		alert("상품이 삭제 되었습니다.");
+    		location.href=`cartDelete.do?product_no=${'${product_no}'}`;
+    	}
+    </script>
   </body>
 </html>

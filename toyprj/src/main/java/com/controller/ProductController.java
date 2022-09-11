@@ -62,7 +62,7 @@ public class ProductController implements Controller {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
-		int result;
+		int result = 0;
 		result = productLogic.addLike(pMap);
 		
 		String page = (String) pMap.get("page");

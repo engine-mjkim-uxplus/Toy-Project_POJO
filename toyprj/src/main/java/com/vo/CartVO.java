@@ -7,6 +7,7 @@ public class CartVO {
 	private String product_img = null;
 	private int product_price;
 	private int product_count;
+	private int product_no;
 	public String getProduct_category() {
 		return product_category;
 	}
@@ -36,6 +37,12 @@ public class CartVO {
 	}
 	public void setProduct_count(int product_count) {
 		this.product_count = product_count;
+	}
+	public int getProduct_no() {
+		return product_no;
+	}
+	public void setProduct_no(int product_no) {
+		this.product_no = product_no;
 	}
 	
 	
