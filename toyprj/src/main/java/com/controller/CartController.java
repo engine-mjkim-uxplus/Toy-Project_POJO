@@ -45,10 +45,10 @@ public class CartController implements Controller {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
-		int product_count = Integer.valueOf((String) pMap.get("product_count"));
-		pMap.put("product_count", product_count);
-		pMap.put("mem_id", mem_id);
 		if(mem_id != null) {
+			int product_count = Integer.valueOf((String) pMap.get("product_count"));
+			pMap.put("product_count", product_count);
+			pMap.put("mem_id", mem_id);
 			select = cartLogic.cartSearch(pMap);
 			// 이후 cartUpdate로 redirect 하도록 수정 필요		
 			if(select != null) {
@@ -58,7 +58,18 @@ public class CartController implements Controller {
 			}	
 		}
 		else if(mem_id == null) {
+			String product_count = (String)pMap.get("product_count");
+			String product_no = (String)pMap.get("product_no");
+			Cookie cookie1 = new Cookie("product_no", product_no);
+			Cookie cookie2 = new Cookie("product_count",product_count);
+			cookie1.setMaxAge(60*60*24);
+			cookie2.setMaxAge(60*60*24);
+			cookie1.setPath("/");
+			cookie2.setPath("/");
+			res.addCookie(cookie1);
+			res.addCookie(cookie2);
 		}
+		
 		String prNo = (String) pMap.get("product_no");
 		String category = (String) pMap.get("product_category");
 		String path = "product/productDetail.do?product_no=" + prNo + "&product_category=" + category;

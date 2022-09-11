@@ -178,6 +178,14 @@
     </style>
   </head>
   <body>
+  <%
+  	Cookie[] cookies = request.getCookies();
+  	if(cookies !=null){
+  		for(Cookie cookie : cookies){
+  		
+  		}
+  	}
+  %>
   	<!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
     <!-- nav end -->
