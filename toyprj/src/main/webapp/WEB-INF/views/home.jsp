@@ -133,6 +133,12 @@
     </style>
   </head>
   <body>
+    <script type="text/javascript">
+		function addLike(no){
+			alert("좋아요를 눌렀습니다.")
+			location.href = "./productInsertLike.do?page=productList.do&product_no="+no
+		}
+  	</script>
     <!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
     <!-- nav end -->

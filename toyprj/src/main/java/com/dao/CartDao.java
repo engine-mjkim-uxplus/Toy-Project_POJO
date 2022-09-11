@@ -105,7 +105,7 @@ public class CartDao {
 		} finally {
 			sqlSession.close();
 		}
-		return null;
+		return result;
 	}
 
 }
