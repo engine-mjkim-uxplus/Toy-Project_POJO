@@ -39,7 +39,7 @@ public class CartController implements Controller {
 	public Object cartInsert(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("CartController => cart/carInsert 호출 ");
 		int result = 0;
-		String path = "product/productDetail";
+		String path = "product/productDetail.do";
 		HttpSession session = req.getSession();
 		String mem_id = (String)session.getAttribute("mem_id");
 		Map<String,Object> pMap = new HashMap<>();
@@ -58,7 +58,7 @@ public class CartController implements Controller {
 	public Object cartUpdate(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("CartController => cart/cartUpdate.do 호출 ");
 		int result = 0;
-		String path = "cart/cartList";
+		String path = "cart/cartList.do";
 		HttpSession session = req.getSession();
 		String mem_id = (String)session.getAttribute("mem_id");
 		Map<String,Object> pMap = new HashMap<>();
@@ -77,7 +77,7 @@ public class CartController implements Controller {
 	public Object cartDelete(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("CartController => cart/cartDelete.do 호출 ");
 		int result = 0;
-		String path = "cart/cartList";
+		String path = "cart/cartList.do";
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
