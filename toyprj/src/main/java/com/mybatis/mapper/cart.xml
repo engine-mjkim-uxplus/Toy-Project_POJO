@@ -16,12 +16,11 @@
 	<select id="cartSearch" parameterType="Map" resultType="String">
 		SELECT 1 FROM CART WHERE MEMBER_ID= #{mem_id} AND PRODUCT_NO=#{product_no}
 	</select>
-	<!--  -->
+	<!-- 카트에 상품이 존재하지 않는 경우 카트 새로 추가  -->
 	<select id="cartInsert" parameterType="Map">
-		INSERT INTO CART VALUES(CART_SEQ.NEXTVAL, #{product_no},#{mem_id}, 1)
+		INSERT INTO CART VALUES(CART_SEQ.NEXTVAL, #{product_no},#{mem_id}, #{product_count})
 	</select>
-	
-	
+	<!-- 카트에 기존 상품이 존재하는 경우 카트에 수량 변경 -->
 	<select id="cartUpdate" parameterType="Map">
 		UPDATE (
               SELECT PRODUCT_COUNT FROM CART
@@ -33,6 +32,9 @@
 			</if>
             <if test='btn != null and btn.equals("plus")'>
 			SET PRODUCT_COUNT = PRODUCT_COUNT+1
+			</if>
+			<if test='product_count gt 0'>
+			SET PRODUCT_COUNT = PRODUCT_COUNT + #{product_count}
 			</if>
 	</select>
 	

@@ -41,13 +41,14 @@ public class CartController implements Controller {
 		HttpSession session = req.getSession();
 		String mem_id = (String)session.getAttribute("mem_id");
 		Map<String,Object> pMap = new HashMap<>();
-		HashMapBinder hmb = new HashMapBinder(req); //product_no=${cart.getProduct_no()}
+		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
+		int product_count = Integer.valueOf((String) pMap.get("product_count"));
+		pMap.put("product_count", product_count);
 		pMap.put("mem_id", mem_id);
 		if(mem_id != null) {
 			select = cartLogic.cartSearch(pMap);
 			if(select != null) {
-				pMap.put("btn", "plus");
 				result = cartLogic.cartUpdate(pMap);
 			} else {
 				result = cartLogic.cartInsert(pMap);
