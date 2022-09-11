@@ -3,11 +3,9 @@ package com.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.log4j.Logger;
 
 import com.shopping.toyprj.CartLogic;
@@ -38,19 +36,26 @@ public class CartController implements Controller {
 	@Override
 	public Object cartInsert(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("CartController => cart/carInsert 호출 ");
+		String select = null;
 		int result = 0;
-		String path = "product/productDetail.do";
 		HttpSession session = req.getSession();
 		String mem_id = (String)session.getAttribute("mem_id");
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req); //product_no=${cart.getProduct_no()}
 		hmb.bind(pMap);
-		int product_no = Integer.valueOf((String) pMap.get("product_no"));
-		pMap.put("product_no", product_no);
 		pMap.put("mem_id", mem_id);
 		if(mem_id != null) {
-			result = cartLogic.cartInsert(pMap);
+			select = cartLogic.cartSearch(pMap);
+			if(select != null) {
+				pMap.put("btn", "plus");
+				result = cartLogic.cartUpdate(pMap);
+			} else {
+				result = cartLogic.cartInsert(pMap);
+			}	
 		}
+		String prNo = (String) pMap.get("product_no");
+		String category = (String) pMap.get("product_category");
+		String path = "product/productDetail.do?product_no=" + prNo + "&product_category=" + category;
 		return path;
 	}
 	

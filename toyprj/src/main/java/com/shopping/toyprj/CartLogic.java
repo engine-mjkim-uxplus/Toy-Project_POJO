@@ -34,10 +34,19 @@ public class CartLogic {
 		return result;
 	}
 
+	public String cartSearch(Map<String, Object> pMap) {
+		logger.info("CartLogic ===> cartSearch 호출");
+		String result = null;
+		result = cartDao.cartSearch(pMap);
+		return result;
+	}
+
 	public int cartInsert(Map<String, Object> pMap) {
 		logger.info("CartLogic ===> cartInsert 호출");
 		int result = 0;
 		result = cartDao.cartInsert(pMap);
 		return result;
 	}
+	
+	
 }
