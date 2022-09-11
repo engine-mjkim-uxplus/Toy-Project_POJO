@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -98,8 +99,21 @@ public class RegisterController implements Controller {
 
 	@Override
 	public Object registerSelect(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("Controller의 registerSelect 호출 성공");
+		int result = 0;
+		HttpSession session = null;
+		String member_id = null;
+		ModelAndView mav = new ModelAndView();
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		member_id = req.getParameter("member_id");
+		System.out.println("가져온 id: "+member_id);
+		result = registerLogic.registerSelect(pMap);
+		session = req.getSession();
+		session.setAttribute("result", result);
+		mav.setViewName("idCheck");
+		return mav;
 	}
 
 	@Override
@@ -110,14 +124,12 @@ public class RegisterController implements Controller {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
-		String member_gender = req.getParameter("member_gender");
-		System.out.println(member_gender);
 		result = registerLogic.registerInsert(pMap); 
 		logger.info("컨트롤러의 result: " +result);
 		if(result == 1) { // 회원가입 성공하면 Insert
-			path = "register/registerInsert";
+			path = "login/loginForm.do";
 		} else { 
-			path = "register/registerForm";
+			path = "register/registerForm.do";
 		}
 		return path;
 	}

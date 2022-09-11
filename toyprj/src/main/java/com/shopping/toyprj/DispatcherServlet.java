@@ -16,6 +16,7 @@ public class DispatcherServlet extends HttpServlet {
 
 	private void doService(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		logger.info("doservice 호출 성공");
+		req.setCharacterEncoding("utf-8"); // post요청시 인코딩해주어야 함
 		String requestURI = req.getRequestURI();
 		String contextPath = req.getContextPath();
 		String command = requestURI.substring(contextPath.length() + 1);
