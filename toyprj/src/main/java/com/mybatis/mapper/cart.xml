@@ -13,8 +13,12 @@
 			WHERE P.PRODUCT_NO = C.PRODUCT_NO	
 	</select>
 	
-	<select id="cartSearch" parameterType="Map">
-		SELECT 1 FROM CART WHERE MEMBER_ID='mjey54' AND PRODUCT_NO=202
+	<select id="cartSearch" parameterType="Map" resultType="String">
+		SELECT 1 FROM CART WHERE MEMBER_ID=#{mem_id} AND PRODUCT_NO=#{product_no}
+	</select>
+	
+	<select id="cartInsert" parameterType="Map">
+		INSERT INTO CART VALUES(CART_SEQ.NEXTVAL, #{product_no},#{mem_id}, 1)
 	</select>
 	
 	

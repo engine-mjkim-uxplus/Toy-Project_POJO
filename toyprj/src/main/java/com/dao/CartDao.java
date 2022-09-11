@@ -84,21 +84,33 @@ public class CartDao {
 		}
 		return result;
 	}
-	// 장바구니 담기
-	public int cartInsert(Map<String, Object> pMap) {
-		logger.info("CartDao ===> cartInsert 호출 성공");
-		String select = null;
-		int result =0;
+	// 장바구니 담기 전 조회
+	public String cartSearch(Map<String, Object> pMap) {
+		logger.info("CartDao ===> cartSearch 호출 성공");
+		String result = null;
 		
 		try {
 			sqlSession = sqlSessionFactory.openSession();
-			select = sqlSession.selectOne("cartSearch", pMap);
-			if (select == null) {
-				result = sqlSession.update("cart");
+			result = sqlSession.selectOne("cartSearch", pMap);
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+	// 장바구니 담기
+	public int cartInsert(Map<String, Object> pMap) {
+		logger.info("CartDao ===> cartInsert 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.insert("cartInsert", pMap);
+			if (result > 0) {
+				sqlSession.commit();
 			} else {
 				sqlSession.rollback();
 			}
-			
 		} catch (Exception e) {
 			sqlSession.rollback();
 			logger.info("Exception : "+e.toString());
