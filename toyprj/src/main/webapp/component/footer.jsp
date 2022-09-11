@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- footer start -->
-<footer class="py-3 my-4 border-top border-secondary">
+<footer class="py-3 border-top border-secondary">
   <ul class="nav justify-content-center mb-2">
     <li class="ms-3">
       <a class="text-muted" href="#">
