@@ -53,6 +53,9 @@ public class CartController implements Controller {
 				result = cartLogic.cartInsert(pMap);
 			}	
 		}
+		else if(mem_id == null) {
+			
+		}
 		String prNo = (String) pMap.get("product_no");
 		String category = (String) pMap.get("product_category");
 		String path = "product/productDetail.do?product_no=" + prNo + "&product_category=" + category;
