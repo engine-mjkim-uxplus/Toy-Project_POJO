@@ -18,6 +18,7 @@
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
 <meta name="generator" content="Hugo 0.101.0" />
 <title>아이디 중복체크</title>
+<%@ include file="../../common/common.jsp" %>
 <style type="text/css">
 .box {
 	margin: -150px 0 0 -200px;
@@ -41,7 +42,7 @@ h3 {
 	function useID(){
 		let form = opener.document.userForm;
 		if(document.idCheckForm.isID.value == "N"){ // 아이디가 중복일 때
-			alert('중복된 아이디 입니다.');
+			alert('중복된 아이디 입니다. 다시 입력해주세요');
 			form.member_id.focus();
 			
 			window.close();
@@ -58,8 +59,9 @@ h3 {
       <hr />
       <br /><br />
       <form name="idCheckForm">
-	      <div class="input-group">
+	      <div class="input">
     	    <input type="text" class="form-control" id="member_id" name="member_id" value="${member_id}" disabled/>
+    	    <br>
         	
         	<c:choose>
         	<c:when test="${result == 1}">

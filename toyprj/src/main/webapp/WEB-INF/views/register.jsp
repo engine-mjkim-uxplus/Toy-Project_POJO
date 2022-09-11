@@ -229,23 +229,34 @@
                     <div class="p-5">
                       <h3 class="fw-normal mb-5">상세주소</h3>
 
-                      <div class="mb-4 pb-2">
-                        <div class="form-outline form-white">
-                          <label class="form-label" for="member_zipcode"
-                            >우편번호:</label
-                          >
-                          <input
-                            type="text"
-                            id="member_zipcode"
-                            name="member_zipcode"
-                            class="form-control form-control-lg"
-                            placeholder="우편번호"
-                          />
+                     <div class="row">
+                          <div class="col-md-8 mb-4 pb-2">
+                            <div class="form-outline form-white">
+                              <label class="form-label" for="member_zipcode"
+                                >우편번호:</label
+                              >
+                              <input
+                                type="text"
+                                id="member_zipcode"
+                                name="member_zipcode"
+                                class="form-control form-control-lg"
+                                placeholder="우편번호"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-4 mt-3">
+                            <div style="margin: 20px"></div>
+                            <input
+                              type="button"
+                              id="btn_address"
+                              onclick="findAddress()"
+                              class="form-control"
+                              value="우편번호 찾기"
+                            />
+                          </div>
                         </div>
-                      </div>
 
-                      <div class="row">
-                        <div class="col-md-9 mb-4 pb-2">
+                        <div class="mb-4 pb-2">
                           <div class="form-outline form-white">
                             <label class="form-label" for="member_address"
                               >주소:
@@ -255,34 +266,22 @@
                               id="member_address"
                               name="member_address"
                               class="form-control form-control-lg"
-                              placeholder="주소는 검색버튼을 눌러주세요"
-                              style="background-color: #ddd"
+                              placeholder="주소"
                             />
                           </div>
                         </div>
-                        <div class="col-md-2 mt-3">
-                          <div style="margin: 20px"></div>
-                          <button
-                            type="button"
-                            id="btn_address"
-                            class="form-control"
-                          >
-                            검색
-                          </button>
-                        </div>
-                      </div>
 
-                      <div class="mb-4 pb-2">
-                        <div class="form-outline form-white">
-                          <input
-                            type="text"
-                            id="member_address2"
-                            name="member_address2"
-                            class="form-control form-control-lg"
-                            placeholder="상세주소 입력"
-                          />
+                        <div class="mb-4 pb-2">
+                          <div class="form-outline form-white">
+                            <input
+                              type="text"
+                              id="member_address2"
+                              name="member_address2"
+                              class="form-control form-control-lg"
+                              placeholder="상세주소 입력"
+                            />
+                          </div>
                         </div>
-                      </div>
 
                       <br /><br /><br /><br />
                       <div class="row">
@@ -312,5 +311,34 @@
   	<!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>
     <!-- footer end -->
+    <!-- 다음지도 api때문에 추가한 부분 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		function findAddress(){
+		   new daum.Postcode({
+		        oncomplete: function(data) {
+		        	// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('member_zipcode').value = data.zonecode;
+	                document.getElementById("member_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("member_address2").focus();
+		        }
+		    }).open();
+		}
+	</script>
   </body>
 </html>
