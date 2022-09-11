@@ -27,7 +27,21 @@ public class RegisterDao {
 			sqlSession.commit();
 			logger.info("result: "+ result);
 		} catch (Exception e) {
-			logger.info("Exception : " + e.toString());
+			logger.info("회원가입DAO Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+	
+	public int registerSelect(Map<String, Object> pMap) {
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.selectOne("registerSelect",pMap);
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("중복체크DAO Exception : " + e.toString());
 		} finally {
 			sqlSession.close();
 		}

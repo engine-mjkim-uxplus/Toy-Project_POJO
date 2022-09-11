@@ -98,8 +98,22 @@ public class RegisterController implements Controller {
 
 	@Override
 	public Object registerSelect(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("Controller의 registerSelect 호출 성공");
+		Object _return = null;
+		int result = 0;
+		String path = null;
+		ModelAndView mav = new ModelAndView();
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		result = registerLogic.registerSelect(pMap);
+		if(result == 0) { // 사용가능한 id일 경우
+			mav.setViewName("register");
+			_return = mav;
+		} else if(result == 1) { // 중복된 id일 경우
+			path = "register/registerSelect";
+		}
+		return _return;
 	}
 
 	@Override
@@ -110,12 +124,10 @@ public class RegisterController implements Controller {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
-		String member_gender = req.getParameter("member_gender");
-		System.out.println(member_gender);
 		result = registerLogic.registerInsert(pMap); 
 		logger.info("컨트롤러의 result: " +result);
 		if(result == 1) { // 회원가입 성공하면 Insert
-			path = "register/registerInsert";
+			path = "login/loginForm";
 		} else { 
 			path = "register/registerForm";
 		}

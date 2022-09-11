@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>회원가입</title>
 	<%@ include file="../../common/common.jsp" %>
 	<style>
 	body {
@@ -64,10 +64,17 @@
 	</style>
   </head>
   <body>
+  <script type="text/javascript">
+  		function signUp(){
+  			alert('회원가입 성공! 로그인 후 이용해주세요.');
+  			$("#f_registerIns").submit();
+  		}
+  </script>
     <!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
     <!-- nav end -->
     <section class="h-100 h-custom gradient-custom-2">
+    <form action="./registerInsert.do" method="post" id="f_registerIns">
       <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-12">
@@ -84,10 +91,11 @@
                       </h3>
                       <!-- [[이름]] -->
                       <div class="mb-4 pb-2">
-                        <label class="form-label" for="mem_name">이름: </label>
+                        <label class="form-label" for="member_name">이름: </label>
                         <input
                           type="text"
-                          id="mem_name"
+                          id="member_name"
+                          name="member_name"
                           class="form-control form-control-lg"
                           placeholder="이름을 입력해주세요"
                         />
@@ -106,7 +114,8 @@
                           <div class="form-outline">
                             <input
                               type="text"
-                              id="mem_id"
+                              id="member_id"
+                              name="member_id"
                               class="form-control form-control-lg"
                               placeholder="아이디를 입력하세요"
                             />
@@ -130,12 +139,13 @@
                       </div>
                       <!-- [[비밀번호]] -->
                       <div class="mb-4 pb-2">
-                        <label class="form-label" for="mem_password"
+                        <label class="form-label" for="member_pw"
                           >비밀번호:
                         </label>
                         <input
                           type="password"
-                          id="mem_password"
+                          id="member_pw"
+                          name="member_pw"
                           class="form-control form-control-lg"
                           placeholder="비밀번호를 입력해주세요"
                         />
@@ -143,12 +153,13 @@
                       <!-- [[전화번호]] -->
                       <div class="mb-4 pb-2">
                         <div class="form-outline">
-                          <label class="form-label" for="form3Examplev4"
+                          <label class="form-label" for="member_phone"
                             >전화번호:
                           </label>
                           <input
                             type="text"
-                            id="mem_phoneNumber"
+                            id="member_phone"
+                            name="member_phone"
                             class="form-control form-control-lg"
                             placeholder="전화번호를 입력해주세요"
                           />
@@ -158,30 +169,20 @@
                       <!-- [[성별체크]] -->
                       <div class="col-md-12 mb-5 form-outline">
                         <label class="form-label" for="gender">성별 </label>
-                        <div class="form-check form-check-inline" id="gender">
+                        <div class="form-check form-check-inline">
                           <input
-                            class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions"
-                            id="femaleGender"
+                            id="member_gender"
+                            name="member_gender"
                             value="여자"
                             checked
-                          />
-                          <label class="form-check-label" for="femaleGender"
-                            >여자</label
-                          >
-                          <div class="form-check form-check-inline">
+                          />여자
                             <input
-                              class="form-check-input"
                               type="radio"
-                              name="inlineRadioOptions"
-                              id="maleGender"
+                              name="member_gender"
+                              id="member_gender"
                               value="남자"
-                            />
-                            <label class="form-check-label" for="maleGender"
-                              >남자</label
-                            >
-                          </div>
+                            />남자
                         </div>
                       </div>
                     </div>
@@ -192,12 +193,13 @@
 
                       <div class="mb-4 pb-2">
                         <div class="form-outline form-white">
-                          <label class="form-label" for="zipcode"
+                          <label class="form-label" for="member_zipcode"
                             >우편번호:</label
                           >
                           <input
                             type="text"
-                            id="zipcode"
+                            id="member_zipcode"
+                            name="member_zipcode"
                             class="form-control form-control-lg"
                             placeholder="우편번호"
                           />
@@ -207,16 +209,16 @@
                       <div class="row">
                         <div class="col-md-9 mb-4 pb-2">
                           <div class="form-outline form-white">
-                            <label class="form-label" for="mem_address"
+                            <label class="form-label" for="member_address"
                               >주소:
                             </label>
                             <input
                               type="text"
-                              id="mem_address"
+                              id="member_address"
+                              name="member_address"
                               class="form-control form-control-lg"
                               placeholder="주소는 검색버튼을 눌러주세요"
                               style="background-color: #ddd"
-                              readonly
                             />
                           </div>
                         </div>
@@ -236,7 +238,8 @@
                         <div class="form-outline form-white">
                           <input
                             type="text"
-                            id="mem_address_detail"
+                            id="member_address2"
+                            name="member_address2"
                             class="form-control form-control-lg"
                             placeholder="상세주소 입력"
                           />
@@ -248,10 +251,12 @@
                         <div class="col-md-9"></div>
                         <div class="col-md-3">
                           <button
-                            type="button"
+                            type="submit"
+                            id="btn_register"
                             class="btn btn-light btn-lg"
                             data-mdb-ripple-color="dark"
                             style="background-color: #cce1ff"
+                            onclick="signUp()"
                           >
                             회원가입
                           </button>
@@ -265,6 +270,7 @@
           </div>
         </div>
       </div>
+    </form>
     </section>
   	<!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>
