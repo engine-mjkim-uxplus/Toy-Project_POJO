@@ -58,16 +58,31 @@ public class CartController implements Controller {
 			}	
 		}
 		else if(mem_id == null) {
-			String product_count = (String)pMap.get("product_count");
 			String product_no = (String)pMap.get("product_no");
+			String product_count = (String)pMap.get("product_count");
+			String product_img = (String)pMap.get("product_img");
+			String product_price = (String)pMap.get("product_price");
+			String product_category = (String)pMap.get("product_category");
 			Cookie cookie1 = new Cookie("product_no", product_no);
 			Cookie cookie2 = new Cookie("product_count",product_count);
+			Cookie cookie3 = new Cookie("product_img",product_img);
+			Cookie cookie4 = new Cookie("product_price",product_price);
+			Cookie cookie5 = new Cookie("product_category",product_category);
 			cookie1.setMaxAge(60*60*24);
 			cookie2.setMaxAge(60*60*24);
+			cookie3.setMaxAge(60*60*24);
+			cookie4.setMaxAge(60*60*24);
+			cookie5.setMaxAge(60*60*24);
 			cookie1.setPath("/");
 			cookie2.setPath("/");
+			cookie3.setPath("/");
+			cookie4.setPath("/");
+			cookie5.setPath("/");
 			res.addCookie(cookie1);
 			res.addCookie(cookie2);
+			res.addCookie(cookie3);
+			res.addCookie(cookie4);
+			res.addCookie(cookie5);
 		}
 		
 		String prNo = (String) pMap.get("product_no");
