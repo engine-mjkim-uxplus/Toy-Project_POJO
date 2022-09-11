@@ -51,7 +51,7 @@ public class LoginController implements Controller {
 		hmb.bind(pMap);
 		mem_id = (String) loginLogic.login(pMap);
 		if(mem_id == null) {
-			path = "login/loginForm";
+			path = "login/loginForm.do";
 		}else {
 		session = req.getSession();
 		session.setAttribute("mem_id", mem_id);
