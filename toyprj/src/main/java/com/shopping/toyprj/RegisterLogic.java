@@ -16,4 +16,11 @@ public class RegisterLogic {
 		result = registerDao.registerInsert(pMap);
 		return result;
 	}
+	
+	public int registerSelect(Map<String, Object> pMap) {
+		logger.info("Logic의 registerSelect호출 성공");
+		int result = 0;
+		result = registerDao.registerSelect(pMap);
+		return result;
+	}
 }
