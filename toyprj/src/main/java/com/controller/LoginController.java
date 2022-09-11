@@ -55,7 +55,7 @@ public class LoginController implements Controller {
 		}else {
 		session = req.getSession();
 		session.setAttribute("mem_id", mem_id);
-		path = "product/productList";
+		path = "product/productList.do";
 		}
 		return path;
 	}
@@ -65,7 +65,7 @@ public class LoginController implements Controller {
 		HttpSession session = req.getSession();
 		session.invalidate();
 		ModelAndView mv = new ModelAndView();
-		String path = "product/productList"; // redirect
+		String path = "product/productList.do"; // redirect
 		return path;
 	}
 
