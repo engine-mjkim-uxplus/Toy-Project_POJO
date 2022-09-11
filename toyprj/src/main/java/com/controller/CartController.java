@@ -3,6 +3,8 @@ package com.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,6 +50,7 @@ public class CartController implements Controller {
 		pMap.put("mem_id", mem_id);
 		if(mem_id != null) {
 			select = cartLogic.cartSearch(pMap);
+			// 이후 cartUpdate로 redirect 하도록 수정 필요		
 			if(select != null) {
 				result = cartLogic.cartUpdate(pMap);
 			} else {
@@ -55,7 +58,6 @@ public class CartController implements Controller {
 			}	
 		}
 		else if(mem_id == null) {
-			
 		}
 		String prNo = (String) pMap.get("product_no");
 		String category = (String) pMap.get("product_category");
