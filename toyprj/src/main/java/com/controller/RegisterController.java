@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -99,21 +100,20 @@ public class RegisterController implements Controller {
 	@Override
 	public Object registerSelect(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("Controller의 registerSelect 호출 성공");
-		Object _return = null;
 		int result = 0;
-		String path = null;
+		HttpSession session = null;
+		String member_id = null;
 		ModelAndView mav = new ModelAndView();
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
+		member_id = req.getParameter("member_id");
+		System.out.println("가져온 id: "+member_id);
 		result = registerLogic.registerSelect(pMap);
-		if(result == 0) { // 사용가능한 id일 경우
-			mav.setViewName("register");
-			_return = mav;
-		} else if(result == 1) { // 중복된 id일 경우
-			path = "register/registerSelect";
-		}
-		return _return;
+		session = req.getSession();
+		session.setAttribute("result", result);
+		mav.setViewName("idCheck");
+		return mav;
 	}
 
 	@Override

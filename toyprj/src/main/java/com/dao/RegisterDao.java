@@ -38,7 +38,7 @@ public class RegisterDao {
 		int result = 0;
 		try {
 			sqlSession = sqlSessionFactory.openSession();
-			result = sqlSession.selectOne("registerSelect",pMap);
+			result = sqlSession.selectOne("registerSelect", pMap);
 			logger.info("result: "+ result);
 		} catch (Exception e) {
 			logger.info("중복체크DAO Exception : " + e.toString());

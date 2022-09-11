@@ -9,6 +9,9 @@
     <title>회원가입</title>
 	<%@ include file="../../common/common.jsp" %>
 	<style>
+	 a {
+        text-decoration: none;
+      }
 	body {
 		box-sizing: border-box;
 	}
@@ -65,16 +68,49 @@
   </head>
   <body>
   <script type="text/javascript">
-  		function signUp(){
+  		function idCheck(){
+  			alert('중복테스트');
+  			const form = document.userForm;
+  			const id = form.member_id.value;
+  			if(!id){
+  				alert('id를 입력하세요.');
+  			} else {
+  				window.open("${contextPath}/register/registerSelect.do?member_id="+id,"","width=600px, height=450px")
+  			}
+  		}
+  		
+  		/* function signUp(){
   			alert('회원가입 성공! 로그인 후 이용해주세요.');
   			$("#f_registerIns").submit();
+  		} */
+  		
+  		function signUp() {
+  			const form = document.userFrom;
+  			
+  			if(!form.member_id.value){
+  				alert('id를 입력하세요.');
+  				return false;
+  			}
+  			if(!form.member_pw.value){
+  				alert('비밀번호를 입력하세요');
+  				return false;
+  			}
+  			if(!form.member_name.value){
+  				alert('이름을 입력하세요.');
+  				return false;
+  			}
+  			if(!form.member_phone.value){
+  				alert('전화번호을 입력하세요.');
+  				return false;
+  			}
   		}
+  		
   </script>
     <!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
     <!-- nav end -->
     <section class="h-100 h-custom gradient-custom-2">
-    <form action="./registerInsert.do" method="post" id="f_registerIns">
+    <form action="./registerInsert.do" method="post" id="f_registerIns" name="userForm" onsubmit="return signUp()">
       <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col-12">
@@ -117,7 +153,7 @@
                               id="member_id"
                               name="member_id"
                               class="form-control form-control-lg"
-                              placeholder="아이디를 입력하세요"
+                              placeholder="아이디를 입력해주세요"
                             />
                           </div>
                         </div>
@@ -126,13 +162,15 @@
                             <button
                               type="button"
                               id="idCheck"
+                              name="idCheck"
                               class="form-control"
                               style="
                                 background-color: rgba(161, 196, 253, 1);
                                 margin-top: 5px;
                               "
-                            >
-                              중복확인
+                            ><a href="javascript:idCheck()">
+                            중복확인
+                            </a>
                             </button>
                           </div>
                         </div>
@@ -256,7 +294,6 @@
                             class="btn btn-light btn-lg"
                             data-mdb-ripple-color="dark"
                             style="background-color: #cce1ff"
-                            onclick="signUp()"
                           >
                             회원가입
                           </button>
