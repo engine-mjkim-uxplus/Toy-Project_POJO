@@ -69,24 +69,22 @@
   <body>
   <script type="text/javascript">
   		function idCheck(){
-  			alert('중복테스트');
   			const form = document.userForm;
-  			const id = form.member_id.value;
-  			if(!id){
+  			const member_id = form.member_id.value;
+  			if(!member_id){
   				alert('id를 입력하세요.');
   			} else {
-  				window.open("${contextPath}/register/registerSelect.do?member_id="+id,"","width=600px, height=450px")
+  				window.open("${contextPath}/register/registerSelect.do?member_id="+member_id,"","width=600px, height=450px")
   			}
   		}
   		
-  		/* function signUp(){
-  			alert('회원가입 성공! 로그인 후 이용해주세요.');
-  			$("#f_registerIns").submit();
-  		} */
-  		
   		function signUp() {
-  			const form = document.userFrom;
+  			const form 	= document.userForm;
   			
+  			if(!form.member_name.value){
+  				alert('이름을 입력하세요.');
+  				return false;
+  			}
   			if(!form.member_id.value){
   				alert('id를 입력하세요.');
   				return false;
@@ -95,10 +93,10 @@
   				alert('비밀번호를 입력하세요');
   				return false;
   			}
-  			if(!form.member_name.value){
-  				alert('이름을 입력하세요.');
+  			if(form.idDuplication.value != "idCheck"){
+  				alert('아이디 중복체크 해주세요.');
   				return false;
-  			}
+  			} 
   			if(!form.member_phone.value){
   				alert('전화번호을 입력하세요.');
   				return false;
@@ -172,6 +170,8 @@
                             중복확인
                             </a>
                             </button>
+                            <!-- id중복 체크 여부 -->
+                            <input type="hidden" id="idDuplication" value="idUncheck">
                           </div>
                         </div>
                       </div>

@@ -38,24 +38,43 @@ h3 {
 </head>
 <body>
 <script type="text/javascript">
-	let openJoinform = opener.document.userForm;
-	if(<%=result%> == 0){ // 아이디가 없을 때
-		
-	} else if(<%= result%> == 1){ // 아이디가 중복일 때
-		
+	function useID(){
+		let form = opener.document.userForm;
+		if(document.idCheckForm.isID.value == "N"){ // 아이디가 중복일 때
+			alert('중복된 아이디 입니다.');
+			form.member_id.focus();
+			
+			window.close();
+		} else { // 아이디가 없을 때
+			form.idCheck.disabled = true;
+			form.idDuplication.value = "idCheck";
+			
+			window.close();
+		}
 	}
 </script>
 	<div class="box p-3">
       <h3>아이디 중복검사</h3>
       <hr />
       <br /><br />
-      <form action="">
+      <form name="idCheckForm">
 	      <div class="input-group">
     	    <input type="text" class="form-control" id="member_id" name="member_id" value="${member_id}" disabled/>
-        	<button class="btn btn-outline-secondary" type="submit">중복검사</button>
+        	
+        	<c:choose>
+        	<c:when test="${result == 1}">
+        		<p style="color: red">이미 존재하는 아이디 입니다.</p>
+        		<input type="hidden" name="isID" value="N" />
+        	</c:when>
+        	<c:when test="${result == 0}">
+        		<p style="color: blue">사용가능한 아이디입니다.</p>
+        		<input type="hidden" name="isID" value="Y" />
+        	</c:when>
+        	</c:choose>
       	</div>
       </form>
-      <input class="btn btn-outline-secondary" type="button" onclick="sendCheckValue()" value="사용하기" >
+      <input class="btn btn-outline-secondary" type="button" onclick="window.close()" value="취소" >
+      <input class="btn btn-outline-secondary" type="button" onclick="useID()" value="사용하기" >
     </div>
 </body>
 </html>

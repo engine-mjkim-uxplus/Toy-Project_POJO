@@ -47,7 +47,7 @@ public class DispatcherServlet extends HttpServlet {
 			else if (obj instanceof String) {
 				logger.info("String page===>" + path);
 				path = (String)obj;
-				res.sendRedirect("/" + path + ".do"); // /login/loginForm.do
+				res.sendRedirect("/" + path); // /login/loginForm.do
 			}
 		} // end of 출력페이지 호출 URL패턴 조립하기
 	} ///// end of 컨트롤 계층 리턴결과

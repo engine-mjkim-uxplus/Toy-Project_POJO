@@ -127,9 +127,9 @@ public class RegisterController implements Controller {
 		result = registerLogic.registerInsert(pMap); 
 		logger.info("컨트롤러의 result: " +result);
 		if(result == 1) { // 회원가입 성공하면 Insert
-			path = "login/loginForm";
+			path = "login/loginForm.do";
 		} else { 
-			path = "register/registerForm";
+			path = "register/registerForm.do";
 		}
 		return path;
 	}
