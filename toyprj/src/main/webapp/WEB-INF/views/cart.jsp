@@ -178,14 +178,6 @@
     </style>
   </head>
   <body>
-  <%
-  	Cookie[] cookies = request.getCookies();
-  	if(cookies !=null){
-  		for(Cookie cookie : cookies){
-  		
-  		}
-  	}
-  %>
   	<!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
     <!-- nav end -->
@@ -203,7 +195,47 @@
           <c:set var ="total_price" value = "0" />
           <!-- 장바구니 아이템 목록 시작 -->
           <c:choose>
-          	<c:when test="${cartList != null}">
+          	<c:when test="${sessionScope.cartList !=null && sessionScope.cartList.size() > 0}">
+          	 <c:forEach var="cart" items="${sessionScope.cartList}">
+		          <section class="cart_table">
+		            <div class="row border-top">
+		              <div class="row main align-items-center">
+		                <div class="col-2">
+		                  <img class="img-fluid product_img" src="${cart.getProduct_img()}" />
+		                </div>
+		                <div class="col">
+		                  <div class="row text-muted product_category">${cart.getProduct_category()}</div>
+		                  <div class="row product-name">${cart.getProduct_name()}</div> 
+		                </div>
+		                <div class="col d-flex">
+		                <c:choose>
+		                <c:when test="${cart.getProduct_count() eq 1}">
+		                	 <button class="count" disabled><i class="fas fa-minus-circle"></i></button>	                
+		                </c:when>
+		                <c:otherwise>
+		                  <button class="count" onClick=countChange('minus',${cart.getProduct_no()});><i class="fas fa-minus-circle"></i></button>	                
+		                </c:otherwise>
+		                </c:choose>	                
+		                  <div class="border col-3 text-center product_count">${cart.getProduct_count()}</div>
+		                  <button class="count" onClick=countChange('plus',${cart.getProduct_no()});><i class="fas fa-plus-circle"></i></button>
+		                </div>
+		                <div class="col product_price d-flex">
+		                  <fmt:formatNumber value="${cart.getProduct_price()*cart.getProduct_count()}" type="number"/>원 
+		                  <button class="delete" onClick=deleteItem(${cart.getProduct_no()});><i class="fas fa-times"></i></button>
+		                </div>
+		              </div>
+		            </div>
+		            </section>
+		        	<c:set var= "total_price" value="${total_price + cart.getProduct_price()*cart.getProduct_count()}"/>
+				</c:forEach>
+            <div class="col mt-4">총 가격 <span class="ms-5"id="total_price"><fmt:formatNumber value="${total_price}" type="number"/>원</span></div>
+            <button class="btn">주문하기</button>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+          	</c:when>
+          	<c:when test="${cartList != null && cartList.size() > 0}">
 	          <c:forEach var="cart" items="${cartList}">
 		          <section class="cart_table">
 		            <div class="row border-top">
@@ -227,7 +259,7 @@
 		                  <div class="border col-3 text-center product_count">${cart.getProduct_count()}</div>
 		                  <button class="count" onClick=countChange('plus',${cart.getProduct_no()});><i class="fas fa-plus-circle"></i></button>
 		                </div>
-		                <div class="col product_price">
+		                <div class="col product_price d-flex">
 		                  <fmt:formatNumber value="${cart.getProduct_price()*cart.getProduct_count()}" type="number"/>원 
 		                  <button class="delete" onClick=deleteItem(${cart.getProduct_no()});><i class="fas fa-times"></i></button>
 		                </div>
@@ -254,7 +286,7 @@
 	<%@ include file="../../component/footer.jsp" %>
     <!-- footer end -->
     <script type="text/javascript">
-    	function countChange(gubun, product_no){
+    	function countChange(gubun, product_no, product_count){
     		if(gubun == "plus"){
     			alert("수량을 변경하였습니다");
     			location.href=`cartUpdate.do?product_no=${'${product_no}'}&btn=plus`;

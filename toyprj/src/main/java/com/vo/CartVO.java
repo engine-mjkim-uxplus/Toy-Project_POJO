@@ -5,9 +5,19 @@ public class CartVO {
 	private String product_category = null;
 	private String product_name = null;
 	private String product_img = null;
+	private String product_no;
 	private int product_price;
 	private int product_count;
-	private int product_no;
+	public CartVO() {}
+	public CartVO(String product_name,String product_no, int product_count, String product_img, int product_price,
+			String product_category) {
+		this.product_name = product_name;
+		this.product_category = product_category;
+		this.product_count = product_count;
+		this.product_img = product_img;
+		this.product_no = product_no;
+		this.product_price = product_price;
+	}
 	public String getProduct_category() {
 		return product_category;
 	}
@@ -38,10 +48,10 @@ public class CartVO {
 	public void setProduct_count(int product_count) {
 		this.product_count = product_count;
 	}
-	public int getProduct_no() {
+	public String getProduct_no() {
 		return product_no;
 	}
-	public void setProduct_no(int product_no) {
+	public void setProduct_no(String product_no) {
 		this.product_no = product_no;
 	}
 	

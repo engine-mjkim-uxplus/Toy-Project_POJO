@@ -1,5 +1,7 @@
 package com.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +19,7 @@ import com.util.ModelAndView;
 
 public class LoginController implements Controller {
 	Logger logger = Logger.getLogger(LoginController.class);
-	LoginLogic loginLogic = null;
+	LoginLogic loginLogic = new LoginLogic();
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> pMap) {
 		// TODO Auto-generated method stub
@@ -29,7 +31,7 @@ public class LoginController implements Controller {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/*********************** 로그인 페이지 요청 ***********************/
 	@Override
 	public Object loginForm(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("LoginController => login/loginForm.do 호출 ");
@@ -37,11 +39,11 @@ public class LoginController implements Controller {
 		mv.setViewName("loginform");
 		return mv;
 	}
-
+	/**************** 로그인 요청(아이디 패스워드 확인) *****************/
 	@Override
 	public Object login(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("LoginController => login/login.do 호출 ");
-		loginLogic = new LoginLogic();
+		String msg= null;
 		String mem_id = null;
 		HttpSession session = null;
 		String path = null;
@@ -51,7 +53,12 @@ public class LoginController implements Controller {
 		hmb.bind(pMap);
 		mem_id = (String) loginLogic.login(pMap);
 		if(mem_id == null) {
-			path = "login/loginForm.do";
+			try {
+				msg =  URLEncoder.encode("id 또는 password가 일치하지 않습니다.", "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			path = "login/loginForm.do?msg=" + msg;
 		}else {
 		session = req.getSession();
 		session.setAttribute("mem_id", mem_id);
@@ -59,6 +66,7 @@ public class LoginController implements Controller {
 		}
 		return path;
 	}
+	/************************** 로그아웃 요청 ****************************/
 	@Override
 	public Object logout(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("LoginController => login/logout.do 호출 ");

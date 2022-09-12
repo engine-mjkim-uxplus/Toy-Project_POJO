@@ -31,12 +31,13 @@
 			alert("좋아요를 눌렀습니다.")
 			location.href = "./productInsertLike.do?page=productDetail.do&product_no="+no+"&product_category="+category;
 		}
-		function addCart(product_no, product_category){
+		function addCart(product_no, product_category,product_img,product_price, product_name){
 			let count = $("#inputQuantity").val();
 			alert("장바구니에 담았습니다.");
 			location.href=`/cart/cartInsert.do?product_no=${'${product_no}'}
 								&product_category=${'${product_category}'}&product_count=${'${count}'}
 								&product_img=${'${product_img}'}&product_price=${'${product_price}'}
+								&product_name=${'${product_name}'}
 								`;
 		}
   	</script>
@@ -80,7 +81,8 @@
               <button onclick="cartCount('+')" class="btn btn-outline-dark me-1" type="button"><i class="fas fa-plus-circle"></i></button>
               <button onclick="cartCount('-')" class="btn btn-outline-dark" type="button"><i class="fas fa-minus-circle"></i></button>
             </div>
-            <button onclick=addCart(${product.getProduct_no()},"${product.getProduct_category()}") class="btn btn-outline-dark flex-shrink-0" type="button">
+            <button onclick=addCart(${product.getProduct_no()},"${product.getProduct_category()}","${product.getProduct_img()}",${product.getProduct_price()},"${product.getProduct_name()}")
+             class="btn btn-outline-dark flex-shrink-0" type="button">
               <i class="bi-cart-fill me-1"></i>
               Add to cart
             </button>

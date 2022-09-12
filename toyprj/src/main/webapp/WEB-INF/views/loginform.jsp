@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.net.URLDecoder" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,6 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />    
     <%@ include file="../../common/common.jsp" %>
     <style>
+    body{
+    	box-sizing: border-box;
+    }
       a {
         text-decoration: none;
       }
@@ -30,9 +34,11 @@
               <div class="card-body p-5 text-center">
                 <div class="mb-md-5 mt-md-4 pb-5">
                   <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                  <p class="text-white-50 mb-5">
-                    Please enter your login and password!
-                  </p>
+                  	<c:if test="${not empty param.msg}">
+                  		<p class="text mb-5" style="color:red; font-size:20px;">
+    					 <i class="fa fa-exclamation-circle me-2"></i>${URLDecoder.decode(param.msg)}         	    
+	                 	</p>
+				    </c:if>   
                   <!-- ==================== Form 태그 시작 ==================== -->
                   <form action="login.do" method="post"> 
                     <div class="form-outline form-black mb-4">
@@ -65,7 +71,7 @@
                   <!-- ==================== Form 태그 끝 ==================== -->
                 </div>
                 <div>
-                  <a href="#!" class="text-white-50 fw-bold">비회원 주문조회</a>
+                  <a href="/register/registerForm.do" class="text-white-50 fw-bold">회원가입</a>
                 </div>
               </div>
             </div>
