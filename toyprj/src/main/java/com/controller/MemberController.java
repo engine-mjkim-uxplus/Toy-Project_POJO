@@ -34,7 +34,7 @@ public class MemberController implements Controller {
 			MemberVO mVO = memberLogic.memberListPayment(id);
 			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
 			mav.addObject("member", mVO);
-			mav.setViewName("/mypage/orderpage"); 
+			mav.setViewName("mypage/orderpage"); 
 			path = mav;
 		}
 		
@@ -55,7 +55,10 @@ public class MemberController implements Controller {
 			path = "login/loginForm.do";
 		}else {
 			ModelAndView mav = new ModelAndView(req);
-			mav.setViewName("/mypage/reviewpage"); 
+			MemberVO mVO = memberLogic.memberListPayment(id);
+			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
+			mav.addObject("member", mVO);
+			mav.setViewName("mypage/reviewpage"); 
 			path = mav;
 		}
 		
@@ -64,21 +67,74 @@ public class MemberController implements Controller {
 	
 	@Override
 	public Object memberListP(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("MemberController: memberListP 호출");
+
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("mem_id");
+		logger.info(id);
+		
+		Object path = null;
+		
+		if (id == null) {
+			path = "login/loginForm.do";
+		}else {
+			ModelAndView mav = new ModelAndView(req);
+			MemberVO mVO = memberLogic.memberListPayment(id);
+			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
+			mav.addObject("member", mVO);
+			mav.setViewName("mypage/personalpage"); 
+			path = mav;
+		}
+		
+		return path;
 	}
 	
 	@Override
 	public Object memberListLike(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("MemberController: memberListLike 호출");
+		
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("mem_id");
+		logger.info(id);
+		
+		Object path = null;
+		
+		if (id == null) {
+			path = "login/loginForm.do";
+		}else {
+			ModelAndView mav = new ModelAndView(req);
+			MemberVO mVO = memberLogic.memberListPayment(id);
+			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
+			mav.addObject("member", mVO);
+			mav.setViewName("mypage/likepage"); 
+			path = mav;
+		}
+		
+		return path;
 	}
 
 
 	@Override
 	public Object memberListCoupon(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("MemberController: memberListCoupon 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("mem_id");
+		logger.info(id);
+		
+		Object path = null;
+		
+		if (id == null) {
+			path = "login/loginForm.do";
+		}else {
+			ModelAndView mav = new ModelAndView(req);
+			MemberVO mVO = memberLogic.memberListPayment(id);
+			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
+			mav.addObject("member", mVO);
+			mav.setViewName("mypage/couponpage");
+			path = mav;
+		}
+		
+		return path;
 	}
 
 
