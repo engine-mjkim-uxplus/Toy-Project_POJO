@@ -150,12 +150,88 @@
     
       <div class="row d-flex" style="height: 500px;">
 		<%@ include file="./component/side.jsp" %>
-        <div class="col-md-11 content">문의내역 페이지</div>
-      </div>
-      
-    </div>
-    
-    <!-- footer start -->
+			<div class="col-md-11 content p-3">
+				<h5 class="font-medium hidden md:block">내 정보 수정</h5>
+				<hr>
+				<h5 class="font-medium mb-4">나의 정보</h5>
+				<div class="input-form-backgroud row">
+					<div class="input-form col-md-12 mx-auto">
+						<form class="validation-form">
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<label for="name">이름</label> 
+									<input type="text" class="form-control" id="name" placeholder="이름" value="" required>
+								</div>
+								<div class="col-md-6 mt-3 pt-3">
+									<label for="nickname">성별</label> 
+									<div class="form-check form-check-inline">
+			                          <input
+			                            type="radio"
+			                            id="member_gender"
+			                            name="member_gender"
+			                            value="여자"
+			                            checked
+			                          />여자
+			                            <input
+			                              type="radio"
+			                              name="member_gender"
+			                              id="member_gender"
+			                              value="남자"
+			                            />남자
+			                        </div>
+								</div>
+							</div>
+	
+							<div class="row">
+								<div class="col-6 mb-3">
+									<label for="email">아이디</label> <input type="text"
+										class="form-control" id="email" placeholder="아이디"
+										required>
+								</div>
+								<div class="col-6 mb-3">
+									<label for="email">비밀번호</label> <input type="password"
+										class="form-control" id="email" placeholder=""
+										required>
+								</div>
+							</div>
+							
+							<div class="mb-3">
+								<label for="address">전화번호</label> <input type="text"
+									class="form-control" id="address" placeholder="01012341234"
+									required>
+							</div>
+							
+							<hr>
+							<h5 class="font-medium mb-4">배송 정보</h5>
+							<div class="row">
+								<div class="col-9 mb-3">
+									<label for="address">우편번호</label> 
+									<input type="text" class="form-control" id="address" placeholder="01001" required>
+								</div>
+								<div class="col-3">
+									<label for="address"> </label> 
+									<input type="button" class="form-control" id="address" value="주소찾기" required>
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label for="address">주소</label> 
+								<input type="text" class="form-control" id="address" placeholder="서울특별시 강남구" required>
+							</div>
+							
+							<div class="mb-3">
+								<label for="address2">상세주소</label> 
+								<input type="text" class="form-control" id="address2" placeholder="상세주소를 입력해주세요.">
+							</div>
+
+							<div class="mb-4"></div>
+							<button class="btn btn-secondary" type="submit">수정하기</button>
+						</form>
+					</div>
+				</div>
+
+			</div>
+			<!-- footer start -->
 	<%@ include file="../../../component/footer.jsp" %>
     <!-- footer end -->
   </body>

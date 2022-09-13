@@ -12,7 +12,7 @@
       @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
       * {
         margin: 0;
-        padding: 0;
+        padding: 1px;
         box-sizing: border-box;
       }
 /*       body {
@@ -131,7 +131,7 @@
         position: absolute;
         font-weight: 800;
         color: #fff;
-        background-color: #0033ff;
+        background-color: #828282;
         padding-left: 7px;
         border-radius: 50%;
         border: 1px solid #fff;
@@ -262,11 +262,11 @@
     <header>
       <div class="d-flex justify-content-center align-items-center pb-3">
         <div class="px-sm-5 px-2 active">
-          SHOPPING CART
+          장바구니
           <span class="fas fa-check"></span>
         </div>
-        <div class="px-sm-5 px-2">CHECKOUT</div>
-        <div class="px-sm-5 px-2">FINISH</div>
+        <div class="px-sm-5 px-2">결제</div>
+        <div class="px-sm-5 px-2">결제완료</div>
       </div>
       <div class="progress">
         <div
@@ -279,114 +279,104 @@
       </div>
     </header>
     <div class="wrapper">
-      <div class="h5 large">Billing Address</div>
+      <div class="h5 large">주문 결제</div>
       <div class="row">
         <div
-          class="col-lg-6 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1"
+          class="col-lg-8 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1"
         >
           <div class="mobile h5">Billing Address</div>
           <div id="details" class="bg-white rounded pb-5">
             <form>
               <div class="form-group">
-                <label class="text-muted">Name</label>
-                <input type="text" value="David Smith" class="form-control" />
+                <label class="text-muted">이름</label>
+                <input type="text" value="David Smith" class="form-control" id="order_name" name="order_name"/>
               </div>
               <div class="form-group">
-                <label class="text-muted">Email</label>
+                <label class="text-muted">핸드폰 번호</label>
                 <div
                   class="d-flex jusify-content-start align-items-center rounded p-2"
                 >
-                  <input type="email" value="david.343@gmail.com" />
-                  <span class="fas fa-check text-success pr-sm-2 pr-0"></span>
+                  <input type="text" value="010123412324" id="order_phone" name="order_phone" />
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-9">
                   <div class="form-group">
-                    <label>City</label>
+                    <label class="text-muted">우편번호</label>
                     <div
                       class="d-flex jusify-content-start align-items-center rounded p-2"
                     >
-                      <input type="text" value="Houston" />
-                      <span class="fas fa-check text-success pr-2"></span>
+                      <input type="text" value="01001" />
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-3">
                   <div class="form-group">
-                    <label>Zip code</label>
+                    <label> </label>
                     <div
                       class="d-flex jusify-content-start align-items-center rounded p-2"
                     >
-                      <input type="text" value="77001" />
-                      <span class="fas fa-check text-success pr-2"></span>
+                      <input type="button" value="우편번호 찾기" />
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-6">
                   <div class="form-group">
-                    <label>Address</label>
+                    <label class="text-muted">주소</label>
                     <div
                       class="d-flex jusify-content-start align-items-center rounded p-2"
                     >
-                      <input type="text" value="542 W.14th Street" />
-                      <span class="fas fa-check text-success pr-2"></span>
+                      <input type="text" value="서울시 강남구 역삼동" />
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-6">
                   <div class="form-group">
-                    <label>State</label>
+                    <label class="text-muted">상세주소</label>
                     <div
                       class="d-flex jusify-content-start align-items-center rounded p-2"
                     >
-                      <input type="text" value="NY" />
-                      <span class="fas fa-check text-success pr-2"></span>
+                      <input type="text" value="kh정보교육원" />
                     </div>
                   </div>
-                </div>
+                  <div class="form-group">
+                    <label class="text-muted">배송시 요청사항</label>
+                    <div
+                      class="d-flex jusify-content-start align-items-center rounded p-2"
+                    >
+                      <input type="text" value="경비실에 맡겨주세요." />
+                    </div>
+                  </div>
               </div>
-              <label>Country</label>
+              <br><hr>
+              <label class="text-muted">쿠폰 적용</label>
               <select name="country" id="country">
-                <option value="usa">USA</option>
-                <option value="ind">INDIA</option>
+              	<option disabled hidden value selected>쿠폰 선택</option>
+                <option value="생일 쿠폰 10%">생일 쿠폰 10%</option>
+                <option value="신학기 5%">신학기 5%</option>
               </select>
+              <div class="row">
+              	<div class="col-8">
+	              <div class="form-group">
+    	            <label class="text-muted">적립금</label>
+        	        <input type="text" value="" class="form-control" placeholder="100원 단위로 입력해주세요."/>
+            	  </div>
+              	</div>
+              	<div class="col-4">
+              		<div class="form-group">
+              		<label class="text-muted"></label>
+              		<p>사용가능 : 0p</p>
+            	  </div>
+              	</div>
+              </div>
             </form>
-          </div>
-          <input type="checkbox" checked />
-          <label>Shipping address is same as billing</label>
-          <div id="address" class="bg-light rounded mt-3">
-            <div class="h5 font-weight-bold text-primary">Shopping Address</div>
-            <div
-              class="d-md-flex justify-content-md-start align-items-md-center pt-3"
-            >
-              <div class="mr-auto">
-                <b>Home Address</b>
-                <p class="text-justify text-muted">542 W.14th Street</p>
-                <p class="text-uppercase text-muted">NY</p>
-              </div>
-              <div class="rounded py-2 px-3" id="register">
-                <a href="#">
-                  <b>Register Now</b>
-                </a>
-                <p class="text-muted">
-                  Create account to have multiple address saved
-                </p>
-              </div>
-            </div>
           </div>
         </div>
         <div
-          class="col-lg-6 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1 pt-lg-0 pt-3"
+          class="col-lg-4 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1 pt-lg-0 pt-3"
         >
           <div id="cart" class="bg-white rounded">
             <div class="d-flex justify-content-between align-items-center">
-              <div class="h6">Cart Summary</div>
-              <div class="h6">
-                <a href="#">Edit</a>
-              </div>
+              <div class="h6">주문 상품(1)</div>
             </div>
             <div
               class="d-flex jusitfy-content-between align-items-center pt-3 pb-2 border-bottom"
@@ -408,94 +398,29 @@
                 <b class="h5">$80.9</b>
               </div>
             </div>
-            <div class="my-3">
-              <input
-                type="text"
-                class="w-100 form-control text-center"
-                placeholder="Gift Card or Promo Card"
-              />
-            </div>
-            <div class="d-flex align-items-center">
-              <div class="display-5">Subtotal</div>
+            <div class="d-flex align-items-center mt-3">
+              <div class="display-5">총 상품금액</div>
               <div class="ml-auto font-weight-bold">$80.9</div>
             </div>
             <div class="d-flex align-items-center py-2 border-bottom">
-              <div class="display-5">Shipping</div>
+              <div class="display-5">배송비</div>
               <div class="ml-auto font-weight-bold">$12.9</div>
             </div>
             <div class="d-flex align-items-center py-2">
-              <div class="display-5">Total</div>
+              <div class="display-5">총 결제금액</div>
               <div class="ml-auto d-flex">
                 <div class="text-primary text-uppercase px-3">usd</div>
                 <div class="font-weight-bold">$92.98</div>
               </div>
             </div>
           </div>
-          <p class="text-muted">Need help with an order?</p>
-          <p class="text-muted">
-            <a href="#" class="text-danger">Hotline:</a>+314440160
-            (International)
-          </p>
-          <div class="h4 pt-3">
-            <span class="fas fa-shield-alt text-primary pr-2"></span>
-            Security of your shopping
-          </div>
-          <div id="summary" class="bg-white rounded py-2 my-4">
-            <div class="table-responsive">
-              <table class="table table-borderless w-75">
-                <tbody>
-                  <tr class="text-muted">
-                    <td>Battlecreek Coffee</td>
-                    <td>:</td>
-                    <td>$80.9</td>
-                  </tr>
-                  <tr class="text-muted">
-                    <td>Code-770</td>
-                    <td>:</td>
-                    <td>770</td>
-                  </tr>
-                  <tr class="text-muted">
-                    <td>Quantity</td>
-                    <td>:</td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <span class="fas fa-minus btn text-muted"></span>
-                        <span>2</span>
-                        <span class="fas fa-plus btn text-muted"></span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              class="border-top py-2 d-flex align-items-center ml-2 font-weight-bold"
-            >
-              <div>Total</div>
-              <div class="ml-auto text-primary">USD</div>
-              <div class="px-2">$92.98</div>
-            </div>
-          </div>
           <div class="row pt-lg-3 pt-2 buttons mb-sm-0 mb-2">
-            <div class="col-md-6">
-              <div class="btn text-uppercase">back to shopping</div>
-            </div>
-            <div class="col-md-6 pt-md-0 pt-3">
-              <div class="btn text-white ml-auto">
-                <span class="fas fa-lock"></span>
-                Continue to Shopping
+              <div class="btn ml-3 mr-3" style="background-color: #eee;">
+                <span class="fas fa-solid fa-credit-card"></span>
+                주문하기
               </div>
-            </div>
-          </div>
-          <div class="text-muted pt-3" id="mobile">
-            <span class="fas fa-lock"></span>
-            Your information is save
           </div>
         </div>
-      </div>
-      <div class="text-muted">
-        <span class="fas fa-lock"></span>
-        Your information is save
       </div>
     </div>
     

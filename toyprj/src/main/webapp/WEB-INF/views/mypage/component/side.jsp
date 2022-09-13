@@ -11,18 +11,18 @@
 
 <div class="col-md-1 listContainer list-group border-end border-secondary">
   <a href="./memberListPayment.do" class="item list-group-item ${URL eq orderpage ? 'active' : 'none' }">
-	<i class="far fa-comment-dots" style="margin-right: 5px;"></i>구매 내역
+   <i class="far fa-comment-dots" style="margin-right: 5px;"></i>구매 내역
   </a>
   <a href="./memberListReview.do" class="item list-group-item ${URL eq reviewpage ? 'active' : 'none' }">
-	<i class="far fa-comment-dots" style="margin-right: 5px;"></i>구매 후기
+   <i class="far fa-comment-dots" style="margin-right: 5px;"></i>구매 후기
   </a>
-  <a href="#" class="item list-group-item ${URL eq personal ? 'active' : 'none' }">
-  	<i class="far fa-comment-dots" style="margin-right: 5px;"></i>개인 정보
+  <a href="./memberListP.do" class="item list-group-item ${URL eq personal ? 'active' : 'none' }">
+     <i class="far fa-comment-dots" style="margin-right: 5px;"></i>개인 정보
   </a>
-  <a href="#" class="item list-group-item ${URL eq couponpage ? 'active' : 'none' }">
-	<i class="far fa-comment-dots" style="margin-right: 5px;"></i>보유 쿠폰
+  <a href="./memberListCoupon.do" class="item list-group-item ${URL eq couponpage ? 'active' : 'none' }">
+   <i class="far fa-comment-dots" style="margin-right: 5px;"></i>보유 쿠폰
   </a>
-  <a href="#" class="item list-group-item ${URL eq likepage ? 'active' : 'none' }">
-	<i class="far fa-comment-dots" style="margin-right: 5px;"></i>좋아요 리스트
+  <a href="./memberListLike.do" class="item list-group-item ${URL eq likepage ? 'active' : 'none' }">
+   <i class="far fa-comment-dots" style="margin-right: 5px;"></i>좋아요 리스트
   </a>
 </div>

@@ -150,7 +150,7 @@
     
       <div class="row d-flex" style="height: 500px;">
 		<%@ include file="./component/side.jsp" %>
-        <div class="col-md-11 content">최근 본 상품 페이지</div>
+        <div class="col-md-11 content">쿠폰 페이지</div>
       </div>
       
     </div>
