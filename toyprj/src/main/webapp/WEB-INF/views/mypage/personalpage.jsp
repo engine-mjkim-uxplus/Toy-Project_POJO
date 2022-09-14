@@ -136,11 +136,17 @@
 		
 		/* [[최근 구매내역을 마이페이지의 메인에서 보여주기]] */
 		.content {
-		  background-color: #ddd;
+		 /*  background-color: #ddd; */
 		}
     </style>
   </head>
   <body>
+  <script>
+  function memUpdateP(){
+		alert('회원정보가 수정되었습니다. 마이페이지로 이동합니다.');
+	  	$("#f_memform").submit();
+	}
+  </script>
     <!-- nav start -->
 	<%@ include file="../../../component/nav.jsp" %>
     <!-- nav end -->
@@ -156,48 +162,53 @@
 				<h5 class="font-medium mb-4">나의 정보</h5>
 				<div class="input-form-backgroud row">
 					<div class="input-form col-md-12 mx-auto">
-						<form class="validation-form">
+						<form class="validation-form" name="memForm" id="f_memform" method="get" action="./memberUpdateP.do">
 							<div class="row">
 								<div class="col-md-6 mb-3">
 									<label for="name">이름</label> 
-									<input type="text" class="form-control" id="name" placeholder="이름" value="" required>
+									<input type="text" class="form-control" id="member_name" name="member_name" value="${member.getMember_name()}" required>
 								</div>
-								<div class="col-md-6 mt-3 pt-3">
-									<label for="nickname">성별</label> 
+								<div class="col-md-3 mb-3">
+									<label for="name" style="color: red;">*아이디는 변경이 불가합니다</label> 
+									<input type="text" class="form-control" name="member_id" value="${member.getMember_id()}" readonly>
+								</div>
+								<div class="col-md-3 mt-3 pt-3">
+									<label>성별</label> 
 									<div class="form-check form-check-inline">
 			                          <input
 			                            type="radio"
 			                            id="member_gender"
 			                            name="member_gender"
 			                            value="여자"
-			                            checked
+			                            <c:if test="${member.getMember_gender() eq '여자'}">checked</c:if>
 			                          />여자
-			                            <input
-			                              type="radio"
-			                              name="member_gender"
-			                              id="member_gender"
-			                              value="남자"
-			                            />남자
+			                          <input
+			                            type="radio"
+			                            name="member_gender"
+			                            id="member_gender"
+			                            value="남자"
+			                            <c:if test="${member.getMember_gender() eq '남자'}">checked</c:if>
+			                          />남자
 			                        </div>
 								</div>
 							</div>
 	
 							<div class="row">
 								<div class="col-6 mb-3">
-									<label for="email">아이디</label> <input type="text"
-										class="form-control" id="email" placeholder="아이디"
-										required>
+									<label for="email">현재 비밀번호</label> <input type="text"
+										class="form-control" value="${member.getMember_pw()}"
+										readonly>
 								</div>
 								<div class="col-6 mb-3">
-									<label for="email">비밀번호</label> <input type="password"
-										class="form-control" id="email" placeholder=""
+									<label for="email">변경할 비밀번호</label> <input type="password"
+										class="form-control" id="member_pw" name="member_pw" placeholder="변경할 비밀번호를 입력해주세요."
 										required>
 								</div>
 							</div>
 							
 							<div class="mb-3">
 								<label for="address">전화번호</label> <input type="text"
-									class="form-control" id="address" placeholder="01012341234"
+									class="form-control" id="member_phone" name="member_phone" value="${member.getMember_phone()}"
 									required>
 							</div>
 							
@@ -206,33 +217,103 @@
 							<div class="row">
 								<div class="col-9 mb-3">
 									<label for="address">우편번호</label> 
-									<input type="text" class="form-control" id="address" placeholder="01001" required>
+									<input type="text" class="form-control" id="member_zipcode" name="member_zipcode" value="${member.getMember_zipcode()}" >
 								</div>
 								<div class="col-3">
 									<label for="address"> </label> 
-									<input type="button" class="form-control" id="address" value="주소찾기" required>
+									<input type="button" class="form-control" id="btn_address" onclick="findAddress()" value="주소찾기" >
 								</div>
 							</div>
 
 							<div class="mb-3">
 								<label for="address">주소</label> 
-								<input type="text" class="form-control" id="address" placeholder="서울특별시 강남구" required>
+								<input type="text" class="form-control" id="member_address" name="member_address" value="${member.getMember_address()}">
 							</div>
 							
 							<div class="mb-3">
 								<label for="address2">상세주소</label> 
-								<input type="text" class="form-control" id="address2" placeholder="상세주소를 입력해주세요.">
+								<input type="text" class="form-control" id="member_address2" name="member_address2" value="${member.getMember_address2()}">
 							</div>
 
 							<div class="mb-4"></div>
-							<button class="btn btn-secondary" type="submit">수정하기</button>
+							<input class="btn btn-secondary" onclick="memUpdateP()" type="button" value="수정하기">
+							<button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#memDelModal">탈퇴하기</button>
 						</form>
 					</div>
 				</div>
 
 			</div>
-			<!-- footer start -->
+	<!-- footer start -->
 	<%@ include file="../../../component/footer.jsp" %>
     <!-- footer end -->
+    
+    <!-- 회원탈퇴 모달 -->
+    <script type="text/javascript">
+		function memDel(){
+			let form = document.delform;
+			if(form.member_pw.value != ${member.getMember_pw()}){
+  				alert('비밀번호가 틀렸습니다.');
+  				return false;
+  			}
+		}
+	</script>
+    <div class="modal fade" id="memDelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg modal-dialog-centered">
+	    <div class="modal-content border border-secondary rounded-3 border-opacity-50">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalToggleLabel">회원 탈퇴</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+			<form id="delform" enctype="multipart/form-data" role="search" action="./memberDelete.do" method="post" onsubmit="return memDel()">
+			 	<div class="box p-3">
+				 	<h5>탈퇴를 원하시면 비밀번호를 입력해주세요</h3>
+				    <hr />
+				    <br />
+				    <div class="input-group">
+						<input type="hidden" class="form-control" name="member_id" value="${member.getMember_id()}">
+				        <input type="password" class="form-control" name="member_pw" />
+				        
+				        <button class="btn btn-outline-secondary" type="submit">탈퇴하기</button>
+				    </div>
+			    </div>
+			</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    <!-- 회원탈퇴 모달 -->
+    
+    <!-- 다음지도 api때문에 추가한 부분 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		function findAddress(){
+		   new daum.Postcode({
+		        oncomplete: function(data) {
+		        	// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('member_zipcode').value = data.zonecode;
+	                document.getElementById("member_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("member_address2").focus();
+	                // 상세주소 초기화
+	                document.getElementById("member_address2").value = "";
+		        }
+		    }).open();
+		}
+	</script>
   </body>
 </html>
