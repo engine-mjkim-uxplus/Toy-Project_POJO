@@ -20,9 +20,53 @@ public class HashMapBinder {
 	Logger logger = Logger.getLogger(HashMapBinder.class);
 	HttpServletRequest req = null;
 	
+	//첨부 파일 처리에 필요한 변수 선언 - 바이너리 타입 처리를 위해
+	MultipartRequest multi = null;
+	//첨부 파일 업로드의 물리적인 경로 이름
+	String realFolder = null;
+	//첨부파일의 한글 처리
+	String encType = "utf-8";
+	//첨부파일의 최대 크기
+	int maxSize = 5*1024*1024;//5MB
+	
 	public HashMapBinder (HttpServletRequest req) {
 		this.req = req;
+		realFolder = "C:\\Users\\User\\Desktop\\projectworkspace\\Toy-Project\\toyprj\\src\\main\\webapp\\reviewimg";
 	}
+	
+	public void multiBind(Map<String,Object> pMap) {
+		pMap.clear();
+		try {
+			multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
+		} catch (Exception e) {
+			logger.info("Exception:"+e.toString());
+		}
+		Enumeration<String> em = multi.getParameterNames();
+		while(em.hasMoreElements()) {
+			String key = em.nextElement();
+			pMap.put(key, multi.getParameter(key));
+		}
+		//기존에 클라이언트에서 받아온 정보를 처리하기
+		//첨부파일에 대한 정보 받아오기
+		Enumeration<String> files = multi.getFileNames();
+		//만일 폼 전송에서 업로드할 파일명이 존재하면...
+		if(files !=null) {
+			//업로드 대상 파일을 객체로 만듦
+			File file = null;
+			while(files.hasMoreElements()) {
+				String fname = files.nextElement();
+				String filename = multi.getFilesystemName(fname);
+				pMap.put("review_img", filename);
+				if(filename !=null && filename.length()>1) {
+					file = new File(realFolder+"\\"+filename);
+				}
+				logger.info(file);
+			}
+		}
+		
+		logger.info(pMap);
+	}
+	
 	// 사용자의 요청파라미터 값 처리 메서드
 	public void bind(Map<String,Object> pMap) {
 		pMap.clear(); // 초기화하고 사용

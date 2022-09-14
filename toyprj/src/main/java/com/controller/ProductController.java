@@ -47,9 +47,13 @@ public class ProductController implements Controller {
 		List<ProductVO> productList = null;
 		productList = productLogic.getRelatedProducts(pMap);
 		
+		List<Map<String,Object>> reviewList = null;
+		reviewList = productLogic.getReviewList(pMap);
+		
 		ModelAndView mav = new ModelAndView(req);
 		mav.addObject("product", product);
 		mav.addObject("productList", productList);
+		mav.addObject("reviewList", reviewList);
 		mav.setViewName("detail");
 		
 		return mav;
@@ -100,6 +104,22 @@ public class ProductController implements Controller {
 		
 		return mav;
 	}
+	
+	@Override
+	public Object productInsertReview(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("ProductController: productInsertReview 호출");
+		
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.multiBind(pMap);
+		
+		productLogic.productInsertReview(pMap);
+		String no = (String) pMap.get("product_no");
+		String category = (String) pMap.get("product_category");
+		
+		String path = "product/productDetail.do?product_no="+no+"&product_category="+category;
+		return path;
+	}
 
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> pMap) {
@@ -125,11 +145,7 @@ public class ProductController implements Controller {
 		return null;
 	}
 
-	@Override
-	public Object productInsertReview(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
 	public Object productUpdateReview(HttpServletRequest req, HttpServletResponse res) {

@@ -46,4 +46,16 @@ public class ProductLogic {
 		productList = productDao.productSearch(pMap);
 		return productList;
 	}
+
+	public void productInsertReview(Map<String, Object> pMap) {
+		logger.info("ProductLogic: productInsertReview 호출");
+		productDao.productInsertReview(pMap);
+	}
+
+	public List<Map<String, Object>> getReviewList(Map<String, Object> pMap) {
+		logger.info("ProductLogic: getReviewList 호출");
+		List<Map<String,Object>> reviewList = null;
+		reviewList = productDao.getReviewList(pMap);
+		return reviewList;
+	}
 }

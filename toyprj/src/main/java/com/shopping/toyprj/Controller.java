@@ -46,7 +46,7 @@ public interface Controller {
 	public Object orderUpdatePoint(HttpServletRequest req, HttpServletResponse res);	 	// 적립금 차감  -- 미정.. 조인으로 쿠폰 & 적립금 업데이트 한번에 처리하기
 	public Object orderDelete(HttpServletRequest req, HttpServletResponse res);		 		// 장바구니에서 주문한 상품 제거
 	// 카트
-	public Object cartList(HttpServletRequest req, HttpServletResponse res);	 			 	// 장바구니 페이지 조회
+	public Object cartList(HttpServletRequest req, HttpServletResponse res);	 			// 장바구니 페이지 조회
 	public Object cartInsert(HttpServletRequest req, HttpServletResponse res); 				// 장바구니 상품추가
 	public Object cartUpdate(HttpServletRequest req, HttpServletResponse res); 				// 장바구니 수정
 	public Object cartDelete(HttpServletRequest req, HttpServletResponse res); 				// 장바구니 삭제

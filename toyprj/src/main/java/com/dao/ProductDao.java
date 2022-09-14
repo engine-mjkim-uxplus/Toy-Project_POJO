@@ -105,4 +105,40 @@ public class ProductDao {
 		return productList;
 	}
 
+	public void productInsertReview(Map<String, Object> pMap) {
+		logger.info("ProductDao: productInsertReview 호출 성공");
+		int insert = 0;
+		int update = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			insert = sqlSession.insert("InsertReview",pMap);
+			update = sqlSession.update("InsertReviewCount",pMap);
+			
+			if (insert == 1 && update == 1 ) {
+				sqlSession.commit();
+			}
+			
+			// insert here
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+	}
+
+	public List<Map<String, Object>> getReviewList(Map<String, Object> pMap) {
+		logger.info("ProductDao: getReviewList 호출");
+		List<Map<String,Object>> reviewList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			reviewList = sqlSession.selectList("getReviewList",pMap); //List<ProductVO>
+			// insert here
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return reviewList;
+	}
+
 }

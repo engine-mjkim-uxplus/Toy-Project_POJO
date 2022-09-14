@@ -150,7 +150,9 @@
     
       <div class="row d-flex" style="height: 500px;">
 		<%@ include file="./component/side.jsp" %>
-        <div class="col-md-11 content">구매내역 페이지</div>
+        <div class="col-md-11 content">
+        	구매내역 페이지
+        </div>
       </div>
       
     </div>
