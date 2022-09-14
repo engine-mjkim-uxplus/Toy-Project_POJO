@@ -41,11 +41,13 @@ public class ProductDao {
 		logger.info("ProductDao : addLike 호출 성공");
 		
 		int result = 0;
+		int result2 = 0;
 		
 		try {
 			sqlSession = sqlSessionFactory.openSession();
 			result = sqlSession.update("likeUpdate", pMap);
-			if (result == 1) {
+			result2 = sqlSession.update("MemberLikeUpdate",pMap);
+			if (result == 1 && result2 == 1) {
 				sqlSession.commit();
 			}
 			// insert here
@@ -139,6 +141,21 @@ public class ProductDao {
 			sqlSession.close();
 		}
 		return reviewList;
+	}
+
+	public Map<String,Object> likeList(Map<String, Object> pMap) {
+		logger.info("ProductDao: likeList 호출");
+		Map<String,Object> likeList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			likeList = sqlSession.selectOne("likeList",pMap); //List<ProductVO>
+			// insert here
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return likeList;
 	}
 
 }
