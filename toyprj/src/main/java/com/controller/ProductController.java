@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -18,6 +19,7 @@ import com.vo.ProductVO;
 
 public class ProductController implements Controller {
 	Logger logger = Logger.getLogger(ProductController.class);
+	HttpSession session = null;
 	ProductLogic productLogic = new ProductLogic();
 	
 	@Override
@@ -66,14 +68,17 @@ public class ProductController implements Controller {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
-		int result = 0;
-		result = productLogic.addLike(pMap);
+		
+		session = req.getSession();
+		pMap.put("member_id", session.getAttribute("mem_id"));
+		
+		productLogic.addLike(pMap);
 		
 		String page = (String) pMap.get("page");
-		String no = (String) pMap.get("product_no");
-		String category = (String) pMap.get("product_category");
 		
 		if(page.equals("productDetail.do")) {
+			String no = (String) pMap.get("product_no");
+			String category = (String) pMap.get("product_category");
 			page = "productDetail.do?product_no="+no+"&product_category="+category;
 		}
 		

@@ -22,7 +22,17 @@ public class ProductLogic {
 	public int addLike(Map<String, Object> pMap) {
 		logger.info("ProductLogic: addLike 호출");
 		int result = 0;
-		result = productDao.addLike(pMap);
+		
+		Map<String,Object> likeList = null;
+		likeList = productDao.likeList(pMap);
+		
+		if (likeList == null) {
+			result = productDao.addLike(pMap);
+			logger.info("ProductLogic: 좋아요 추가 성공");
+		} else {
+			logger.info("ProductLogic: 좋아요 추가 실패");
+		}
+			
 		return result;
 	}
 	

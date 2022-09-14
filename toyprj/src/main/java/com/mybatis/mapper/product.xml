@@ -31,10 +31,20 @@
 		where rownum <![CDATA[<=]]> 4 
 	</select>
 	
+	<select id="likeList" parameterType="map" resultType="map">
+		SELECT PRODUCT_NO FROM PRODUCT_LIKE 
+		WHERE MEMBER_ID = #{member_id} 
+		AND PRODUCT_NO = #{product_no}
+	</select>
+	
 	<update id="likeUpdate" parameterType="map">
 		UPDATE PRODUCT
 		SET product_like = product_like + 1
 		WHERE product_no = #{product_no}
+	</update>
+	
+	<update id="MemberLikeUpdate" parameterType="map">
+		INSERT INTO PRODUCT_LIKE (MEMBER_ID, PRODUCT_NO) VALUES (#{member_id}, #{product_no})
 	</update>
 	
 	<update id="InsertReviewCount" parameterType="map">
