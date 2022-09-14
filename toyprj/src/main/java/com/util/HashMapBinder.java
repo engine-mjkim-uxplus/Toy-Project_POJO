@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -19,7 +20,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 public class HashMapBinder {
 	Logger logger = Logger.getLogger(HashMapBinder.class);
 	HttpServletRequest req = null;
-	
+	HttpSession session = null;
 	//첨부 파일 처리에 필요한 변수 선언 - 바이너리 타입 처리를 위해
 	MultipartRequest multi = null;
 	//첨부 파일 업로드의 물리적인 경로 이름
@@ -63,7 +64,6 @@ public class HashMapBinder {
 				logger.info(file);
 			}
 		}
-		
 		logger.info(pMap);
 	}
 	

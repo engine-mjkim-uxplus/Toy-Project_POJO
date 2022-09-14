@@ -13,6 +13,26 @@
     <title>Shop Item - Start Bootstrap Template</title>
     <%@ include file="../../common/common.jsp" %>
     <style type="text/css">
+    	a{
+    	  text-decoration: none;
+    	}
+    	#icontext{
+		  position: relative;
+		  right: 38px;
+		  bottom: 5px;
+    	}
+	    table {
+	      width: 100%;
+	      border-top: 1px solid #444444;
+	      border-collapse: collapse;
+	      text-align: center;
+	    }
+	    th, td {
+	      border-bottom: 1px solid #444444;
+	      padding: 10px;
+	      vertical-align: middle;
+	    }
+
 	    #myform fieldset{
 		    display: inline-block;
 		    direction: rtl;
@@ -50,6 +70,7 @@
 		    border-radius: 5px;
 		    font-size: 16px;
 		    resize: none;
+		    
 		}
     </style>
   </head>
@@ -101,22 +122,20 @@
             <div class="fs-5 mb-3">
               <!-- <span class="text-decoration-line-through">$45.00</span> -->
               <span class="mb-3">${product.getProduct_price()}\</span>
-              <h4>
-		          <button class="nav-link px-2 text-muted border-0" 
-		          		onclick="addLike(${product.getProduct_no()},'${product.getProduct_category()}')" >
+	          <h4>
+	              <c:if test="${ !empty mem_id }">
+			      		<a href="javascript:addLike(${product.getProduct_no()},'${product.getProduct_category()}')">
+			      			<i class="fa fa-heart" style="color: red;"> ${product.getProduct_like()}</i>
+			      		</a>
+		          </c:if>
+		          <c:if test="${ empty mem_id }">
 		          	<i class="fa fa-heart" style="color: red;"> ${product.getProduct_like()}</i>
-		          </button>
-
-		          <button class="nav-link px-2 text-muted border-0" data-bs-toggle="modal" data-bs-target="#starModal">
-		          	<i class="fas fa-star" style="color: orange;">
-		          	 	<c:if test="${ !empty reviewList }">
-		          	 		${ reviewList.get(0).get("REVIEW_AVG") }
-		          	 	</c:if>
-		          	 	<c:if test="${ empty reviewList }">
-		          	 		0
-		          	 	</c:if>
-		          	</i>
-		          </button>
+		          </c:if>
+		          /
+              	<i class="fas fa-star" style="color: orange;">
+              		<c:if test="${ !empty reviewList }">${ reviewList.get(0).get("REVIEW_AVG") }</c:if>
+              		<c:if test="${ empty reviewList }">0</c:if>
+              	</i>
 	          </h4>
             </div>
             <p class="lead">
@@ -147,82 +166,120 @@
     </section>
     <!-- Product section end -->
     
-    <!-- Related items section-->
-    <section class="bg-light">
-      <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4">Related products</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        
-	        <c:forEach var="item" items="${productList}">
-	          <div class="col mb-5">
-	            <div class="card h-100">
-	            	<c:if test="${ item.getProduct_no() == 101 }">
-	            		<!-- Sale badge-->
-			            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+	<!-- Nav tabs -->
+	<ul class="nav nav-pills justify-content-center mb-5" id="myTab" role="tablist">
+	  <li class="nav-item w-25" role="presentation">
+	    <button class="nav-link active w-75" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">관련 상품</button>
+	  </li>
+	  <li class="nav-item w-25" role="presentation">
+	    <button class="nav-link w-75" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">상품 리뷰</button>
+	  </li>
+	</ul>
+
+	<!-- Tab panes start -->
+	<div class="tab-content">
+	  <!-- Related items section-->
+	  <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab" tabindex="0">	    
+		<section class="bg-light mt-5">
+			<div class="container px-4 px-lg-5 mt-5">
+				<h2 class="fw-bolder mb-4">Related Products</h2>
+				<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					<c:forEach var="item" items="${productList}">
+						<div class="col mb-5">
+							<div class="card h-100">
+								<c:if test="${ item.getProduct_no() == 101 }">
+									<!-- Sale badge-->
+									<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+								</c:if>
+								<!-- Product image-->
+								<a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}">
+									<img
+										class="card-img-top"
+										src="${item.getProduct_img()}"
+										 alt="..."
+									/>
+								</a>
+								<!-- Product details-->
+								<div class="card-body p-4">
+									<div class="text-center">
+										<!-- Product name-->
+										<h5 class="fw-bolder">${item.getProduct_name()}</h5>
+										<!-- Product price-->
+										${item.getProduct_price()}\
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>    
+			</div>
+		</section>
+	  </div>
+	  <!-- Related items end-->
+	  
+	  <!-- review start-->
+	  <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+	    <section class="bg-light d-flex justify-content-center mt-5">
+		    <div class="container px-4 px-lg-5">
+			    <div class="mb-4 d-flex justify-content-between">
+			    	<h2 class="fw-bolder">Product Reviews</h2>
+			    	<c:if test="${ !empty mem_id }">
+			    		<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#starModal">리뷰 작성하기</button>
+			    	</c:if>
+			    </div>
+			    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					<c:if test="${ !empty reviewList }">
+				    <table class="table">
+					  <thead class="table-dark">
+					    <tr>
+					      <th class="col-1" scope="col">작성일</th>
+					      <th class="col-1" scope="col">작성자</th>
+					      <th class="col-2" scope="col">별점</th>
+					      <th class="col-2" scope="col">첨부사진</th>
+					      <th class="col-6" scope="col">후기</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	<c:forEach var="review" items="${reviewList}">
+						  	<tr>
+						      <td scope="row"><div>${review.get("REVIEW_DATE")}</div></td>
+						      <td><div>${review.get("MEMBER_ID")}</div></td>
+						      <td>
+						      	<c:forEach begin="1" end="${review.get('REVIEW_SCORE')}">
+						      		<i class="fas fa-star" style="color: orange;"></i>
+							  	</c:forEach>
+						      </td>
+						      <c:if test="${ !empty review.get('REVIEW_IMG') }">
+							      <td>
+							      	<a target='_blank' href="http://localhost:8080/reviewimg/${review.get('REVIEW_IMG')}">
+							      		<img style="width: 100px; height: 100px;" src="../../../reviewimg/${review.get('REVIEW_IMG')}"/>
+							      	</a>
+							      </td>
+						      </c:if>
+						      <c:if test="${ empty review.get('REVIEW_IMG') }">
+							      <td>
+							      	<img style="width: 100px; height: 100px;" src="../../../reviewimg/null.jpg"/>
+							      </td>
+						      </c:if>
+						      <td><div>${review.get("REVIEW_CONTENT")}</div></td>
+						    </tr>
+					  	</c:forEach>
+					  </tbody>
+					</table>
 					</c:if>
-
-	              <!-- Product image-->
-	              <a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}">
-	              <img
-	                class="card-img-top"
-	                src="${item.getProduct_img()}"
-	                alt="..."
-	              />
-	              </a>
-	              <!-- Product details-->
-	              <div class="card-body p-4">
-	                <div class="text-center">
-	                  <!-- Product name-->
-	                  <h5 class="fw-bolder">${item.getProduct_name()}</h5>
-	                  <!-- Product price-->
-	                  ${item.getProduct_price()}\
-	                </div>
-	              </div>
-	            </div>
-	          </div>
-	    	</c:forEach>
-	    	
-        </div>
-      </div>
-    </section>
-    <!-- Related items end-->
-    
-    <!-- review section -->
-
-
-	<section class="bg-light">
+					<c:if test="${ empty reviewList }">
+						<h1 class="m-5 w-100">구매 후기가 없습니다. 리뷰를 작성해주세요.</h1>
+						<div style="height: 400px;"></div>
+					</c:if>
+				</div>
+			</div>
+		</section>
+	  </div>
+	  <!-- review end-->
+	</div>
+	<!-- Tab panes end -->
 	
-		<c:if test="${ !empty reviewList }">
-	    <table class="table">
-		  <thead>
-		    <tr>
-		      <th scope="col">작성일</th>
-		      <th scope="col">ID</th>
-		      <th scope="col">후기</th>
-		      <th scope="col">별점</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		  	<c:forEach var="review" items="${reviewList}">
-			  	<tr>
-			      <th scope="row">${review.get("REVIEW_DATE")}</th>
-			      <td>${review.get("MEMBER_ID")}</td>
-			      <td>${review.get("REVIEW_CONTENT")}</td>
-			      <td>${review.get("REVIEW_SCORE")}</td>
-			    </tr>
-		  	</c:forEach>
-		  </tbody>
-		</table>
-		</c:if>
-		
-		<c:if test="${ empty reviewList }">
-			<h1>아직 구매 후기가 없습니다.</h1>
-		</c:if>
-		
-	</section>
-
-
-    <!-- review section end -->
+    
     
     <!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>

@@ -183,7 +183,12 @@
 			            </a>
 			            <ul class="product-links">
 			              <li>
-			                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+			              	<c:if test="${ !empty mem_id }">
+			                	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+			                </c:if>
+			                <c:if test="${ empty mem_id }">
+			                	<a href="javascript:alert('로그인이 필요합니다.')"><i class="fa fa-heart" style="color: red;"></i></a>
+			                </c:if>
 			              </li>
 			              <li>
 			                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
@@ -215,7 +220,12 @@
 					            </a>
 					            <ul class="product-links">
 					              <li>
-					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+							        <c:if test="${ !empty mem_id }">
+					                	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+					                </c:if>
+					                <c:if test="${ empty mem_id }">
+					                	<a href="javascript:alert('로그인이 필요합니다.')"><i class="fa fa-heart" style="color: red;"></i></a>
+					                </c:if>
 					              </li>
 					              <li>
 					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
@@ -248,7 +258,12 @@
 					            </a>
 					            <ul class="product-links">
 					              <li>
-					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+					                <c:if test="${ !empty mem_id }">
+					                	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+					                </c:if>
+					                <c:if test="${ empty mem_id }">
+					                	<a href="javascript:alert('로그인이 필요합니다.')"><i class="fa fa-heart" style="color: red;"></i></a>
+					                </c:if>
 					              </li>
 					              <li>
 					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
@@ -281,7 +296,12 @@
 					            </a>
 					            <ul class="product-links">
 					              <li>
-					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+					                <c:if test="${ !empty mem_id }">
+					                	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
+					                </c:if>
+					                <c:if test="${ empty mem_id }">
+					                	<a href="javascript:alert('로그인이 필요합니다.')"><i class="fa fa-heart" style="color: red;"></i></a>
+					                </c:if>
 					              </li>
 					              <li>
 					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
