@@ -264,7 +264,7 @@ public class HandlerMapping {
 		///////////////////////////////////////////
 		// 주문 분기(OrderController)
 		else if("order".equals(upmu[0])) {
-			controller = new MemberController();
+			controller = new OrderController();
 			// 주문페이지 이동(회원 및 비회원 구분)
 			if("orderList".equals(upmu[1])) {
 				obj = controller.orderList(req,res);

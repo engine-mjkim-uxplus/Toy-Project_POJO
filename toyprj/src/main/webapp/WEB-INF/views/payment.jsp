@@ -258,8 +258,7 @@
     <!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
     <!-- nav end -->
-    
-    <header>
+   <header>
       <div class="d-flex justify-content-center align-items-center pb-3">
         <div class="px-sm-5 px-2 active">
           장바구니
@@ -278,44 +277,40 @@
         ></div>
       </div>
     </header>
-    <div class="wrapper">
+    <form class="wrapper" action="./orderInsert.do" method="GET" >
       <div class="h5 large">주문 결제</div>
       <div class="row">
-        <div
-          class="col-lg-8 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1"
-        >
+        <div class="col-lg-8 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1">
           <div class="mobile h5">Billing Address</div>
           <div id="details" class="bg-white rounded pb-5">
-            <form>
+		    <c:choose>
+		    <c:when test="${mem_id != null}">
+            <section>
               <div class="form-group">
-                <label class="text-muted">이름</label>
-                <input type="text" value="David Smith" class="form-control" id="order_name" name="order_name"/>
+                <label class="text-muted" for="name">이름</label>
+                <input type="text"  name="name" value="David Smith" class="form-control" id="order_name" name="order_name"/>
               </div>
               <div class="form-group">
-                <label class="text-muted">핸드폰 번호</label>
+                <label class="text-muted" for="phone">핸드폰 번호</label>
                 <div
                   class="d-flex jusify-content-start align-items-center rounded p-2"
                 >
-                  <input type="text" value="010123412324" id="order_phone" name="order_phone" />
+                  <input type="text"  name="phone" value="010123412324" id="order_phone" name="order_phone" />
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-9">
                   <div class="form-group">
-                    <label class="text-muted">우편번호</label>
-                    <div
-                      class="d-flex jusify-content-start align-items-center rounded p-2"
-                    >
-                      <input type="text" value="01001" />
+                    <label class="text-muted" for="zipcode">우편번호</label>
+                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
+                      <input type="text" name="zipcode" value="01001" />
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label> </label>
-                    <div
-                      class="d-flex jusify-content-start align-items-center rounded p-2"
-                    >
+                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
                       <input type="button" value="우편번호 찾기" />
                     </div>
                   </div>
@@ -323,27 +318,23 @@
               </div>
               <div class="row">
                   <div class="form-group">
-                    <label class="text-muted">주소</label>
+                    <label class="text-muted" for="address">주소</label>
                     <div
                       class="d-flex jusify-content-start align-items-center rounded p-2"
                     >
-                      <input type="text" value="서울시 강남구 역삼동" />
+                      <input type="text" name="address" value="서울시 강남구 역삼동" />
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="text-muted">상세주소</label>
-                    <div
-                      class="d-flex jusify-content-start align-items-center rounded p-2"
-                    >
-                      <input type="text" value="kh정보교육원" />
+                    <label class="text-muted" for="address2">상세주소</label>
+                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
+                      <input type="text" name="address2" value="kh정보교육원" />
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="text-muted">배송시 요청사항</label>
-                    <div
-                      class="d-flex jusify-content-start align-items-center rounded p-2"
-                    >
-                      <input type="text" value="경비실에 맡겨주세요." />
+                    <label class="text-muted" for="requirement">배송시 요청사항</label>
+                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
+                      <input type="text" name="requirement" value="경비실에 맡겨주세요." />
                     </div>
                   </div>
               </div>
@@ -357,8 +348,8 @@
               <div class="row">
               	<div class="col-8">
 	              <div class="form-group">
-    	            <label class="text-muted">적립금</label>
-        	        <input type="text" value="" class="form-control" placeholder="100원 단위로 입력해주세요."/>
+    	            <label class="text-muted" for="point">적립금</label>
+        	        <input type="text" name="point" value="" class="form-control" placeholder="100원 단위로 입력해주세요."/>
             	  </div>
               	</div>
               	<div class="col-4">
@@ -368,62 +359,124 @@
             	  </div>
               	</div>
               </div>
-            </form>
+            </section>
           </div>
         </div>
-        <div
-          class="col-lg-4 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1 pt-lg-0 pt-3"
-        >
+       </c:when>
+       <c:when test="${mem_id == null}">
+         <section>
+             <div class="form-group">
+               <label class="text-muted" for="name">이름</label>
+               <input type="text"  name="name" value="" class="form-control" id="order_name" name="order_name"/>
+             </div>
+             <div class="form-group">
+               <label class="text-muted" for="phone">핸드폰 번호</label>
+               <div
+                 class="d-flex jusify-content-start align-items-center rounded p-2"
+               >
+                 <input type="text"  name= "phone"value="" id="order_phone" name="order_phone" />
+               </div>
+             </div>
+             <div class="row">
+               <div class="col-lg-9">
+                 <div class="form-group">
+                   <label class="text-muted" for="zipcode">우편번호</label>
+                   <div class="d-flex jusify-content-start align-items-center rounded p-2">
+                     <input type="text" name="zipcode" value="" />
+                   </div>
+                 </div>
+               </div>
+               <div class="col-lg-3">
+                 <div class="form-group">
+                   <label> </label>
+                   <div class="d-flex jusify-content-start align-items-center rounded p-2">
+                     <input type="button" value="우편번호 찾기" />
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class="row">
+                 <div class="form-group">
+                   <label class="text-muted" for="address">주소</label>
+                   <div
+                     class="d-flex jusify-content-start align-items-center rounded p-2"
+                   >
+                     <input type="text" name="address" value="" />
+                   </div>
+                 </div>
+                 <div class="form-group">
+                   <label class="text-muted" for="address2">상세주소</label>
+                   <div class="d-flex jusify-content-start align-items-center rounded p-2">
+                     <input type="text" name="address2" value="" />
+                   </div>
+                 </div>
+                 <div class="form-group">
+                   <label class="text-muted" for="requirement">배송시 요청사항</label>
+                   <div class="d-flex jusify-content-start align-items-center rounded p-2">
+                     <input type="text" name="requirement" value="" />
+                   </div>
+                 </div>
+             </div>
+             <br><hr>
+           </section>
+         </div>
+       </div>
+       </c:when>
+    </c:choose>
+        <!-- 주문 상품 -->
+        <section class="col-lg-4 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1 pt-lg-0 pt-3">
           <div id="cart" class="bg-white rounded">
             <div class="d-flex justify-content-between align-items-center">
-              <div class="h6">주문 상품(1)</div>
+              <div class="h6">주문 상품</div>
             </div>
-            <div
-              class="d-flex jusitfy-content-between align-items-center pt-3 pb-2 border-bottom"
-            >
-              <div class="item pr-2">
-                <img
-                  src="https://images.unsplash.com/photo-1569488859134-24b2d490f23f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  alt=""
-                  width="80"
-                  height="80"
-                />
-                <div class="number">2</div>
-              </div>
-              <div class="d-flex flex-column px-3">
-                <b class="h5">BattleCreek Coffee</b>
-                <a href="#" class="h5 text-primary">C-770</a>
-              </div>
-              <div class="ml-auto">
-                <b class="h5">$80.9</b>
-              </div>
-            </div>
+            <!-- 상품 정보 시작 -->
+            <c:forEach var="cart" items="${cartList}">
+	            <section>
+		            <div class="d-flex jusitfy-content-between align-items-center pt-3 pb-2 border-bottom">
+		              <div class="item pr-2">
+		                <img
+		                  src="https://media.worksout.co.kr/resized/live/CA22SSPA5P00755001/CA22SSPA5P00755001-1.jpg"
+		                  alt="product_img"
+		                  width="80"
+		                  height="80"
+		                />
+		                <div class="number product_count">2</div>
+		              </div>
+		              <div class="d-flex flex-column px-3">
+		              	<input type="hidden" name="product_no" value=""/>
+		              	<input type="hidden" name="product_name" value=""/>
+		              	<input type="hidden" name="product_price" value=""/>
+		              	<input type="hidden" name="product_count" value=""/>
+		                <b class="h4 product-name">Black-jean</b>
+		                <p class="h5 text-primary">30,000</a>
+		              </div>
+		            </div>
+	            </section>
+       		</c:forEach>
+            <div>
             <div class="d-flex align-items-center mt-3">
-              <div class="display-5">총 상품금액</div>
-              <div class="ml-auto font-weight-bold">$80.9</div>
+              <div class="display-5 me-4">상품금액</div>
+              <div class="ml-auto font-weight-bold">30,000원</div>
             </div>
             <div class="d-flex align-items-center py-2 border-bottom">
-              <div class="display-5">배송비</div>
-              <div class="ml-auto font-weight-bold">$12.9</div>
+              <div class="display-5 me-2">배송비</div>
+              <div class="ml-auto font-weight-bold" style="margin-left:35px">2500원</div>
             </div>
             <div class="d-flex align-items-center py-2">
-              <div class="display-5">총 결제금액</div>
+              <p class="display-5 me-4">결제금액</p>
               <div class="ml-auto d-flex">
-                <div class="text-primary text-uppercase px-3">usd</div>
-                <div class="font-weight-bold">$92.98</div>
+                <p class="font-weight-bold">32,500원</p>
               </div>
             </div>
           </div>
           <div class="row pt-lg-3 pt-2 buttons mb-sm-0 mb-2">
-              <div class="btn ml-3 mr-3" style="background-color: #eee;">
-                <span class="fas fa-solid fa-credit-card"></span>
+              <button type="submit" class="btn ml-3 mr-3 fas fa-solid fa-credit-card" style="background-color: #eee;">
                 주문하기
-              </div>
+              </button>
           </div>
-        </div>
+        </section>
       </div>
-    </div>
-    
+    </form>
     <!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>
     <!-- footer end -->

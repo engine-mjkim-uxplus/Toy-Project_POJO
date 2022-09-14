@@ -1,19 +1,49 @@
 package com.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
 
 import com.shopping.toyprj.Controller;
+import com.shopping.toyprj.OrderLogic;
+import com.util.HashMapBinder;
 import com.util.ModelAndView;
 
 public class OrderController implements Controller {
+	Logger logger = Logger.getLogger(OrderController.class);
+	OrderLogic orderLogic = new OrderLogic();
 	
 	@Override
 	public Object orderList(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+	logger.info("OrderController => order/orderList.do 호출 ");
+	ModelAndView mv = new ModelAndView(req);
+	HashMapBinder hmb = new HashMapBinder(req);
+	Map<String,Object> pMap = new HashMap<>();
+	hmb.bind(pMap);
+	String[] product_no = (String[])pMap.get("product_no");
+	String[] product_price = (String[])pMap.get("product_price");
+	String[] product_img = (String[])pMap.get("product_img");
+	String[] product_name = (String[])pMap.get("product_name");
+	String[] product_count = (String[])pMap.get("product_count");
+	for(int i =0; i < pMap.size(); i++) {
+		
+	}
+	HttpSession session = req.getSession();
+	String mem_id = (String)session.getAttribute("mem_id");
+	
+	
+	
+	if(mem_id != null) {
+		
+	}	
+	mv.addObject("cartList", pMap);
+	mv.setViewName("payment");
+		return mv;
 	}
 	
 	@Override

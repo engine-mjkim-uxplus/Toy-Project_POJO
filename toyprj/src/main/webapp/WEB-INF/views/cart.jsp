@@ -229,16 +229,30 @@
 		        	<c:set var= "total_price" value="${total_price + cart.getProduct_price()*cart.getProduct_count()}"/>
 				</c:forEach>
             <!-- 장바구니 아이템 목록 끝 -->
+          	<form  action="/order/orderList.do" method="POST">
+          	  <c:forEach var="cart" items="${cartList}">
+  			  <input type="hidden" name="product_no" value="${cart.getProduct_no()}"/>
+	          <input type="hidden" name="product_name" value="${cart.getProduct_name()}"/>
+	          <input type="hidden" name="product_price" value="${cart.getProduct_price()}"/>
+	          <input type="hidden" name="product_count" value="${cart.getProduct_count()}"/>		          
+	          <input type="hidden" name="product_img" value="${cart.getProduct_img()}"/>
+	          </c:forEach>
             <div class="col mt-4">총 가격 <span class="ms-5"id="total_price"><fmt:formatNumber value="${total_price}" type="number"/>원</span></div>
-            <button class="btn">주문하기</button>
+            <button type="submit" class="btn">주문하기</button>
           </div>
         </div>
       </div>
     </div>
+    </form>
     </c:when>
           	<c:when test="${sessionScope.cartList !=null && sessionScope.cartList.size() > 0}">
           	 <c:forEach var="cart" items="${sessionScope.cartList}">
 		          <section class="cart_table">
+		          <input type="hidden" name="product_no" value="${cart.getProduct_no()}"/>
+		          <input type="hidden" name="product_name" value="${cart.getProduct_name()}"/>
+		          <input type="hidden" name="product_price" value="${cart.getProduct_price()}"/>
+		          <input type="hidden" name="product_count" value="${cart.getProduct_count()}"/>		          
+		          <input type="hidden" name="product_img" value="${cart.getProduct_img()}"/>
 		            <div class="row border-top">
 		              <div class="row main align-items-center">
 		                <div class="col-2">
@@ -269,18 +283,28 @@
 		            </section>
 		        	<c:set var= "total_price" value="${total_price + cart.getProduct_price()*cart.getProduct_count()}"/>
 				</c:forEach>
+          	<form  action="/order/orderList.do" method="POST">
+          	 <c:forEach var="cart" items="${sessionScope.cartList}">
+  			  <input type="hidden" name="product_no" value="${cart.getProduct_no()}"/>
+	          <input type="hidden" name="product_name" value="${cart.getProduct_name()}"/>
+	          <input type="hidden" name="product_price" value="${cart.getProduct_price()}"/>
+	          <input type="hidden" name="product_count" value="${cart.getProduct_count()}"/>		          
+	          <input type="hidden" name="product_img" value="${cart.getProduct_img()}"/>
+	         </c:forEach>
             <div class="col mt-4">총 가격 <span class="ms-5"id="total_price"><fmt:formatNumber value="${total_price}" type="number"/>원</span></div>
-            <button class="btn">주문하기</button>
+            <button type="submit" class="btn">주문하기</button>
 	          </div>
 	        </div>
 	      </div>
 	    </div>
+	   </form>
 	</c:when>
    	<c:otherwise>
    		<div class="border-top"></div>
    		<h5 class="text-center noItem">장바구니에 담긴 상품이 없습니다</h5>
    	</c:otherwise>
     </c:choose>
+    </form>
     <!-- cart-list end -->
     <!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>

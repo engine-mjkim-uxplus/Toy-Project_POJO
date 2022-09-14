@@ -74,8 +74,13 @@ public class HashMapBinder {
 		Enumeration<String> em = req.getParameterNames();
 		while(em.hasMoreElements()) {
 			// key값 꺼내기
-			String key = em.nextElement(); // b_title, b_writer, b_content, b_pw등
-			pMap.put(key, req.getParameter(key));
+			String key = em.nextElement(); 
+			String[] keys = req.getParameterValues(key); // 키 하나당 여러개의 값(배열)
+			if(keys != null && keys.length > 1) {
+				pMap.put(key, keys);
+			} else {
+				pMap.put(key, req.getParameter(key));
+			}
 		}
 		logger.info(pMap);
 	}/////////// end of bind
