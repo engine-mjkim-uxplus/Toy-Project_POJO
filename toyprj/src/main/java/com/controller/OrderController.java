@@ -9,7 +9,36 @@ import com.shopping.toyprj.Controller;
 import com.util.ModelAndView;
 
 public class OrderController implements Controller {
-
+	
+	@Override
+	public Object orderList(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Object orderInsert(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Object orderUpdateCoupon(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Object orderUpdatePoint(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Object orderDelete(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public ModelAndView execute(HttpServletRequest req, HttpServletResponse res, Map<String, Object> pMap) {
 		// TODO Auto-generated method stub
@@ -156,36 +185,6 @@ public class OrderController implements Controller {
 
 	@Override
 	public Object memberDelete(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object orderList(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object orderInsert(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object orderUpdateCoupon(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object orderUpdatePoint(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object orderDelete(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}
