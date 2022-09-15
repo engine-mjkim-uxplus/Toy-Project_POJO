@@ -1,6 +1,8 @@
 package com.controller;
 
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import com.shopping.toyprj.MemberLogic;
 import com.util.HashMapBinder;
 import com.util.ModelAndView;
 import com.vo.MemberVO;
+import com.vo.ProductVO;
 
 public class MemberController implements Controller {
 	Logger logger = Logger.getLogger(MemberController.class);
@@ -100,14 +103,15 @@ public class MemberController implements Controller {
 		logger.info(id);
 		
 		Object path = null;
+		List<ProductVO> memberListLike = null;
 		
 		if (id == null) {
 			path = "login/loginForm.do";
 		}else {
+			List<ProductVO> sListLike = (ArrayList<ProductVO>) session.getAttribute("memberListLike");
 			ModelAndView mav = new ModelAndView(req);
-			MemberVO mVO = memberLogic.memberListPayment(id);
-			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
-			mav.addObject("member", mVO);
+			memberListLike = memberLogic.memberListLike(id);
+			mav.addObject("memberListLike", memberListLike);
 			mav.setViewName("mypage/likepage"); 
 			path = mav;
 		}
@@ -200,7 +204,6 @@ public class MemberController implements Controller {
 			hmb.bind(pMap);
 			int result = 0;
 			result = memberLogic.memberDelete(pMap); 
-//			path = "member/memberDelete.do";
 			
 			if(result == 1) { // 회원 삭제된 경우 
 				session.invalidate(); // 세션 삭제 

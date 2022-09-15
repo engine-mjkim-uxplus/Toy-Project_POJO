@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import com.shopping.toyprj.MemberLogic;
 import com.util.MyBatisCommonFactory;
+import com.vo.CartVO;
 import com.vo.MemberVO;
 import com.vo.ProductVO;
 
@@ -70,6 +72,84 @@ public class MemberDao {
 			sqlSession.close();
 		}
 		return result;
+	}
+
+	public List<CartVO> getCartList(Map<String, Object> pMap) {
+		logger.info("MemberDao: getCartList 호출 성공");
+		List<CartVO> cartList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			cartList = sqlSession.selectList("getCart",pMap);
+			logger.info(cartList);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return cartList;
+	}
+
+	public int deleteCart(Map<String, Object> pMap) {
+		logger.info("MemberDao: deleteCart 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.delete("delCart",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
+	public List<ProductVO> getLikeList(Map<String, Object> pMap) {
+		logger.info("MemberDao: getLikeList 호출 성공");
+		List<ProductVO> likeList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			likeList = sqlSession.selectList("getLike",pMap);
+			logger.info(likeList);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return likeList;
+	}
+
+	public int deleteLike(Map<String, Object> pMap) {
+		logger.info("MemberDao: deleteLike 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.delete("delLike",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
+	public List<ProductVO> getMemberListLike(String id) {
+		logger.info("MemberDao: getMemberListLike 호출 성공");
+		List<ProductVO> likeList = null;
+		
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			likeList = sqlSession.selectList("memberListLike",id);
+			logger.info(likeList);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return likeList;
 	}
 
 }
