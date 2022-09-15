@@ -165,11 +165,11 @@
 						<form class="validation-form" name="memForm" id="f_memform" method="get" action="./memberUpdateP.do">
 							<div class="row">
 								<div class="col-md-6 mb-3">
-									<label for="name">이름</label> 
+									<label for="member_name">이름</label> 
 									<input type="text" class="form-control" id="member_name" name="member_name" value="${member.getMember_name()}" required>
 								</div>
 								<div class="col-md-3 mb-3">
-									<label for="name" style="color: red;">*아이디는 변경이 불가합니다</label> 
+									<label for="member_id" style="color: red;">*아이디는 변경이 불가합니다</label> 
 									<input type="text" class="form-control" name="member_id" value="${member.getMember_id()}" readonly>
 								</div>
 								<div class="col-md-3 mt-3 pt-3">
@@ -200,14 +200,14 @@
 										readonly>
 								</div>
 								<div class="col-6 mb-3">
-									<label for="email">변경할 비밀번호</label> <input type="password"
+									<label for="member_pw">변경할 비밀번호</label> <input type="password"
 										class="form-control" id="member_pw" name="member_pw" placeholder="변경할 비밀번호를 입력해주세요."
 										required>
 								</div>
 							</div>
 							
 							<div class="mb-3">
-								<label for="address">전화번호</label> <input type="text"
+								<label for="member_phone">전화번호</label> <input type="text"
 									class="form-control" id="member_phone" name="member_phone" value="${member.getMember_phone()}"
 									required>
 							</div>
@@ -216,22 +216,22 @@
 							<h5 class="font-medium mb-4">배송 정보</h5>
 							<div class="row">
 								<div class="col-9 mb-3">
-									<label for="address">우편번호</label> 
+									<label for="member_zipcode">우편번호</label> 
 									<input type="text" class="form-control" id="member_zipcode" name="member_zipcode" value="${member.getMember_zipcode()}" >
 								</div>
 								<div class="col-3">
-									<label for="address"> </label> 
+									<label for="btn_address"> </label> 
 									<input type="button" class="form-control" id="btn_address" onclick="findAddress()" value="주소찾기" >
 								</div>
 							</div>
 
 							<div class="mb-3">
-								<label for="address">주소</label> 
+								<label for="member_address">주소</label> 
 								<input type="text" class="form-control" id="member_address" name="member_address" value="${member.getMember_address()}">
 							</div>
 							
 							<div class="mb-3">
-								<label for="address2">상세주소</label> 
+								<label for="member_address2">상세주소</label> 
 								<input type="text" class="form-control" id="member_address2" name="member_address2" value="${member.getMember_address2()}">
 							</div>
 
@@ -251,9 +251,12 @@
     <script type="text/javascript">
 		function memDel(){
 			let form = document.delform;
-			if(form.member_pw.value != ${member.getMember_pw()}){
+			if(!form.member_pw.value) {
+				alert('비밀번호를 입력해주세요');
+			} else if(form.member_pw.value != ${member.getMember_pw()}){
   				alert('비밀번호가 틀렸습니다.');
-  				return false;
+  			} else {
+  				alert('탈퇴되었습니다. 이용해주셔서 감사합니다.');
   			}
 		}
 	</script>
@@ -265,16 +268,16 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-			<form id="delform" enctype="multipart/form-data" role="search" action="./memberDelete.do" method="post" onsubmit="return memDel()">
+			<form name="delform" enctype="multipart/form-data" role="search" action="./memberDelete.do" method="get">
 			 	<div class="box p-3">
 				 	<h5>탈퇴를 원하시면 비밀번호를 입력해주세요</h3>
 				    <hr />
 				    <br />
 				    <div class="input-group">
-						<input type="hidden" class="form-control" name="member_id" value="${member.getMember_id()}">
-				        <input type="password" class="form-control" name="member_pw" />
+						<input type="hidden" class="form-control" name="member_id" id="member_id" value="${member.getMember_id()}">
+				        <input type="password" class="form-control" name="member_pw" id="member_pw" />
 				        
-				        <button class="btn btn-outline-secondary" type="submit">탈퇴하기</button>
+				        <button class="btn btn-outline-secondary" type="submit" onclick="memDel()">탈퇴하기</button>
 				    </div>
 			    </div>
 			</form>

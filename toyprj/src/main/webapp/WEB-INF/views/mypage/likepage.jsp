@@ -138,6 +138,17 @@
 		.content {
 		  background-color: #ddd;
 		}
+		 @media (max-width: 767px) {
+        .card {
+          margin: 3vh auto;
+        }
+      	}
+      	.cart {
+	        background-color: #fff;
+	        padding: 4vh 5vh;
+	        border-bottom-left-radius: 1rem;
+	        border-top-left-radius: 1rem;
+      	}
     </style>
   </head>
   <body>
@@ -150,7 +161,44 @@
     
       <div class="row d-flex" style="height: 500px;">
 		<%@ include file="./component/side.jsp" %>
-        <div class="col-md-11 content">좋아요 리스트 페이지</div>
+        <div class="col-md-11 content">
+        	<div class="card">
+      			<div class="row">
+        			<div class="col-md-12 cart">
+          				<div class="title">
+           					 <div class="row">
+             					 <div class="col">
+                				<h4><b>좋아요 누른 상품 목록</b></h4>
+              					</div>
+            				</div>
+          				</div>
+				<!-- 좋아요 누른 상품 시작 -->
+				  <c:choose>
+		          	<c:when test="${memberListLike != null && memberListLike.size() > 0}">
+			          <c:forEach var="like" items="${memberListLike}">
+				          <section class="like_table" style="width: 100%; height: 150px;">
+				            <div class="row">
+				              <div class="row main align-items-center">
+				                <div class="col-2">
+				                  <img class="p-3 product_img" style="width: 50%; height: 50%;'" src="${like.getProduct_img()}" />
+				                </div>
+				                <div class="col-5">
+				                  <div class="row text-muted product_category">${like.getProduct_category()}</div>
+				                  <div class="row product-name">${like.getProduct_name()}</div>
+				                </div>
+				                <div class="col-4 product-price">${like.getProduct_price()}</div>
+				              </div>
+				            </div>
+				            <hr/>
+				            </section>
+						</c:forEach>
+					</c:when>
+				  </c:choose>
+				<!-- 좋아요 누른 상품 끝 -->
+          			</div>
+          		</div>
+	        </div>
+		</div>
       </div>
       
     </div>
