@@ -10,7 +10,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Shop Item - Start Bootstrap Template</title>
+    <title>Detail Page</title>
     <%@ include file="../../common/common.jsp" %>
     <style type="text/css">
     	a{
@@ -75,6 +75,9 @@
     </style>
   </head>
   <body>
+
+
+  	
   	<script type="text/javascript">
   		function cartCount(result){
   			let count = document.getElementById('inputQuantity');
@@ -87,10 +90,26 @@
   				count.value = countNum;
   			}
   		}
+  		
 		function addLike(no,category){
-			alert("좋아요를 눌렀습니다.")
-			location.href = "./productInsertLike.do?page=productDetail.do&product_no="+no+"&product_category="+category;
+			let likeList = ${likeList == null ?[] :likeList};
+			
+			if (likeList.length === 0){
+				alert("로그인이 필요합니다.");
+				return;
+			}
+			
+			if(likeList.includes(no)){
+				if(confirm("이미 좋아요한 상품입니다. 취소하시겠습니까?")){
+					alert('좋아요가 취소됐습니다.');	
+					location.href = "./productDeleteLike.do?page=productDetail.do&product_no="+no+"&product_category="+category;
+				}
+			}else {
+				alert("좋아요를 눌렀습니다.");
+				location.href = "./productInsertLike.do?page=productDetail.do&product_no="+no+"&product_category="+category;
+			}
 		}
+		
 		function addCart(product_no, product_category,product_img,product_price, product_name){
 			let count = $("#inputQuantity").val();
 			alert("장바구니에 담았습니다.");
@@ -106,35 +125,34 @@
     <!-- nav end -->
 
     <!-- Product section-->
+    <c:set var="item" value="${productList.get(0)}"/>
+	<c:if test="${ productList.size() > 5 }">
+		<c:set var="review" value="${productList.get(5)}"/>
+	</c:if>
     <section class="bg-light">
       <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
           <div class="col-md-6">
             <img
               class="card-img-top mb-5 mb-md-0"
-              src="${product.getProduct_img()}"
+              src="${ item.get('PRODUCT_IMG') }"
               alt="..."
             />
           </div>
           <div class="col-md-6">
-            <div class="small mb-1">${product.getProduct_category()}</div>
-            <h1 class="display-5 fw-bolder">${product.getProduct_name()}</h1>
+            <div class="small mb-1">${ item.get('PRODUCT_CATEGORY') }</div>
+            <h1 class="display-5 fw-bolder">${ item.get('PRODUCT_NAME') }</h1>
             <div class="fs-5 mb-3">
               <!-- <span class="text-decoration-line-through">$45.00</span> -->
-              <span class="mb-3">${product.getProduct_price()}\</span>
+              <span class="mb-3">${ item.get('PRODUCT_PRICE') }\</span>
 	          <h4>
-	              <c:if test="${ !empty mem_id }">
-			      		<a href="javascript:addLike(${product.getProduct_no()},'${product.getProduct_category()}')">
-			      			<i class="fa fa-heart" style="color: red;"> ${product.getProduct_like()}</i>
-			      		</a>
-		          </c:if>
-		          <c:if test="${ empty mem_id }">
-		          	<i class="fa fa-heart" style="color: red;"> ${product.getProduct_like()}</i>
-		          </c:if>
+			   <a href="javascript:addLike(${ item.get('PRODUCT_NO') },'${ item.get('PRODUCT_CATEGORY') }')">
+			      <i class="fa fa-heart" style="color: red;"> ${ item.get('PRODUCT_LIKE') }</i>
+			   </a>
 		          /
               	<i class="fas fa-star" style="color: orange;">
-              		<c:if test="${ !empty reviewList }">${ reviewList.get(0).get("REVIEW_AVG") }</c:if>
-              		<c:if test="${ empty reviewList }">0</c:if>
+              		<c:if test="${ !empty review }">${ review.get("REVIEW_AVG") }</c:if>
+              		<c:if test="${ empty review }">0</c:if>
               	</i>
 	          </h4>
             </div>
@@ -155,10 +173,8 @@
               <button onclick="cartCount('+')" class="btn btn-outline-dark me-1" type="button"><i class="fas fa-plus-circle"></i></button>
               <button onclick="cartCount('-')" class="btn btn-outline-dark" type="button"><i class="fas fa-minus-circle"></i></button>
             </div>
-            <button onclick=addCart(${product.getProduct_no()},"${product.getProduct_category()}","${product.getProduct_img()}",${product.getProduct_price()},"${product.getProduct_name()}")
-             class="btn btn-outline-dark flex-shrink-0" type="button">
-              <i class="bi-cart-fill me-1"></i>
-              Add to cart
+            <button onclick='addCart(${ item.get('PRODUCT_NO')}, "${ item.get('PRODUCT_CATEGORY')}","${ item.get('PRODUCT_IMG')}",${ item.get('PRODUCT_PRICE')},"${ item.get('PRODUCT_NAME')}")' class="btn btn-outline-dark flex-shrink-0" type="button">
+              <i class="bi-cart-fill me-1">Add to cart</i>
             </button>
           </div>
         </div>
@@ -184,18 +200,18 @@
 			<div class="container px-4 px-lg-5 mt-5">
 				<h2 class="fw-bolder mb-4">Related Products</h2>
 				<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-					<c:forEach var="item" items="${productList}">
+					<c:forEach begin="1" end="4" var="product" items="${productList}">
 						<div class="col mb-5">
 							<div class="card h-100">
-								<c:if test="${ item.getProduct_no() == 101 }">
+								<c:if test="${ product.get('PRODUCT_NO') == 101 }">
 									<!-- Sale badge-->
 									<div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
 								</c:if>
 								<!-- Product image-->
-								<a href="./productDetail.do?product_no=${item.getProduct_no()}&product_category=${item.getProduct_category()}">
+								<a href="./productDetail.do?product_no=${product.get('PRODUCT_NO')}&product_category=${product.get('PRODUCT_CATEGORY')}">
 									<img
 										class="card-img-top"
-										src="${item.getProduct_img()}"
+										src="${product.get('PRODUCT_IMG')}"
 										 alt="..."
 									/>
 								</a>
@@ -203,9 +219,9 @@
 								<div class="card-body p-4">
 									<div class="text-center">
 										<!-- Product name-->
-										<h5 class="fw-bolder">${item.getProduct_name()}</h5>
+										<h5 class="fw-bolder">${product.get('PRODUCT_NAME')}</h5>
 										<!-- Product price-->
-										${item.getProduct_price()}\
+										${product.get('PRODUCT_PRICE')}\
 									</div>
 								</div>
 							</div>
@@ -228,7 +244,7 @@
 			    	</c:if>
 			    </div>
 			    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-					<c:if test="${ !empty reviewList }">
+					<c:if test="${ !empty review }">
 				    <table class="table">
 					  <thead class="table-dark">
 					    <tr>
@@ -240,34 +256,34 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					  	<c:forEach var="review" items="${reviewList}">
+					  	<c:forEach begin="5" var="reviewList" items="${productList}">
 						  	<tr>
-						      <td scope="row"><div>${review.get("REVIEW_DATE")}</div></td>
-						      <td><div>${review.get("MEMBER_ID")}</div></td>
+						      <td scope="row"><div>${reviewList.get("REVIEW_DATE")}</div></td>
+						      <td><div>${reviewList.get("MEMBER_ID")}</div></td>
 						      <td>
-						      	<c:forEach begin="1" end="${review.get('REVIEW_SCORE')}">
+						      	<c:forEach begin="1" end="${reviewList.get('REVIEW_SCORE')}">
 						      		<i class="fas fa-star" style="color: orange;"></i>
 							  	</c:forEach>
 						      </td>
-						      <c:if test="${ !empty review.get('REVIEW_IMG') }">
+						      <c:if test="${ !empty reviewList.get('REVIEW_IMG') }">
 							      <td>
-							      	<a target='_blank' href="http://localhost:8080/reviewimg/${review.get('REVIEW_IMG')}">
-							      		<img style="width: 100px; height: 100px;" src="../../../reviewimg/${review.get('REVIEW_IMG')}"/>
+							      	<a target='_blank' href="http://localhost:8080/reviewimg/${reviewList.get('REVIEW_IMG')}">
+							      		<img style="width: 100px; height: 100px;" src="../../../reviewimg/${reviewList.get('REVIEW_IMG')}"/>
 							      	</a>
 							      </td>
 						      </c:if>
-						      <c:if test="${ empty review.get('REVIEW_IMG') }">
+						      <c:if test="${ empty reviewList.get('REVIEW_IMG') }">
 							      <td>
 							      	<img style="width: 100px; height: 100px;" src="../../../reviewimg/null.jpg"/>
 							      </td>
 						      </c:if>
-						      <td><div>${review.get("REVIEW_CONTENT")}</div></td>
+						      <td><div>${reviewList.get("REVIEW_CONTENT")}</div></td>
 						    </tr>
 					  	</c:forEach>
 					  </tbody>
 					</table>
 					</c:if>
-					<c:if test="${ empty reviewList }">
+					<c:if test="${ empty review }">
 						<h1 class="m-5 w-100">구매 후기가 없습니다. 리뷰를 작성해주세요.</h1>
 						<div style="height: 400px;"></div>
 					</c:if>
@@ -326,8 +342,8 @@
 				  <input type="text" class="form-control" name="review_content" placeholder="리뷰 내용을 입력하세요." >
 				  <input type="hidden" class="form-control" name="review_date" value="${now}">
 				  <input type="hidden" class="form-control" name="member_id" value="${mem_id}">
-				  <input type="hidden" class="form-control" name="product_no" value="${product.getProduct_no()}">
-				  <input type="hidden" class="form-control" name="product_category" value="${product.getProduct_category()}">
+				  <input type="hidden" class="form-control" name="product_no" value="${item.get('PRODUCT_NO')}">
+				  <input type="hidden" class="form-control" name="product_category" value="${item.get('PRODUCT_CATEGORY')}">
 				  <button class="btn btn-outline-primary" type="submit">등록</button>
 				</div>
 			</form>
@@ -335,6 +351,6 @@
 	    </div>
 	  </div>
 	</div>
-	
+
   </body>
 </html>

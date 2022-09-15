@@ -148,9 +148,9 @@
     <%@ include file="./component/head.jsp" %>
     <div class="wrap">
     
-      <div class="row d-flex" style="height: 500px;">
+      <div class="row d-flex" style="height: 1000px;">
 		<%@ include file="./component/side.jsp" %>
-        <div class="col-md-11 content">구매후기 페이지</div>
+        <div class="col-md-10 content">구매후기 페이지</div>
       </div>
       
     </div>

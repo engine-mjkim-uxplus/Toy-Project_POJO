@@ -154,9 +154,9 @@
     <%@ include file="./component/head.jsp" %>
     <div class="wrap">
     
-      <div class="row d-flex" style="height: 500px;">
+      <div class="row d-flex" style="height: 1000px;">
 		<%@ include file="./component/side.jsp" %>
-			<div class="col-md-11 content p-3">
+			<div class="col-md-10 content p-3">
 				<h5 class="font-medium hidden md:block">내 정보 수정</h5>
 				<hr>
 				<h5 class="font-medium mb-4">나의 정보</h5>

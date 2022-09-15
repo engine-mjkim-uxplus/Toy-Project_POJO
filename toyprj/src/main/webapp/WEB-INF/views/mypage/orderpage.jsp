@@ -9,6 +9,17 @@
     <title>Document</title>
 	<%@ include file="../../../common/common.jsp" %>
     <style>
+    	table {
+	      width: 100%;
+	      border-top: 1px solid #444444;
+	      border-collapse: collapse;
+	      text-align: center;
+	    }
+	    th, td {
+	      border-bottom: 1px solid #444444;
+	      padding: 10px;
+	      vertical-align: middle;
+	    }
     	body {
 		  padding: 0;
 		  margin: 0;
@@ -148,13 +159,107 @@
     <%@ include file="./component/head.jsp" %>
     <div class="wrap">
     
-      <div class="row d-flex" style="height: 500px;">
+      <div class="row d-flex" style="height: 1000px;">
 		<%@ include file="./component/side.jsp" %>
-        <div class="col-md-11 content">
-        	구매내역 페이지
+        <div class="col-md-10 content">
+        
+			<ol class="list-group d-flex flex-row justify-content-center mt-5">
+			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
+			    <div class="d-flex justify-content-center align-items-center flex-column">
+			      <div class="fw-bold border border-secondary rounded-circle d-flex justify-content-center align-items-center mb-2" style="width: 100px; height: 100px;">
+			      	<i class="fas fa-truck fs-1"></i>
+			      </div>
+			      <div class="fs-5 mb-2">배송중</div>
+			      <div class="badge bg-primary rounded-pill fs-5">0</div>
+			    </div>
+			  </li>
+			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
+			    <div class="d-flex justify-content-center align-items-center flex-column">
+			      <div class="fw-bold border border-secondary rounded-circle d-flex justify-content-center align-items-center mb-2" style="width: 100px; height: 100px;">
+			      	<i class="fas fa-box fs-1"></i>
+			      </div>
+			      <div class="fs-5 mb-2">배송완료</div>
+			      <div class="badge bg-primary rounded-pill fs-5">0</div>
+			    </div>
+			  </li>
+			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
+			    <div class="d-flex justify-content-center align-items-center flex-column">
+			      <div class="fw-bold border border-secondary rounded-circle d-flex justify-content-center align-items-center mb-2" style="width: 100px; height: 100px;">
+			      	<i class="fas fa-undo-alt fs-1"></i>
+			      </div>
+			      <div class="fs-5 mb-2">취소/반품/교환</div>
+			      <div class="badge bg-primary rounded-pill fs-5">0</div>
+			    </div>
+			  </li>
+			</ol>
+			
+			<section class="bg-light d-flex justify-content-center mt-5">
+			    <div class="container px-4 px-lg-5">
+				    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					    <table class="table">
+						  <thead class="table-dark">
+						    <tr>
+						      <th class="col-1" scope="col">구매날짜</th>
+						      <th class="col-1" scope="col">주문번호</th>
+						      <th class="col-1" scope="col">상품이미지</th>
+						      <th class="col-1" scope="col">상품이름</th>
+						      <th class="col-1" scope="col">상품가격</th>
+						      <th class="col-1" scope="col">수령인주소</th>
+						      <th class="col-1" scope="col">배송메모</th>
+						      <th class="col-1" scope="col"></th>
+						    </tr>
+						  </thead>
+						  <tbody>
+							  	<tr>
+							      <td scope="row">예</td>
+							      <td>예</td>
+							      <td>예</td>
+								  <td>예</td>
+							      <td>예</td>
+							      <td>예</td>
+							      <td>예</td>
+							      <td class="d-flex flex-column">
+							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
+							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>
+							      	<button type="button" class="btn btn-primary mb-2">반품요청</button>
+							      </td>
+							    </tr>
+							  	<tr>
+							      <td scope="row">예</td>
+							      <td>예</td>
+							      <td>예</td>
+								  <td>예</td>
+							      <td>예</td>
+							      <td>예</td>
+							      <td>예</td>
+							      <td class="d-flex flex-column">
+							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
+							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>
+							      	<button type="button" class="btn btn-primary mb-2">반품요청</button>
+							      </td>
+							    </tr>
+							  	<tr>
+							      <td scope="row">예</td>
+							      <td>예</td>
+							      <td>예</td>
+								  <td>예</td>
+							      <td>예</td>
+							      <td>예</td>
+							      <td>예</td>
+							      <td class="d-flex flex-column">
+							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
+							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>
+							      	<button type="button" class="btn btn-primary mb-2">반품요청</button>
+							      </td>
+							    </tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</section>
+			
         </div>
       </div>
-      
     </div>
     
     <!-- footer start -->

@@ -134,9 +134,23 @@
   </head>
   <body>
     <script type="text/javascript">
-		function addLike(no){
-			alert("좋아요를 눌렀습니다.")
-			location.href = "./productInsertLike.do?page=productList.do&product_no="+no
+		function addLike(no){			
+			let likeList = ${likeList == null ?[] :likeList};
+			
+			if (likeList.length === 0){
+				alert("로그인이 필요합니다.");
+				return;
+			}
+			
+			if(likeList.includes(no)){
+				if(confirm("이미 좋아요한 상품입니다. 취소하시겠습니까?")){
+					alert('좋아요가 취소됐습니다.');	
+					location.href = "./productDeleteLike.do?page=productList.do&product_no="+no
+				}
+			}else {
+				alert("좋아요를 눌렀습니다.");
+				location.href = "./productInsertLike.do?page=productList.do&product_no="+no
+			}
 		}
   	</script>
     <!-- nav start -->
@@ -183,12 +197,7 @@
 			            </a>
 			            <ul class="product-links">
 			              <li>
-			              	<c:if test="${ !empty mem_id }">
-			                	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
-			                </c:if>
-			                <c:if test="${ empty mem_id }">
-			                	<a href="javascript:alert('로그인이 필요합니다.')"><i class="fa fa-heart" style="color: red;"></i></a>
-			                </c:if>
+			              	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
 			              </li>
 			              <li>
 			                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
@@ -220,12 +229,7 @@
 					            </a>
 					            <ul class="product-links">
 					              <li>
-							        <c:if test="${ !empty mem_id }">
-					                	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
-					                </c:if>
-					                <c:if test="${ empty mem_id }">
-					                	<a href="javascript:alert('로그인이 필요합니다.')"><i class="fa fa-heart" style="color: red;"></i></a>
-					                </c:if>
+					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
 					              </li>
 					              <li>
 					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
@@ -258,12 +262,7 @@
 					            </a>
 					            <ul class="product-links">
 					              <li>
-					                <c:if test="${ !empty mem_id }">
-					                	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
-					                </c:if>
-					                <c:if test="${ empty mem_id }">
-					                	<a href="javascript:alert('로그인이 필요합니다.')"><i class="fa fa-heart" style="color: red;"></i></a>
-					                </c:if>
+					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
 					              </li>
 					              <li>
 					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
@@ -296,12 +295,7 @@
 					            </a>
 					            <ul class="product-links">
 					              <li>
-					                <c:if test="${ !empty mem_id }">
-					                	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
-					                </c:if>
-					                <c:if test="${ empty mem_id }">
-					                	<a href="javascript:alert('로그인이 필요합니다.')"><i class="fa fa-heart" style="color: red;"></i></a>
-					                </c:if>
+					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
 					              </li>
 					              <li>
 					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>

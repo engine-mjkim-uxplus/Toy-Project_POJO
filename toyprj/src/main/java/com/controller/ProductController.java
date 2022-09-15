@@ -22,6 +22,7 @@ public class ProductController implements Controller {
 	HttpSession session = null;
 	ProductLogic productLogic = new ProductLogic();
 	
+	/*********************** 전체 상품페이지(홈페이지) 요청 ***********************/
 	@Override
 	public Object productList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("ProductController: productList 호출");
@@ -29,38 +30,55 @@ public class ProductController implements Controller {
 		ModelAndView mav = new ModelAndView(req);
 		mav.setViewName("home");
 		
-		List<ProductVO> productList;
+		Map<String,Object> pMap = new HashMap<>();
+		session = req.getSession();
+		String id = (String) session.getAttribute("mem_id");
+		
+		
+		if ( id != null ) {
+			pMap.put("member_id", id);
+			List<Integer> likeList = null;
+			likeList = productLogic.likeList(pMap);
+			mav.addObject("likeList", likeList);
+		}
+		
+		List<ProductVO> productList = null;
 		productList = productLogic.productList();
 		mav.addObject("productList", productList);
+		
 		return mav;
 	}
 	
+	/*********************** 디테일 상품페이지 요청 ***********************/
 	@Override
 	public Object productDetail(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("ProductController: productDetail 호출");
+		
+		ModelAndView mav = new ModelAndView(req);
+		mav.setViewName("detail");
 		
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
 		
-		ProductVO product = null;
-		product = productLogic.product(pMap);
+		session = req.getSession();
+		String id = (String) session.getAttribute("mem_id");
 		
-		List<ProductVO> productList = null;
-		productList = productLogic.getRelatedProducts(pMap);
+		if ( id != null ) {
+			pMap.put("member_id", id);
+			List<Integer> likeList = null;
+			likeList = productLogic.likeList(pMap);
+			mav.addObject("likeList", likeList);
+		}
 		
-		List<Map<String,Object>> reviewList = null;
-		reviewList = productLogic.getReviewList(pMap);
-		
-		ModelAndView mav = new ModelAndView(req);
-		mav.addObject("product", product);
+		List<Map<String,Object>> productList = null;
+		productList = productLogic.productDetail(pMap);
 		mav.addObject("productList", productList);
-		mav.addObject("reviewList", reviewList);
-		mav.setViewName("detail");
 		
 		return mav;
 	}
 	
+	/*********************** 좋아요 추가 요청 ***********************/
 	@Override
 	public Object productInsertLike(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("ProductController: productInsertLike 호출");
@@ -86,6 +104,33 @@ public class ProductController implements Controller {
 		return path;
 	}
 	
+	/*********************** 좋아요 삭제 요청 ***********************/
+	@Override
+	public Object productDeleteLike(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("ProductController: productInsertLike 호출");
+		
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		
+		session = req.getSession();
+		pMap.put("member_id", session.getAttribute("mem_id"));
+		
+		productLogic.minusLike(pMap);
+		
+		String page = (String) pMap.get("page");
+		
+		if(page.equals("productDetail.do")) {
+			String no = (String) pMap.get("product_no");
+			String category = (String) pMap.get("product_category");
+			page = "productDetail.do?product_no="+no+"&product_category="+category;
+		}
+		
+		String path = "product/"+page;
+		return path;
+	}
+	
+	/*********************** 상품 검색 요청 (수정필요) ***********************/
 	@Override
 	public Object productSearch(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("ProductController: productSearch 호출");
@@ -110,6 +155,7 @@ public class ProductController implements Controller {
 		return mav;
 	}
 	
+	/*********************** 상품 리뷰 추가 요청 ***********************/
 	@Override
 	public Object productInsertReview(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("ProductController: productInsertReview 호출");
@@ -160,12 +206,6 @@ public class ProductController implements Controller {
 
 	@Override
 	public Object productUpdateCount(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object productDeleteLike(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}

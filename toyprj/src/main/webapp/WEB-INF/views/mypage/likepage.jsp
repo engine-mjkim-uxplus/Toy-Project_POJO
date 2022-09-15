@@ -159,9 +159,9 @@
     <%@ include file="./component/head.jsp" %>
     <div class="wrap">
     
-      <div class="row d-flex" style="height: 500px;">
+      <div class="row d-flex" style="height: 1000px;">
 		<%@ include file="./component/side.jsp" %>
-        <div class="col-md-11 content">
+        <div class="col-md-10 content">
         	<div class="card">
       			<div class="row">
         			<div class="col-md-12 cart">

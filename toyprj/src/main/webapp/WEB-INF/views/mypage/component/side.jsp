@@ -9,7 +9,7 @@
 <c:set var="couponpage" value="/WEB-INF/views/mypage/couponpage.jsp" />
 <c:set var="likepage" value="/WEB-INF/views/mypage/likepage.jsp" />
 
-<div class="col-md-1 listContainer list-group border-end border-secondary">
+<div class="col-md-2 listContainer list-group border-end border-secondary">
   <a href="./memberListPayment.do" class="item list-group-item ${URL eq orderpage ? 'active' : 'none' }">
    <i class="far fa-comment-dots" style="margin-right: 5px;"></i>구매 내역
   </a>
