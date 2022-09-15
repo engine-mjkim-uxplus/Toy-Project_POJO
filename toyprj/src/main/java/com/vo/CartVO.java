@@ -18,6 +18,14 @@ public class CartVO {
 		this.product_no = product_no;
 		this.product_price = product_price;
 	}
+	public CartVO(String product_name, String product_img, String product_no, int product_price, int product_count) {
+		super();
+		this.product_name = product_name;
+		this.product_img = product_img;
+		this.product_no = product_no;
+		this.product_price = product_price;
+		this.product_count = product_count;
+	}
 	public String getProduct_category() {
 		return product_category;
 	}
