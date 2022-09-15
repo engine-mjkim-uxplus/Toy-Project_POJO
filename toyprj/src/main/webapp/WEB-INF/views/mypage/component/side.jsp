@@ -17,7 +17,7 @@
    <i class="far fa-comment-dots" style="margin-right: 5px;"></i>구매 후기
   </a>
   <a href="./memberListP.do" class="item list-group-item ${URL eq personal ? 'active' : 'none' }">
-     <i class="far fa-comment-dots" style="margin-right: 5px;"></i>개인 정보
+     <i class="far fa-comment-dots" style="margin-right: 5px;"></i>개인 정보 수정
   </a>
   <a href="./memberListCoupon.do" class="item list-group-item ${URL eq couponpage ? 'active' : 'none' }">
    <i class="far fa-comment-dots" style="margin-right: 5px;"></i>보유 쿠폰

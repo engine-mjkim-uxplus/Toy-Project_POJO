@@ -2,7 +2,7 @@ package com.vo;
 
 public class MemberVO {
    private String member_id = null;
-   private String memeber_pw = null;
+   private String member_pw = null;
    private String member_name = null;
    private String member_phone = null;
    private String member_zipcode = null;
@@ -19,12 +19,12 @@ public class MemberVO {
       this.member_id = member_id;
    }
 
-   public String getMemeber_pw() {
-      return memeber_pw;
+   public String getMember_pw() {
+      return member_pw;
    }
 
-   public void setMemeber_pw(String memeber_pw) {
-      this.memeber_pw = memeber_pw;
+   public void setMember_pw(String member_pw) {
+      this.member_pw = member_pw;
    }
 
    public String getMember_name() {

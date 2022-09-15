@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.shopping.toyprj.Controller;
 import com.shopping.toyprj.MemberLogic;
+import com.util.HashMapBinder;
 import com.util.ModelAndView;
 import com.vo.MemberVO;
 
@@ -149,11 +151,30 @@ public class MemberController implements Controller {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	/************************ [[ 회원정보 수정 ]] ************************/
 	@Override
 	public Object memberUpdateP(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("MemberController: memberUpdateP 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("mem_id");
+		logger.info(id);
+		
+		Object path = null;
+		
+		if (id == null) {
+			path = "login/loginForm.do";
+		}else {
+			ModelAndView mav = new ModelAndView(req);
+			Map<String,Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.bind(pMap);
+			int result = 0;
+			result = memberLogic.memberUpdateP(pMap); 
+			mav.setViewName("mypage/orderpage"); // 마이페이지의 메인(결제내역)으로 이동하게 한다.
+			path = mav;
+		}
+		
+		return path;
 	}
 
 	@Override
@@ -164,8 +185,34 @@ public class MemberController implements Controller {
 
 	@Override
 	public Object memberDelete(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("MemberController: memberDelete 호출");
+		HttpSession session = req.getSession();
+		String id = (String) session.getAttribute("mem_id");
+		logger.info(id);
+		
+		Object path = null;
+		
+		if (id == null) {
+			path = "login/loginForm.do";
+		}else {
+			Map<String,Object> pMap = new HashMap<>();
+			HashMapBinder hmb = new HashMapBinder(req);
+			hmb.bind(pMap);
+			int result = 0;
+			result = memberLogic.memberDelete(pMap); 
+//			path = "member/memberDelete.do";
+			
+			if(result == 1) { // 회원 삭제된 경우 
+				session.invalidate(); // 세션 삭제 
+				path = "product/productList.do"; // 메인페이지로 이동한다. 
+			} else { // 회원탈퇴 실패한 경우 
+				ModelAndView mav = new ModelAndView(req);
+				mav.setViewName("mypage/orderpage");// 마이페이지의 메인으로 이동한다. 
+				path = mav;
+			}
+			
+		}
+		return path;
 	}
 
 	@Override

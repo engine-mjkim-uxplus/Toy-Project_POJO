@@ -40,4 +40,36 @@ public class MemberDao {
 		return mVO;
 	}
 
+	public int memberUpdateP(Map<String, Object> pMap) {
+		logger.info("MemberDao: memberUpdateP 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("memberUpdateP",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
+	public int memberDelete(Map<String, Object> pMap) {
+		logger.info("MemberDao: memberDelete 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("memberDelete",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
 }

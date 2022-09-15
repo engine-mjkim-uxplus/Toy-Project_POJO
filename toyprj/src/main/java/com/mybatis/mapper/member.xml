@@ -5,4 +5,21 @@
 	<select id="getMember" parameterType="map" resultType="com.vo.MemberVO">
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{id}
 	</select>
+	
+	<update id="memberUpdateP" parameterType="map">
+		UPDATE MEMBER
+		   SET member_pw = #{member_pw}
+		      ,member_name = #{member_name}
+		      ,member_phone = #{member_phone}
+		      ,member_zipcode = #{member_zipcode}
+		      ,member_address = #{member_address}
+		      ,member_address2 = #{member_address2}
+		      ,member_gender = #{member_gender}
+		 WHERE member_id = #{member_id}
+	</update>
+	
+	<delete id="memberDelete" parameterType="map">
+		DELETE FROM MEMBER
+		 WHERE member_id = #{member_id}
+	</delete>
 </mapper>

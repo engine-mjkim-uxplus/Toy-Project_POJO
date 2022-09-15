@@ -7,7 +7,7 @@
     <div class="name">${member.getMember_id()}</div>
   </div>
   <div class="modify">
-    <button class="btn btn-secondary btn-sm" type="button">프로필 수정</button>
+	<button class="btn btn-secondary btn-sm" type="button">프로필 수정</button>
   </div>
 </div>
 
