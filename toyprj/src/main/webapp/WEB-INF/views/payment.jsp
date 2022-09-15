@@ -277,6 +277,7 @@
         ></div>
       </div>
     </header>
+    <c:set var ="total_price" value = "0" />
     <form class="wrapper" action="./orderInsert.do" method="GET" >
       <div class="h5 large">주문 결제</div>
       <div class="row">
@@ -435,37 +436,40 @@
 		            <div class="d-flex jusitfy-content-between align-items-center pt-3 pb-2 border-bottom">
 		              <div class="item pr-2">
 		                <img
-		                  src="https://media.worksout.co.kr/resized/live/CA22SSPA5P00755001/CA22SSPA5P00755001-1.jpg"
+		                  src="${cart.getProduct_img()}"
 		                  alt="product_img"
 		                  width="80"
 		                  height="80"
 		                />
-		                <div class="number product_count">2</div>
+		                <div class="number product_count">${cart.getProduct_count()}</div>
 		              </div>
 		              <div class="d-flex flex-column px-3">
 		              	<input type="hidden" name="product_no" value=""/>
 		              	<input type="hidden" name="product_name" value=""/>
 		              	<input type="hidden" name="product_price" value=""/>
 		              	<input type="hidden" name="product_count" value=""/>
-		                <b class="h4 product-name">Black-jean</b>
-		                <p class="h5 text-primary">30,000</a>
+		                <b class="h4 product_name">${cart.getProduct_name()}</b>
+		                <p class="h5 text-primary product_price">${cart.getProduct_price()}</a>
 		              </div>
 		            </div>
+		            <c:set var= "total_price" value="${total_price + cart.getProduct_price()*cart.getProduct_count()}"/>
 	            </section>
        		</c:forEach>
             <div>
             <div class="d-flex align-items-center mt-3">
-              <div class="display-5 me-4">상품금액</div>
-              <div class="ml-auto font-weight-bold">30,000원</div>
+              <div class="display-5 me-4">총 금액</div>
+              <div class="ml-auto" style="font-weight:bold;">
+              	<fmt:formatNumber value="${total_price}" type="number" />원
+              </div>
             </div>
             <div class="d-flex align-items-center py-2 border-bottom">
               <div class="display-5 me-2">배송비</div>
-              <div class="ml-auto font-weight-bold" style="margin-left:35px">2500원</div>
+              <div class="ml-auto" style="margin-left:35px;font-weight:bold;">2500원</div>
             </div>
             <div class="d-flex align-items-center py-2">
               <p class="display-5 me-4">결제금액</p>
               <div class="ml-auto d-flex">
-                <p class="font-weight-bold">32,500원</p>
+                <p class="font-weight-bold" style="font-weight:bold;">32,500원</p>
               </div>
             </div>
           </div>

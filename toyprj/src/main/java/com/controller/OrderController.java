@@ -1,6 +1,9 @@
 package com.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +16,7 @@ import com.shopping.toyprj.Controller;
 import com.shopping.toyprj.OrderLogic;
 import com.util.HashMapBinder;
 import com.util.ModelAndView;
+import com.vo.CartVO;
 
 public class OrderController implements Controller {
 	Logger logger = Logger.getLogger(OrderController.class);
@@ -25,25 +29,32 @@ public class OrderController implements Controller {
 	HashMapBinder hmb = new HashMapBinder(req);
 	Map<String,Object> pMap = new HashMap<>();
 	hmb.bind(pMap);
-	String[] product_no = (String[])pMap.get("product_no");
-	String[] product_price = (String[])pMap.get("product_price");
-	String[] product_img = (String[])pMap.get("product_img");
 	String[] product_name = (String[])pMap.get("product_name");
-	String[] product_count = (String[])pMap.get("product_count");
-	for(int i =0; i < pMap.size(); i++) {
-		
-	}
+	String[] product_img = (String[])pMap.get("product_img");
+	String[] product_no = (String[])pMap.get("product_no");
+	int[] product_price = Arrays.stream((String[])pMap.get("product_price"))
+							.mapToInt(Integer::parseInt).toArray();
+	int[] product_count = Arrays.stream((String[])pMap.get("product_count"))
+							.mapToInt(Integer::parseInt).toArray();
+	
+	List cartList = new ArrayList();
+	CartVO cartVO = null;
+	
+	for(int i =0; i < product_name.length; i++) {
+		cartVO = new CartVO(product_name[i], product_img[i]
+							, product_no[i], product_price[i], product_count[i]);
+		cartList.add(cartVO);
+				}
 	HttpSession session = req.getSession();
 	String mem_id = (String)session.getAttribute("mem_id");
-	
-	
 	
 	if(mem_id != null) {
 		
 	}	
-	mv.addObject("cartList", pMap);
+	mv.addObject("cartList", cartList);
 	mv.setViewName("payment");
-		return mv;
+	
+	return mv;
 	}
 	
 	@Override
