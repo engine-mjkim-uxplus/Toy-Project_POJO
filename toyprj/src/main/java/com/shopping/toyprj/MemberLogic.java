@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.dao.MemberDao;
 import com.vo.CartVO;
 import com.vo.MemberVO;
+import com.vo.ProductReviewVO;
 import com.vo.ProductVO;
 
 public class MemberLogic {
@@ -53,6 +54,13 @@ public class MemberLogic {
 		List<ProductVO> likeList = new ArrayList<>();
 		likeList = memberdao.getMemberListLike(id);
 		return likeList;
+	}
+
+	public List<Map<String, Object>> memberListReview(String id) {
+		logger.info("MemberLogic: memberListReview 호출");
+		List<Map<String, Object>> memberListReview = new ArrayList<>();
+		memberListReview = memberdao.memberListReview(id);
+		return memberListReview;
 	}
 
 	

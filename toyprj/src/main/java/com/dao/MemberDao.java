@@ -12,6 +12,7 @@ import com.shopping.toyprj.MemberLogic;
 import com.util.MyBatisCommonFactory;
 import com.vo.CartVO;
 import com.vo.MemberVO;
+import com.vo.ProductReviewVO;
 import com.vo.ProductVO;
 
 public class MemberDao {
@@ -143,13 +144,29 @@ public class MemberDao {
 		try {
 			sqlSession = sqlSessionFactory.openSession();
 			likeList = sqlSession.selectList("memberListLike",id);
-			logger.info(likeList);
+			logger.info(id+", "+likeList);
 		} catch (Exception e) {
 			logger.info("Exception : " + e.toString());
 		} finally {
 			sqlSession.close();
 		}
 		return likeList;
+	}
+
+	public List<Map<String, Object>> memberListReview(String id) {
+		logger.info("MemberDao: memberListReview 호출 성공");
+		List<Map<String, Object>> memberListReview = null;
+		
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			memberListReview = sqlSession.selectList("memberListReview",id);
+			logger.info(id+", "+memberListReview);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return memberListReview;
 	}
 
 }

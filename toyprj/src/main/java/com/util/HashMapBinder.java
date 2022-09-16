@@ -32,10 +32,10 @@ public class HashMapBinder {
 	
 	public HashMapBinder (HttpServletRequest req) {
 		this.req = req;
-		realFolder = "C:\\Users\\User\\Desktop\\projectworkspace\\Toy-Project\\toyprj\\src\\main\\webapp\\reviewimg";
 	}
 	
 	public void multiBind(Map<String,Object> pMap) {
+		realFolder = req.getSession().getServletContext().getRealPath("/reviewimg");
 		pMap.clear();
 		try {
 			multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
