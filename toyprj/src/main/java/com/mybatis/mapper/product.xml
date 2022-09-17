@@ -24,7 +24,7 @@
 	</select>
 	
 	<select id="getReviewList" parameterType="map" resultType="map">
-		SELECT * FROM PRODUCT_REVIEW, (SELECT AVG(NVL(review_score, 0)) as review_avg from PRODUCT_REVIEW)
+		SELECT * FROM PRODUCT_REVIEW, (SELECT ROUND(AVG(NVL(review_score, 0)),1) as review_avg from PRODUCT_REVIEW)
 		WHERE PRODUCT_NO = #{product_no}
 	</select>
 	<!-- 디테일 상품페이지 쿼리 -->
@@ -83,7 +83,7 @@
 		    #{product_no},
 		    #{review_content},
 		    #{review_score},
-		    #{review_img},
+		    #{review_img, jdbcType=VARCHAR},
 		    #{review_date}
 		)
 	</insert>

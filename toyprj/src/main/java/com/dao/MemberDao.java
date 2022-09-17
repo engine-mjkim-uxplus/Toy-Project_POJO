@@ -152,4 +152,22 @@ public class MemberDao {
 		return likeList;
 	}
 
+	public MemberVO login(String id) {
+		MemberVO mVO = null;
+		Map<String,Object> pMap = new HashMap<>();
+		pMap.put("id", id);
+		
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			mVO = sqlSession.selectOne("getMember",pMap); //ProductVO			
+			// insert here
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		
+		return mVO;
+	}
+
 }

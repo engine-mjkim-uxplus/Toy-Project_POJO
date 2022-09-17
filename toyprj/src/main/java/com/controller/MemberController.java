@@ -36,12 +36,15 @@ public class MemberController implements Controller {
 			path = "login/loginForm.do";
 		}else {
 			ModelAndView mav = new ModelAndView(req);
-			MemberVO mVO = memberLogic.memberListPayment(id);
+			MemberVO mVO = memberLogic.Login(id);
 			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
 			mav.addObject("member", mVO);
 			mav.setViewName("mypage/orderpage"); 
 			path = mav;
 		}
+		
+		List<Map<String,Object>> orderList = null;
+		orderList = memberLogic.memberListPayment();
 		
 		return path;
 	}

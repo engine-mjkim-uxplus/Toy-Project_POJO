@@ -158,11 +158,10 @@
     
     <%@ include file="./component/head.jsp" %>
     <div class="wrap">
-    
       <div class="row d-flex" style="height: 1000px;">
 		<%@ include file="./component/side.jsp" %>
         <div class="col-md-10 content">
-        
+
 			<ol class="list-group d-flex flex-row justify-content-center mt-5">
 			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
 			    <div class="d-flex justify-content-center align-items-center flex-column">
@@ -192,8 +191,8 @@
 			    </div>
 			  </li>
 			</ol>
-			
-			<section class="bg-light d-flex justify-content-center mt-5">
+
+			<section class="w-100 bg-light d-flex justify-content-center mt-5">
 			    <div class="container px-4 px-lg-5">
 				    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 					    <table class="table">
@@ -201,23 +200,24 @@
 						    <tr>
 						      <th class="col-1" scope="col">구매날짜</th>
 						      <th class="col-1" scope="col">주문번호</th>
-						      <th class="col-1" scope="col">상품이미지</th>
-						      <th class="col-1" scope="col">상품이름</th>
-						      <th class="col-1" scope="col">상품가격</th>
-						      <th class="col-1" scope="col">수령인주소</th>
+						      <th class="col-1" scope="col" colspan="2">상품정보</th>
+						      <th class="col-1" scope="col">수량</th>
+						      <th class="col-1" scope="col">가격</th>
+						      <th class="col-1" scope="col">배송정보</th>
 						      <th class="col-1" scope="col">배송메모</th>
-						      <th class="col-1" scope="col"></th>
+						      <th class="col-1" scope="col">검색</th>
 						    </tr>
 						  </thead>
 						  <tbody>
 							  	<tr>
-							      <td scope="row">예</td>
-							      <td>예</td>
-							      <td>예</td>
-								  <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
+							      <td scope="row">구매날짜</td>
+							      <td>주문번호</td>
+							      <td>이미지</td>
+								  <td>이름</td>
+							      <td>수량</td>
+							      <td>가격</td>
+							      <td>배송정보</td>
+							      <td>배송메모</td>
 							      <td class="d-flex flex-column">
 							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
 							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>
@@ -225,27 +225,14 @@
 							      </td>
 							    </tr>
 							  	<tr>
-							      <td scope="row">예</td>
-							      <td>예</td>
-							      <td>예</td>
-								  <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td class="d-flex flex-column">
-							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
-							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>
-							      	<button type="button" class="btn btn-primary mb-2">반품요청</button>
-							      </td>
-							    </tr>
-							  	<tr>
-							      <td scope="row">예</td>
-							      <td>예</td>
-							      <td>예</td>
-								  <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
+							      <td scope="row">구매날짜</td>
+							      <td>주문번호</td>
+							      <td>이미지</td>
+								  <td>이름</td>
+							      <td>수량</td>
+							      <td>가격</td>
+							      <td>배송정보</td>
+							      <td>배송메모</td>
 							      <td class="d-flex flex-column">
 							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
 							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>

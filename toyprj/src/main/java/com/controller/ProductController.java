@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.shopping.toyprj.Controller;
-import com.shopping.toyprj.DispatcherServlet;
 import com.shopping.toyprj.ProductLogic;
 import com.util.HashMapBinder;
 import com.util.ModelAndView;
@@ -26,7 +26,6 @@ public class ProductController implements Controller {
 	@Override
 	public Object productList(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("ProductController: productList 호출");
-		
 		ModelAndView mav = new ModelAndView(req);
 		mav.setViewName("home");
 		
