@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.order">
+	
 	<select id="searchIsCoupon" parameterType="String" resultType="Integer">
 		SELECT member_coupon FROM member WHERE member_id = #{mem_id}
 	</select>
@@ -12,4 +13,30 @@
                  WHERE member_id = #{mem_id}
                )
 	</select>
+	
+	<insert id="orderMinsert" parameterType="Map">
+		INSERT ALL
+				<foreach item="item" collection="List"  separator=","> 
+                INTO SHOPPING_ORDER
+                (order_no, member_id,product_no,order_price,order_count,order_date,order_name,order_address,
+                  order_address2,order_zipcode,order_phone,order_memo)
+              VALUES ('1','mjey54',201,1,'1','1','1',1,'1','1','1',1)
+              </foreach>
+              SELECT * 
+              FROM DUAL;
+	
+		INSERT INTO SHOPPING_ORDER
+                (
+                member_id,product_no,order_price,order_count,order_date,order_name,order_address,
+                 order_address2,order_zipcode,order_phone,order_memo
+                 )
+              VALUES
+              <foreach item="item" collection="List"  separator=",">
+              (
+              #{}, #{mem_id}, #{item.product_no}, #{item.product_price}, #{item.product_count}, #{order_date}, #{name},
+              #{address}, #{address2}, #{zipcode}, #{phone}, #{memo}
+              )
+              </foreach>
+
+	</insert>
 </mapper>
