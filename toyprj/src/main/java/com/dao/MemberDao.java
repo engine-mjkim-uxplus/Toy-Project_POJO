@@ -24,15 +24,13 @@ public class MemberDao {
 		sqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
 	}
 	
-	public MemberVO memberListPayment(String id) {
+	public List<Map<String,Object>> memberListPayment(String id) {
 		logger.info("MemberDao: memberListPayment 호출 성공");
-		MemberVO mVO = null;
-		Map<String,Object> pMap = new HashMap<>();
-		pMap.put("id", id);
+		List<Map<String,Object>> orderList = null;
 		
 		try {
 			sqlSession = sqlSessionFactory.openSession();
-			mVO = sqlSession.selectOne("getMember",pMap); //ProductVO			
+			orderList = sqlSession.selectList("getOrderList", id); 	
 			// insert here
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
@@ -40,7 +38,7 @@ public class MemberDao {
 			sqlSession.close();
 		}
 		
-		return mVO;
+		return orderList;
 	}
 
 	public int memberUpdateP(Map<String, Object> pMap) {
@@ -153,6 +151,25 @@ public class MemberDao {
 		return likeList;
 	}
 
+
+	public MemberVO login(String id) {
+		MemberVO mVO = null;
+		Map<String,Object> pMap = new HashMap<>();
+		pMap.put("id", id);
+		
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			mVO = sqlSession.selectOne("getMember",pMap); //ProductVO			
+			// insert here
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		
+		return mVO;
+	}
+
 	public List<Map<String, Object>> memberListReview(String id) {
 		logger.info("MemberDao: memberListReview 호출 성공");
 		List<Map<String, Object>> memberListReview = null;
@@ -167,6 +184,7 @@ public class MemberDao {
 			sqlSession.close();
 		}
 		return memberListReview;
+
 	}
 
 }

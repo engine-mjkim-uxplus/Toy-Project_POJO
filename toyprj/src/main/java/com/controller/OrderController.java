@@ -77,7 +77,7 @@ public class OrderController implements Controller {
 		mv.setViewName("memPayment");
 		
 		member = new MemberVO();
-		member = memberLogic.memberListPayment(mem_id); // 멤버의 주소 및 휴대폰 번호
+		member = memberLogic.Login(mem_id); // 멤버의 주소 및 휴대폰 번호
 		mv.addObject("member", member);
 		
 		Map<String,Object> rMap = new HashMap(); // 결과값 받아올 Map

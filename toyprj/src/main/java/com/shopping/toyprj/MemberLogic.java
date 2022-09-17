@@ -15,10 +15,10 @@ public class MemberLogic {
 	Logger logger = Logger.getLogger(MemberLogic.class);
 	MemberDao memberdao = new MemberDao();
 	
-	public MemberVO memberListPayment(String id) {
-		logger.info("MemberLogic: memberListPayment 호출");
-		MemberVO mVO = memberdao.memberListPayment(id);
-		return mVO;
+	public List<Map<String,Object>> memberListPayment(String id) {
+		List<Map<String,Object>> orderList = null;
+		orderList = memberdao.memberListPayment(id);
+		return orderList;
 	}
 
 	public int memberUpdateP(Map<String, Object> pMap) {
@@ -56,13 +56,19 @@ public class MemberLogic {
 		return likeList;
 	}
 
+
+	public MemberVO Login(String id) {
+		logger.info("MemberLogic: memberListPayment 호출");
+		MemberVO mVO = memberdao.login(id);
+		return mVO;
+	}
+
 	public List<Map<String, Object>> memberListReview(String id) {
 		logger.info("MemberLogic: memberListReview 호출");
 		List<Map<String, Object>> memberListReview = new ArrayList<>();
 		memberListReview = memberdao.memberListReview(id);
 		return memberListReview;
-	}
 
-	
+	}
 
 }

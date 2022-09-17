@@ -158,11 +158,10 @@
     
     <%@ include file="./component/head.jsp" %>
     <div class="wrap">
-    
       <div class="row d-flex" style="height: 1000px;">
 		<%@ include file="./component/side.jsp" %>
         <div class="col-md-10 content">
-        
+
 			<ol class="list-group d-flex flex-row justify-content-center mt-5">
 			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
 			    <div class="d-flex justify-content-center align-items-center flex-column">
@@ -170,7 +169,7 @@
 			      	<i class="fas fa-truck fs-1"></i>
 			      </div>
 			      <div class="fs-5 mb-2">배송중</div>
-			      <div class="badge bg-primary rounded-pill fs-5">0</div>
+			      <div class="badge bg-primary rounded-pill fs-5">${orderList.size()}</div>
 			    </div>
 			  </li>
 			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
@@ -192,8 +191,8 @@
 			    </div>
 			  </li>
 			</ol>
-			
-			<section class="bg-light d-flex justify-content-center mt-5">
+
+			<section class="w-100 bg-light d-flex justify-content-center mt-5">
 			    <div class="container px-4 px-lg-5">
 				    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 					    <table class="table">
@@ -201,59 +200,44 @@
 						    <tr>
 						      <th class="col-1" scope="col">구매날짜</th>
 						      <th class="col-1" scope="col">주문번호</th>
-						      <th class="col-1" scope="col">상품이미지</th>
-						      <th class="col-1" scope="col">상품이름</th>
-						      <th class="col-1" scope="col">상품가격</th>
-						      <th class="col-1" scope="col">수령인주소</th>
-						      <th class="col-1" scope="col">배송메모</th>
-						      <th class="col-1" scope="col"></th>
+						      <th class="col-4" scope="col">상품정보</th>
+						      <th class="col-1" scope="col">수량</th>
+						      <th class="col-1" scope="col">가격</th>
+						      <th class="col-1" scope="col">배송정보</th>
+						      <th class="col-1" scope="col">검색</th>
 						    </tr>
 						  </thead>
-						  <tbody>
-							  	<tr>
-							      <td scope="row">예</td>
-							      <td>예</td>
-							      <td>예</td>
-								  <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td class="d-flex flex-column">
-							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
-							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>
-							      	<button type="button" class="btn btn-primary mb-2">반품요청</button>
-							      </td>
-							    </tr>
-							  	<tr>
-							      <td scope="row">예</td>
-							      <td>예</td>
-							      <td>예</td>
-								  <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td class="d-flex flex-column">
-							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
-							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>
-							      	<button type="button" class="btn btn-primary mb-2">반품요청</button>
-							      </td>
-							    </tr>
-							  	<tr>
-							      <td scope="row">예</td>
-							      <td>예</td>
-							      <td>예</td>
-								  <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td>예</td>
-							      <td class="d-flex flex-column">
-							      	<button type="button" class="btn btn-primary mb-2">교환요청</button>
-							      	<button type="button" class="btn btn-primary mb-2">구매확정</button>
-							      	<button type="button" class="btn btn-primary mb-2">반품요청</button>
-							      </td>
-							    </tr>
+						  <tbody id="tbody">
+							    <c:forEach var="item" items="${orderList}">
+								  	<tr>
+								      <td scope="row">${item.get('ORDER_DATE')}</td>
+								      <td>${item.get('ORDER_NO')}</td>
+									  <td>
+									  	<img src="${item.get('PRODUCT_IMG')}" style="width: 100px; height: auto;">
+									  	<span class="fs-5">${item.get('PRODUCT_NAME')}</span>
+									  </td>
+								      <td>${item.get('ORDER_COUNT')}</td>
+								      <td>${item.get('ORDER_PRICE')}</td>
+								      <td>
+								      	<button 
+								      	class="btn btn-primary mb-2"
+								      	data-bs-toggle="modal" data-bs-target="#locationModal"
+								      	data-address="${item.get('ORDER_NAME')},${item.get('ORDER_ADDRESS')},${item.get('ORDER_ADDRESS2')},${item.get('ORDER_ZIPCODE')},${item.get('ORDER_PHONE')},${item.get('ORDER_MEMO')}">
+								      		배송정보
+								      	</button>
+								      </td>
+								      <td class="">
+								      	<button type="button" class="btn btn-primary mb-2">교환요청</button><br/>
+								      	<button type="button" class="btn btn-primary mb-2">구매확정</button><br/>
+								      	<button type="button" class="btn btn-primary">반품요청</button>
+								      </td>
+								    </tr>
+						  		</c:forEach>
 						  </tbody>
 						</table>
+						<c:if test="${ empty orderList }">
+							<h3 class="mt-5">구매내역이 없습니다</h3>
+						</c:if>
 					</div>
 				</div>
 			</section>
@@ -262,8 +246,74 @@
       </div>
     </div>
     
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg modal-dialog-centered">
+	    <div class="modal-content border border-secondary rounded-3 border-opacity-50">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalToggleLabel">배송 정보</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      	<form id="infoChange">
+				<div class="input-group mb-3">
+				  <span class="input-group-text" id="basic-addon3">수령자 이름</span>
+				  <input type="text" class="form-control" id="locationName" aria-describedby="basic-addon3" value="">
+				</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text" id="basic-addon3">수령자 우편번호</span>
+				  <input type="text" class="form-control" id="locationZipcode" aria-describedby="basic-addon3" value="">
+				</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text" id="basic-addon3">수령자 상세주소1</span>
+				  <input type="text" class="form-control" id="locationAddress" aria-describedby="basic-addon3" value="">
+				</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text" id="basic-addon3">수령자 상세주소2</span>
+				  <input type="text" class="form-control" id="locationAddress2" aria-describedby="basic-addon3" value="">
+				</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text" id="basic-addon3">수령자 전화번호</span>
+				  <input type="text" class="form-control" id="locationPhone" aria-describedby="basic-addon3" value="">
+				</div>
+				<div class="input-group mb-3">
+				  <span class="input-group-text" id="basic-addon3">배송 메모</span>
+				  <input type="text" class="form-control" id="locationMemo" aria-describedby="basic-addon3" value="">
+				</div>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button form="infoChange" type="button" class="btn btn-primary">수정하기</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      	  </div>
+	    </div>
+	  </div>
+	</div>
     <!-- footer start -->
 	<%@ include file="../../../component/footer.jsp" %>
     <!-- footer end -->
   </body>
+  <script type="text/javascript">
+	let tbody = document.getElementById('tbody');
+	let locationInfo = []
+	
+	let Name = document.getElementById('locationName');
+	let Zipcode = document.getElementById('locationZipcode');
+	let Address = document.getElementById('locationAddress');
+	let Address2 = document.getElementById('locationAddress2');
+	let Phone = document.getElementById('locationPhone');
+	let Memo = document.getElementById('locationMemo');
+	 
+	tbody.addEventListener('click',function(e){
+		let address = e.target.dataset.address;
+		locationInfo = address.split(',');
+		<!-- ['백종국', '경기도 구리시 수택동', '빌라 마동 302호', '46978', '01033992301', '빨리 갖다주세요'] -->
+		
+		Name.value = locationInfo[0];
+		Address.value = locationInfo[1];
+		Address2.value = locationInfo[2];
+		Zipcode.value = locationInfo[3];
+		Phone.value = locationInfo[4];
+		Memo.value = locationInfo[5];
+	});
+  </script>
 </html>

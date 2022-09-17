@@ -6,6 +6,14 @@
 		SELECT * FROM MEMBER WHERE MEMBER_ID = #{id}
 	</select>
 	
+	<select id="getOrderList" parameterType="String" resultType="map">
+		SELECT b.order_no, b.order_date, b.order_name, b.order_address, b.order_address2,b.order_zipcode, b.order_phone, b.order_memo,
+		a.product_name, a.product_img, b.order_count, b.order_price
+		FROM PRODUCT a , SHOPPING_ORDER b
+		where member_id = #{value}
+		and a.product_no = b.product_no
+	</select>
+	
 	<update id="memberUpdateP" parameterType="map">
 		UPDATE MEMBER
 		   SET member_pw = #{member_pw}

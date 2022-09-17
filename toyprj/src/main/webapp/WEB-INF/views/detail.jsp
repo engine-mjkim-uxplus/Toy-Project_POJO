@@ -76,9 +76,7 @@
   </head>
   <body>
 
-
-  	
-  	<script type="text/javascript">
+<script type="text/javascript">		
   		function cartCount(result){
   			let count = document.getElementById('inputQuantity');
   			let countNum = parseInt(count.value);
@@ -255,7 +253,7 @@
 					      <th class="col-6" scope="col">후기</th>
 					    </tr>
 					  </thead>
-					  <tbody>
+					  <tbody id="tbody">
 					  	<c:forEach begin="5" var="reviewList" items="${productList}">
 						  	<tr>
 						      <td scope="row"><div>${reviewList.get("REVIEW_DATE")}</div></td>
@@ -267,8 +265,10 @@
 						      </td>
 						      <c:if test="${ !empty reviewList.get('REVIEW_IMG') }">
 							      <td>
-							      	<a target='_blank' href="http://localhost:8080/reviewimg/${reviewList.get('REVIEW_IMG')}">
-							      		<img style="width: 100px; height: 100px;" src="../../../reviewimg/${reviewList.get('REVIEW_IMG')}"/>
+							      	<a href="#" data-bs-toggle="modal" data-bs-target="#imgModal">
+							      		<img style="width: 100px; height: 100px;" src="../../../reviewimg/${reviewList.get('REVIEW_IMG')}" 
+							      			data-img="${reviewList.get('REVIEW_IMG')}"
+							      		/>
 							      	</a>
 							      </td>
 						      </c:if>
@@ -351,6 +351,29 @@
 	    </div>
 	  </div>
 	</div>
-
+	
+	<div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg modal-dialog-centered">
+	    <div class="modal-content border border-secondary rounded-3 border-opacity-50">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalToggleLabel">첨부사진</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+			<img id="modalImg" style="width: 100%; height: 500px;">
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<script type="text/javascript">
+ 		let tbody = document.getElementById('tbody');
+ 		let modalImg = document.getElementById('modalImg');
+ 		
+ 		tbody.addEventListener('click',function(e){
+			const imgName = e.target.dataset.img;
+			const imgPath = "../../../reviewimg/"+imgName;
+			modalImg.setAttribute('src',imgPath);
+		});
+	</script>
   </body>
 </html>
