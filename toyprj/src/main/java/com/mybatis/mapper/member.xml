@@ -55,5 +55,12 @@
                ) C
          WHERE P.PRODUCT_NO = C.PRODUCT_NO
 	</select>
+	<!-- 구매내역 가져오기 -->
+	<select id="memberListReview" parameterType="String" resultType="map">
+	SELECT P.PRODUCT_NAME,P.PRODUCT_IMG,P.PRODUCT_NO
+	      ,R.MEMBER_ID, R.REVIEW_CONTENT, R.REVIEW_SCORE, R.REVIEW_IMG, R.REVIEW_DATE
+	  FROM PRODUCT P , PRODUCT_REVIEW  R
+	 WHERE P.PRODUCT_NO = R.PRODUCT_NO and MEMBER_ID= #{member_id}
+	</select>
 	
 </mapper>
