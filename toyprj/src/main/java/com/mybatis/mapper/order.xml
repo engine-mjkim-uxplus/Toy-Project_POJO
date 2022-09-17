@@ -16,27 +16,19 @@
 	
 	<insert id="orderMinsert" parameterType="Map">
 		INSERT ALL
-				<foreach item="item" collection="List"  separator=","> 
+				<foreach item="item" collection="productList"> 
                 INTO SHOPPING_ORDER
-                (order_no, member_id,product_no,order_price,order_count,order_date,order_name,order_address,
-                  order_address2,order_zipcode,order_phone,order_memo)
-              VALUES ('1','mjey54',201,1,'1','1','1',1,'1','1','1',1)
-              </foreach>
-              SELECT * 
-              FROM DUAL;
-	
-		INSERT INTO SHOPPING_ORDER
                 (
-                member_id,product_no,order_price,order_count,order_date,order_name,order_address,
-                 order_address2,order_zipcode,order_phone,order_memo
-                 )
-              VALUES
-              <foreach item="item" collection="List"  separator=",">
-              (
-              #{}, #{mem_id}, #{item.product_no}, #{item.product_price}, #{item.product_count}, #{order_date}, #{name},
-              #{address}, #{address2}, #{zipcode}, #{phone}, #{memo}
-              )
+	                member_id,product_no,order_price,order_count,order_date,order_name,order_address,
+	                order_address2,order_zipcode,order_phone,order_memo,order_number
+                )
+              	VALUES
+              	(
+              		#{mem_id}, #{item.product_no}, #{item.product_price}, #{item.product_count}, #{order_date}, #{name},
+		            #{address}, #{address2}, #{zipcode}, #{phone}, #{memo}, #{orderNumber}
+		        )
               </foreach>
-
+              SELECT 1 
+              FROM DUAL
 	</insert>
 </mapper>

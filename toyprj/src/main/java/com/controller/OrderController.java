@@ -131,6 +131,7 @@ public class OrderController implements Controller {
 		orderNumber = strToday + resultUuid.substring(0,10);
 		mv.addObject("orderNumber", orderNumber);
 		mv.addObject("name", (String)pMap.get("name"));
+		pMap.put("orderNumber", orderNumber);
 		logger.info(orderNumber);
 		
 		// 회원 주문

@@ -57,7 +57,8 @@ public class OrderDao {
 		int result = 0;
 		try {
 			sqlSession = sqlSessionFactory.openSession();
-			result = sqlSession.selectOne("orderMinsert", pMap);
+			logger.info(pMap.get("productList"));
+			result = sqlSession.insert("orderMinsert", pMap);
 			sqlSession.commit();
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
