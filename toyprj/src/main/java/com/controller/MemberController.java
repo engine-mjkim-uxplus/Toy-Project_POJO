@@ -16,7 +16,6 @@ import com.shopping.toyprj.MemberLogic;
 import com.util.HashMapBinder;
 import com.util.ModelAndView;
 import com.vo.MemberVO;
-import com.vo.ProductReviewVO;
 import com.vo.ProductVO;
 
 public class MemberController implements Controller {
@@ -32,11 +31,11 @@ public class MemberController implements Controller {
 		logger.info(id);
 		
 		Object path = null;
+		ModelAndView mav = new ModelAndView(req);
 		
 		if (id == null) {
 			path = "login/loginForm.do";
 		}else {
-			ModelAndView mav = new ModelAndView(req);
 			MemberVO mVO = memberLogic.Login(id);
 			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
 			mav.addObject("member", mVO);
@@ -45,7 +44,8 @@ public class MemberController implements Controller {
 		}
 		
 		List<Map<String,Object>> orderList = null;
-		orderList = memberLogic.memberListPayment();
+		orderList = memberLogic.memberListPayment(id);
+		mav.addObject("orderList", orderList);
 		
 		return path;
 	}
