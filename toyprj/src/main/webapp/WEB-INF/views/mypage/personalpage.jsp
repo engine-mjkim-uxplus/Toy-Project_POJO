@@ -157,7 +157,7 @@
       <div class="row d-flex" style="height: 1000px;">
 		<%@ include file="./component/side.jsp" %>
 			<div class="col-md-10 content p-3">
-				<h5 class="font-medium hidden md:block">내 정보 수정</h5>
+				<h4 class="font-medium hidden md:block"><b>🔑내 정보 수정</b></h4>
 				<hr>
 				<h5 class="font-medium mb-4">나의 정보</h5>
 				<div class="input-form-backgroud row">

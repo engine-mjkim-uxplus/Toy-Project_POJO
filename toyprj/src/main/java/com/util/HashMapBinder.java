@@ -36,7 +36,10 @@ public class HashMapBinder {
 	
 	public void multiBind(Map<String,Object> pMap) {
 		realFolder = req.getSession().getServletContext().getRealPath("/reviewimg");
+
 		System.out.println("realFolder :"+realFolder);
+
+
 		pMap.clear();
 		try {
 			multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());

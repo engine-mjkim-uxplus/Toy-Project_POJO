@@ -13,14 +13,19 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.shopping.toyprj.Controller;
+import com.shopping.toyprj.MemberLogic;
 import com.shopping.toyprj.OrderLogic;
 import com.util.HashMapBinder;
 import com.util.ModelAndView;
 import com.vo.CartVO;
+import com.vo.CouponVO;
+import com.vo.MemberVO;
 
 public class OrderController implements Controller {
 	Logger logger = Logger.getLogger(OrderController.class);
 	OrderLogic orderLogic = new OrderLogic();
+	MemberLogic memberLogic = new MemberLogic();
+	
 	
 	@Override
 	public Object orderList(HttpServletRequest req, HttpServletResponse res) {
@@ -29,31 +34,68 @@ public class OrderController implements Controller {
 	HashMapBinder hmb = new HashMapBinder(req);
 	Map<String,Object> pMap = new HashMap<>();
 	hmb.bind(pMap);
-	String[] product_name = (String[])pMap.get("product_name");
-	String[] product_img = (String[])pMap.get("product_img");
-	String[] product_no = (String[])pMap.get("product_no");
-	int[] product_price = Arrays.stream((String[])pMap.get("product_price"))
-							.mapToInt(Integer::parseInt).toArray();
-	int[] product_count = Arrays.stream((String[])pMap.get("product_count"))
-							.mapToInt(Integer::parseInt).toArray();
 	
+	// 상품이 한가지 품목만 넘어 왔을 경우, 여러 품목이 넘어 왔을 경우에 대해 분기처리
+	// pMap.get(key)값이 여러개면 ? pMap.get(key)값이 하나면?
 	List cartList = new ArrayList();
 	CartVO cartVO = null;
 	
-	for(int i =0; i < product_name.length; i++) {
-		cartVO = new CartVO(product_name[i], product_img[i]
-							, product_no[i], product_price[i], product_count[i]);
+	// pMap에 저장된 상품이 하나일 경우
+	if(pMap.get("product_name") instanceof String) {
+		String product_name = (String)pMap.get("product_name");
+		String product_img = (String)pMap.get("product_img");
+		String product_no =  (String)pMap.get("product_no");
+		int product_price = Integer.valueOf((String)pMap.get("product_price"));
+		int product_count = Integer.valueOf((String)pMap.get("product_count"));
+		// 상품정보 1건 VO를 통해 List에 담기
+		cartVO = new CartVO(product_name, product_img, product_no, product_price, product_count);
 		cartList.add(cartVO);
-				}
+		
+	// pMap에 저장된 상품이 여러개일 경우(배열)	
+	} else {
+		String[] product_name = (String[])pMap.get("product_name");
+		String[] product_img = (String[])pMap.get("product_img");
+		String[] product_no = (String[])pMap.get("product_no");
+		int[] product_price = Arrays.stream((String[])pMap.get("product_price"))
+								.mapToInt(Integer::parseInt).toArray();
+		int[] product_count = Arrays.stream((String[])pMap.get("product_count"))
+								.mapToInt(Integer::parseInt).toArray();
+		// 상품정보 N건 VO를 통해 List에 담기
+		for(int i =0; i < product_name.length; i++) {
+			cartVO = new CartVO(product_name[i], product_img[i]
+					, product_no[i], product_price[i], product_count[i]);
+			cartList.add(cartVO);
+		}
+		
+	}
 	HttpSession session = req.getSession();
 	String mem_id = (String)session.getAttribute("mem_id");
-	
+	MemberVO member = null;
+	List<CouponVO> couponList = null;
+	// 회원일 경우 회원테이블에서 주소 가져오기
 	if(mem_id != null) {
+		mv.setViewName("memPayment");
 		
-	}	
+		member = new MemberVO();
+		member = memberLogic.Login(mem_id); // 멤버의 주소 및 휴대폰 번호
+		mv.addObject("member", member);
+		
+		Map<String,Object> rMap = new HashMap(); // 결과값 받아올 Map
+		// 쿠폰 여부조회 및 쿠포정보 가져오기
+		couponList = orderLogic.memberCoupon(mem_id,rMap);
+		
+		// 조회한 쿠폰 결과가 있으면 추가(List 자료형이면 결과값이 있는 것)
+		if((int)rMap.get("result") > 0 ) {
+			logger.info("Controller 쿠폰 => " + couponList);
+			mv.addObject("couponList",couponList);
+		} else {
+			couponList = null;
+		}
+	// 비회원
+	} else if(mem_id == null) {
+		mv.setViewName("payment");
+	}
 	mv.addObject("cartList", cartList);
-	mv.setViewName("payment");
-	
 	return mv;
 	}
 	

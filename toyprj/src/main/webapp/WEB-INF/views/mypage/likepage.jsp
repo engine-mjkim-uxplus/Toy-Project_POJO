@@ -168,7 +168,7 @@
           				<div class="title">
            					 <div class="row">
              					 <div class="col">
-                				<h4><b>좋아요 누른 상품 목록</b></h4>
+                				<h4><b>❤️좋아요 누른 상품 목록</b></h4>
               					</div>
             				</div>
           				</div>
