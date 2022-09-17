@@ -2,9 +2,9 @@ package com.vo;
 
 public class CartVO {
 // 상품 카테고리, 상품이름, 상품 이미지, 상품 수량, 상품 가격
-	private String product_category = null;
-	private String product_name = null;
-	private String product_img = null;
+	private String product_category;
+	private String product_name;
+	private String product_img;
 	private String product_no;
 	private int product_price;
 	private int product_count;
