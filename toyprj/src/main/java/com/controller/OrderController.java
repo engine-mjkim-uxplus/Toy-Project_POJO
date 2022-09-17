@@ -122,7 +122,7 @@ public class OrderController implements Controller {
 		SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c1 = Calendar.getInstance();
 		String strToday = sdf.format(c1.getTime());
-		String strToday2 = sdf.format(c1.getTime());
+		String strToday2 = fDate.format(c1.getTime());
 		pMap.put("order_date", strToday2); // 테이블에 저장할 날짜(yyyy-mm-dd)
 		
 		String uuid = UUID.randomUUID().toString();
