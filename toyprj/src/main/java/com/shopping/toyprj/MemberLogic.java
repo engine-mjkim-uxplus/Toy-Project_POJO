@@ -15,9 +15,9 @@ public class MemberLogic {
 	Logger logger = Logger.getLogger(MemberLogic.class);
 	MemberDao memberdao = new MemberDao();
 	
-	public List<Map<String,Object>> memberListPayment(String id) {
+	public List<Map<String,Object>> memberListPayment(Map<String,Object> pMap) {
 		List<Map<String,Object>> orderList = null;
-		orderList = memberdao.memberListPayment(id);
+		orderList = memberdao.memberListPayment(pMap);
 		return orderList;
 	}
 
