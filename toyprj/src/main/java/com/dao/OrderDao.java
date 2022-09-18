@@ -51,7 +51,7 @@ public class OrderDao {
 		
 		return couponList;
 	}
-	/************************ 회원 주문 ***********************/
+	/************************ 결제 후 회원 주문 테이블에 결제건 등록***********************/
 	public int orderMinsert(Map<String, Object> pMap) {
 		logger.info("OrderDao ===> orderMinsert 호출");
 		int result = 0;
@@ -59,6 +59,7 @@ public class OrderDao {
 			sqlSession = sqlSessionFactory.openSession();
 			logger.info(pMap.get("productList"));
 			result = sqlSession.insert("orderMinsert", pMap);
+			logger.info("Insert 결과 : " + result);
 			sqlSession.commit();
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
@@ -67,5 +68,54 @@ public class OrderDao {
 		}
 		return result;
 	}
+	/************************ 결제 후 결제상품 장바구니 삭제 ***********************/
+	public int cartMdelete(Map<String, Object> pMap) {
+		logger.info("OrderDao ===> orderMdelete 호출");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.delete("cartMdelete", pMap);
+			logger.info("delete 결과 : " + result);
+			sqlSession.commit();
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+	/************************ 결제 후 회원 쿠폰 / 포인트 사용시 업데이트 ***********************/
+	public int orderMupdate(Map<String, Object> pMap) {
+		logger.info("OrderDao ===> orderMupdate 호출");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("orderMupdate", pMap);
+			logger.info("update 결과 : " + result);
+			sqlSession.commit();
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+	/************************ 쿠폰 사용시 사용한 쿠폰 coupon_zip에서 삭제 ***********************/
+	public int couponDelete(Map<String, Object> pMap) {
+		logger.info("OrderDao ===> couponDelete 호출");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.delete("couponDelete", pMap);
+			logger.info("couponDelete 결과 : " + result);
+			sqlSession.commit();
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+	
 }
 

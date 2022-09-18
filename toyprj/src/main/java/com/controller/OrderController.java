@@ -114,7 +114,11 @@ public class OrderController implements Controller {
 		String mem_id = (String)session.getAttribute("mem_id");
 		Map<String,Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
-		pMap.put("mem_id", mem_id);
+		
+		int coupon= Integer.valueOf((String)pMap.get("coupon"));
+		int point = Integer.valueOf((String)pMap.get("point"));
+		pMap.put("coupon", coupon);
+		pMap.put("point", point);
 		
 		// 주문번호(날짜생성 ex.20220522)
 		String orderNumber = "";
@@ -123,7 +127,6 @@ public class OrderController implements Controller {
 		Calendar c1 = Calendar.getInstance();
 		String strToday = sdf.format(c1.getTime());
 		String strToday2 = fDate.format(c1.getTime());
-		pMap.put("order_date", strToday2); // 테이블에 저장할 날짜(yyyy-mm-dd)
 		
 		String uuid = UUID.randomUUID().toString();
 		// 하이픈 제외
@@ -132,11 +135,15 @@ public class OrderController implements Controller {
 		mv.addObject("orderNumber", orderNumber);
 		mv.addObject("name", (String)pMap.get("name"));
 		pMap.put("orderNumber", orderNumber);
+		pMap.put("mem_id", mem_id);
+		pMap.put("buyState", "주문완료");
+		pMap.put("order_date", strToday2); // 테이블에 저장할 날짜(yyyy-mm-dd)
 		logger.info(orderNumber);
 		
 		// 회원 주문
 		if(mem_id != null) {
 			List<Map<String,Object>> productList = null;
+			List<Map<String,Object>> product = null;
 			HashMap<String,Object> lMap = null;
 			// 상품이 단건일 경우
 			if(pMap.get("product_name") instanceof String) {
