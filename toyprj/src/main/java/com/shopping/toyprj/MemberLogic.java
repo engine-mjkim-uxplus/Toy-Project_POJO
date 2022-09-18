@@ -33,10 +33,14 @@ public class MemberLogic {
 		int result = 0;
 		List<CartVO> cartList = new ArrayList<>();
 		List<ProductVO> likeList = new ArrayList<>();
+		List<ProductReviewVO> reviewList = new ArrayList<>();
 		logger.info("MemberLogic: 카트 목록 불러오기");
 		cartList = memberdao.getCartList(pMap);
 		likeList = memberdao.getLikeList(pMap);
+		reviewList = memberdao.getReviewList(pMap);
 		pMap.put("cartList", cartList);
+		pMap.put("likeList", likeList);
+		pMap.put("reviewList", reviewList);
 		if(cartList.size() > 0 && cartList != null) {
 			logger.info("MemberLogic: 카트 삭제");
 			memberdao.deleteCart(pMap);
@@ -44,6 +48,10 @@ public class MemberLogic {
 		if(likeList.size() > 0 && cartList != null) {
 			logger.info("MemberLogic: 좋아요 삭제");
 			memberdao.deleteLike(pMap);
+		}
+		if(reviewList.size() > 0 && reviewList != null) {
+			logger.info("MemberLogic: 리뷰 삭제");
+			memberdao.deleteReview(pMap);
 		}
 		result = memberdao.memberDelete(pMap);
 		return result;

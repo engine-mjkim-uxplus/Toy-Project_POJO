@@ -187,4 +187,35 @@ public class MemberDao {
 
 	}
 
+	public List<ProductReviewVO> getReviewList(Map<String, Object> pMap) {
+		logger.info("MemberDao: getReviewList 호출 성공");
+		List<ProductReviewVO> reviewList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			reviewList = sqlSession.selectList("getReview",pMap);
+			logger.info(reviewList);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return reviewList;
+	}
+
+	public void deleteReview(Map<String, Object> pMap) {
+		logger.info("MemberDao: deleteReview 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.delete("delReview",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		
+	}
+
 }
