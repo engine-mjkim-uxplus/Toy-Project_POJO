@@ -45,6 +45,15 @@
 		DELETE FROM product_like
 		 WHERE member_id = #{member_id}
 	</delete>
+	<select id="getReview" parameterType="map" resultType="com.vo.ProductReviewVO">
+		SELECT * FROM product_review
+		 WHERE member_id = #{member_id}
+	</select>
+	
+	<delete id="delReview" parameterType="map">
+		DELETE FROM product_review
+		 WHERE member_id = #{member_id}
+	</delete>
 	<!-- [[ 회원 탈퇴할 때 무결성 제약조건 방지용 끝 ]] -->	
 	
 	<delete id="memberDelete" parameterType="map">
