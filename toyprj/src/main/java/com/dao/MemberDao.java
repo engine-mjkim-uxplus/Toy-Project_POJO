@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.shopping.toyprj.MemberLogic;
 import com.util.MyBatisCommonFactory;
 import com.vo.CartVO;
+import com.vo.CouponVO;
 import com.vo.MemberVO;
 import com.vo.ProductReviewVO;
 import com.vo.ProductVO;
@@ -216,6 +217,51 @@ public class MemberDao {
 			sqlSession.close();
 		}
 		
+	}
+
+	public List<CouponVO> memberListCoupon(String id) {
+		logger.info("MemberDao: memberListCoupon 호출 성공");
+		List<CouponVO> memberListCoupon = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			memberListCoupon = sqlSession.selectList("memberListCoupon", id);
+			logger.info(memberListCoupon);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return memberListCoupon;
+	}
+
+	public List<Map<String, Object>> getCouponList(Map<String, Object> pMap) {
+		logger.info("MemberDao: getCouponList 호출 성공");
+		List<Map<String, Object>> couponList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			couponList = sqlSession.selectList("getCoupon",pMap);
+			logger.info(couponList);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return couponList;
+	}
+
+	public void deleteCoupon(Map<String, Object> pMap) {
+		logger.info("MemberDao: deleteCoupon 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.delete("delCoupon",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
 	}
 
 }

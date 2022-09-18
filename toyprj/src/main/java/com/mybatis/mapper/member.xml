@@ -58,6 +58,15 @@
 		DELETE FROM product_review
 		 WHERE member_id = #{member_id}
 	</delete>
+	<select id="getCoupon" parameterType="map" resultType="map">
+		SELECT * FROM coupon_zip
+		 WHERE member_id = #{member_id}
+	</select>
+	
+	<delete id="delCoupon" parameterType="map">
+		DELETE FROM coupon_zip
+		 WHERE member_id = #{member_id}
+	</delete>
 	<!-- [[ 회원 탈퇴할 때 무결성 제약조건 방지용 끝 ]] -->	
 	
 	<delete id="memberDelete" parameterType="map">
@@ -82,6 +91,14 @@
 	      ,R.MEMBER_ID, R.REVIEW_CONTENT, R.REVIEW_SCORE, R.REVIEW_IMG, R.REVIEW_DATE
 	  FROM PRODUCT P , PRODUCT_REVIEW  R
 	 WHERE P.PRODUCT_NO = R.PRODUCT_NO and MEMBER_ID= #{member_id}
+	</select>
+	<!-- 쿠폰내역 가져오기 -->
+	<select id="memberListCoupon" parameterType="String" resultType="com.vo.CouponVO">
+		SELECT C.COUPON_NO, C.COUPON_NAME, C.COUPON_DATE, C.COUPON_TEXT, C.COUPON_PRICE
+		  FROM COUPON C,
+		       (SELECT COUPON_NO FROM COUPON_ZIP
+		         WHERE member_id = #{member_id}) Z
+		 WHERE C.COUPON_NO = Z.COUPON_NO
 	</select>
 	
 </mapper>
