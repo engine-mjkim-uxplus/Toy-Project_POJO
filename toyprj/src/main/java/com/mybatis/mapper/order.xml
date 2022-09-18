@@ -13,7 +13,26 @@
                  WHERE member_id = #{mem_id}
                )
 	</select>
-	<!-- 결제 후 결제정보 저장  -->
+	<!-- 비회원 결제정보 저장  -->
+	<insert id="orderInsert" parameterType="Map">
+			INSERT ALL
+				<foreach item="item" collection="productList"> 
+                INTO UNMEMBER_ORDER
+                (
+	                product_no,order_price,order_count,order_date,order_name,order_address,
+	                order_address2,order_zipcode,order_phone,order_memo,order_number, buystate
+                )
+              	VALUES
+              	(
+              		#{item.product_no}, #{item.product_price}, #{item.product_count}, #{order_date}, #{name},
+		            #{address}, #{address2}, #{zipcode}, #{phone}, #{memo}, #{orderNumber}, #{buyState}
+		        )
+              </foreach>
+              SELECT 1 
+              FROM DUAL
+	</insert>
+	
+	<!-- 회원 결제정보 저장  -->
 	<insert id="orderMinsert" parameterType="Map">
 		INSERT ALL
 				<foreach item="item" collection="productList"> 

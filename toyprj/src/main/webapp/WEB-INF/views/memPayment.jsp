@@ -279,7 +279,7 @@
     </header>
     <!-- 회원 주문 페이지 -->
     <c:set var ="total_price" value = "0" />
-    <form class="wrapper" name="paymentForm" id="paymentForm" action="./orderInsert.do" method="get" >
+    <form class="wrapper" name="paymentForm" id="paymentForm" action="./orderInsert.do" method="POST" >
       <div class="h5 large">주문 결제</div>
       <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1">
@@ -288,14 +288,14 @@
             <section>
               <div class="form-group">
                 <label class="text-muted" for="name">이름</label>
-                <input type="text"  name="name" class="form-control" id="buyer_name" name="buyer_name" value="${member.getMember_name()}"/>
+                <input type="text"  name="name" class="form-control" id="buyer_name" value="${member.getMember_name()}"/>
               </div>
               <div class="form-group">
                 <label class="text-muted" for="phone">핸드폰 번호</label>
                 <div
                   class="d-flex jusify-content-start align-items-center rounded p-2"
                 >
-                  <input type="text"  name="phone" id="order_phone" name="order_phone" value="${member.getMember_phone()}"/>
+                  <input type="text"  name="phone" id="order_phone" value="${member.getMember_phone()}"/>
                   </input>
                 </div>
               </div>

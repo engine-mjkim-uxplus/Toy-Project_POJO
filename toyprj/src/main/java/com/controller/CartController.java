@@ -30,6 +30,7 @@ public class CartController implements Controller {
 		HttpSession session = req.getSession();
 		String mem_id = (String)session.getAttribute("mem_id");
 		List<CartVO> sCartList = (ArrayList<CartVO>)session.getAttribute("cartList");
+		
 		// 회원일 경우 db에서 카트조회
 		if(mem_id != null) {
 			cartList = cartLogic.cartList(mem_id);
@@ -97,8 +98,7 @@ public class CartController implements Controller {
 						++check;
 						break;
 					}
-				}
-				
+				}				
 				if(check == 0) {
 				CartVO item= new CartVO(product_name,product_no,product_count,product_img,product_price,product_category);
 				sCartList.add(item);
@@ -125,6 +125,7 @@ public class CartController implements Controller {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(req);
 		hmb.bind(pMap);
+		
 		int product_no = Integer.valueOf((String) pMap.get("product_no"));
 		pMap.put("product_no", product_no);
 		pMap.put("mem_id", mem_id);
