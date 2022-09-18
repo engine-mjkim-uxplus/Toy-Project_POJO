@@ -147,7 +147,7 @@
 		
 		/* [[최근 구매내역을 마이페이지의 메인에서 보여주기]] */
 		.content {
-		  background-color: #ddd;
+		  
 		}
     </style>
   </head>
@@ -191,8 +191,17 @@
 			    </div>
 			  </li>
 			</ol>
+			
 
-			<section class="w-100 bg-light d-flex justify-content-center mt-5">
+			<jsp:useBean id="time" class="com.vo.DateVO" />
+			<section class="w-100 bg-light d-flex flex-column mt-5 align-items-center">
+				<div class="input-group mb-3 w-50">
+				  <a href="./memberListPayment.do?date=<jsp:getProperty name="time" property="threeMonthsAgo"/>" class="btn btn-outline-secondary" type="button">최근 3개월</a>
+				  <a href="./memberListPayment.do?date=<jsp:getProperty name="time" property="aMonthAgo"/>" class="btn btn-outline-secondary" type="button">최근 1개월</a>
+				  <a href="./memberListPayment.do?date=<jsp:getProperty name="time" property="aWeekAgo"/>" class="btn btn-outline-secondary" type="button">최근 1주일</a>
+				  <input id="searchDate" type="date" class="form-control" max="<jsp:getProperty name="time" property="today"/>">
+				  <button class="btn btn-outline-secondary" type="button" onclick='searchDate()'>검색</button>
+				</div>
 			    <div class="container px-4 px-lg-5">
 				    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 					    <table class="table">
@@ -204,7 +213,7 @@
 						      <th class="col-1" scope="col">수량</th>
 						      <th class="col-1" scope="col">가격</th>
 						      <th class="col-1" scope="col">배송정보</th>
-						      <th class="col-1" scope="col">검색</th>
+						      <th class="col-1" scope="col"></th>
 						    </tr>
 						  </thead>
 						  <tbody id="tbody">
@@ -315,5 +324,16 @@
 		Phone.value = locationInfo[4];
 		Memo.value = locationInfo[5];
 	});
+	
+	function searchDate(){
+		const date = document.getElementById('searchDate');
+		const selectDate = date.value;
+		
+		if (selectDate != null && selectDate.length > 0){
+			location.href="./memberListPayment.do?date="+selectDate;
+		}else {
+			alert('날짜를 입력해주세요.');
+		}
+	}
   </script>
 </html>
