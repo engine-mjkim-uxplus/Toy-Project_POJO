@@ -62,4 +62,8 @@
     	WHERE member_id = #{mem_id}
        AND coupon_no = #{coupon}
 	</delete>	
+	
+	
+	
+	
 </mapper>

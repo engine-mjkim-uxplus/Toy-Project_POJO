@@ -142,19 +142,29 @@ public class OrderController implements Controller {
 		
 		// 회원 주문
 		if(mem_id != null) {
-			List<Map<String,Object>> productList = null;
-			List<Map<String,Object>> product = null;
-			HashMap<String,Object> lMap = null;
+			List<Map<String,Object>> productList = new ArrayList<>();
+			HashMap<String,Object> lMap = new HashMap<>();
+			
 			// 상품이 단건일 경우
 			if(pMap.get("product_name") instanceof String) {
 				logger.info("상품이 하나 입니다");
+				String product_name = (String)pMap.get("product_name");
+				String product_no = (String)pMap.get("product_no");
+				int product_price = Integer.valueOf((String)pMap.get("product_price"));
+				int product_count = Integer.valueOf((String)pMap.get("product_count"));
+				
+				lMap.put("product_name", product_name); 
+				lMap.put("product_no", product_no); 
+				lMap.put("product_price", product_price); 
+				lMap.put("product_count", product_count); 
+				productList.add(lMap);
+				pMap.put("productList", productList);
 				orderLogic.memOrder(pMap);
 				
 			// pMap에 저장된 상품이 여러개일 경우(배열)	
 			} else {
 				logger.info("상품이 여러개 입니다");
 				try {
-					productList = new ArrayList<>();
 					String[] product_name = (String[])pMap.get("product_name");
 					String[] product_no = (String[])pMap.get("product_no");
 					int[] product_price = Arrays.stream((String[])pMap.get("product_price"))
@@ -163,7 +173,6 @@ public class OrderController implements Controller {
 											.mapToInt(Integer::parseInt).toArray();	
 					
 					for(int i = 0; i < product_name.length; i++) {
-						logger.info("여기타니");
 						lMap = new HashMap<>();
 						lMap.put("product_name", product_name[i]); 
 						lMap.put("product_no", product_no[i]); 
