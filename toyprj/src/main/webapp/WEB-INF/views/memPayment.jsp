@@ -352,7 +352,7 @@
               	<div class="col-7 d-flex">
 	              <div class="form-group col-9">
     	            <label class="text-muted" for="point">적립금 사용</label>
-        	        <input type="text" id="point" name="point" value="" class="form-control" placeholder="100원 단위로 입력해주세요."/>
+        	        <input type="text" id="point" name="point" value="0" class="form-control" placeholder="100원 단위로 입력해주세요."/>
             	  </div>
             	  <div class="mt-4 col-3">
               		<button class="btn fa-solid b btn-success" id="pointBtn">적용</button>
@@ -596,6 +596,7 @@
         }, function (rsp) { // callback
             if (rsp.success) {
 				alert("결제성공");
+				$('#point').removeAttr('disabled');
 		        $('#paymentForm').submit();
             } else {
 				alert(rsp.error_msg);
@@ -603,12 +604,6 @@
             }
         });
       }
-    function isSubmit(){
-    	return true;
-    }
-    
-    /*
-    */
  	</script>
  	
     
