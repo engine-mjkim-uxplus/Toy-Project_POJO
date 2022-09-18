@@ -1,7 +1,6 @@
 package com.controller;
 
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +25,13 @@ public class MemberController implements Controller {
 	public Object memberListPayment(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("MemberController: memberListPayment 호출");
 		
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		
 		HttpSession session = req.getSession();
 		String id = (String) session.getAttribute("mem_id");
-		logger.info(id);
+		pMap.put("member_id", id);
 		
 		Object path = null;
 		ModelAndView mav = new ModelAndView(req);
@@ -44,7 +47,7 @@ public class MemberController implements Controller {
 		}
 		
 		List<Map<String,Object>> orderList = null;
-		orderList = memberLogic.memberListPayment(id);
+		orderList = memberLogic.memberListPayment(pMap);
 		mav.addObject("orderList", orderList);
 		
 		return path;
