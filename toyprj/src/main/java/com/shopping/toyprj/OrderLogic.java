@@ -36,6 +36,15 @@ public class OrderLogic {
 		} 
 		return couponList; 
 	}
-	
+
+	public void memOrder(Map<String, Object> pMap) {
+		logger.info("OrderLogic => memOrderInsert 호출");
+		int result = 0;
+		// 1. shopping order update
+		result = orderDao.orderMinsert(pMap);
+		
+		
+		
+	}
 	
 }

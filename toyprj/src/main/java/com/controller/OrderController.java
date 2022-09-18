@@ -1,10 +1,15 @@
 package com.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -91,6 +96,7 @@ public class OrderController implements Controller {
 		} else {
 			couponList = null;
 		}
+		
 	// 비회원
 	} else if(mem_id == null) {
 		mv.setViewName("payment");
@@ -101,8 +107,80 @@ public class OrderController implements Controller {
 	
 	@Override
 	public Object orderInsert(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("OrderController => order/orderInsert.do 호출 ");
+		ModelAndView mv = new ModelAndView(req);
+		HashMapBinder hmb = new HashMapBinder(req);
+		HttpSession session = req.getSession();
+		String mem_id = (String)session.getAttribute("mem_id");
+		Map<String,Object> pMap = new HashMap<>();
+		hmb.bind(pMap);
+		pMap.put("mem_id", mem_id);
+		
+		// 주문번호(날짜생성 ex.20220522)
+		String orderNumber = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c1 = Calendar.getInstance();
+		String strToday = sdf.format(c1.getTime());
+		String strToday2 = fDate.format(c1.getTime());
+		pMap.put("order_date", strToday2); // 테이블에 저장할 날짜(yyyy-mm-dd)
+		
+		String uuid = UUID.randomUUID().toString();
+		// 하이픈 제외
+		String resultUuid = uuid.toString().replaceAll("-", "");
+		orderNumber = strToday + resultUuid.substring(0,10);
+		mv.addObject("orderNumber", orderNumber);
+		mv.addObject("name", (String)pMap.get("name"));
+		pMap.put("orderNumber", orderNumber);
+		logger.info(orderNumber);
+		
+		// 회원 주문
+		if(mem_id != null) {
+			List<Map<String,Object>> productList = null;
+			HashMap<String,Object> lMap = null;
+			// 상품이 단건일 경우
+			if(pMap.get("product_name") instanceof String) {
+				logger.info("상품이 하나 입니다");
+				orderLogic.memOrder(pMap);
+				
+			// pMap에 저장된 상품이 여러개일 경우(배열)	
+			} else {
+				logger.info("상품이 여러개 입니다");
+				try {
+					productList = new ArrayList<>();
+					String[] product_name = (String[])pMap.get("product_name");
+					String[] product_no = (String[])pMap.get("product_no");
+					int[] product_price = Arrays.stream((String[])pMap.get("product_price"))
+											.mapToInt(Integer::parseInt).toArray();
+					int[] product_count = Arrays.stream((String[])pMap.get("product_count"))
+											.mapToInt(Integer::parseInt).toArray();	
+					
+					for(int i = 0; i < product_name.length; i++) {
+						logger.info("여기타니");
+						lMap = new HashMap<>();
+						lMap.put("product_name", product_name[i]); 
+						lMap.put("product_no", product_no[i]); 
+						lMap.put("product_price", product_price[i]); 
+						lMap.put("product_count", product_count[i]); 
+						productList.add(lMap);
+					}
+					pMap.put("productList", productList);
+					orderLogic.memOrder(pMap);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+			
+		} 
+		// 비회원 주문
+		else {
+			
+		}
+		
+		mv.setViewName("sucessPayment");
+		
+		return mv;
 	}
 	
 	@Override

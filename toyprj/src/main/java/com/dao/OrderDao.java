@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -50,5 +51,21 @@ public class OrderDao {
 		
 		return couponList;
 	}
-
+	/************************ 회원 주문 ***********************/
+	public int orderMinsert(Map<String, Object> pMap) {
+		logger.info("OrderDao ===> orderMinsert 호출");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			logger.info(pMap.get("productList"));
+			result = sqlSession.insert("orderMinsert", pMap);
+			sqlSession.commit();
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
 }
+

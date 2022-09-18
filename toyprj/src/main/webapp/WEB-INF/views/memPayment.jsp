@@ -6,6 +6,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <title>Document</title>
 	<%@ include file="../../common/common.jsp" %>
     <style>
@@ -278,7 +279,7 @@
     </header>
     <!-- 회원 주문 페이지 -->
     <c:set var ="total_price" value = "0" />
-     <form class="wrapper" name="paymentForm" action="./orderInsert.do" method="GET" >
+    <form class="wrapper" name="paymentForm" id="paymentForm" action="./orderInsert.do" method="get" >
       <div class="h5 large">주문 결제</div>
       <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1">
@@ -287,7 +288,7 @@
             <section>
               <div class="form-group">
                 <label class="text-muted" for="name">이름</label>
-                <input type="text"  name="name" class="form-control" id="order_name" name="order_name" value="${member.getMember_name()}"/>
+                <input type="text"  name="name" class="form-control" id="buyer_name" name="buyer_name" value="${member.getMember_name()}"/>
               </div>
               <div class="form-group">
                 <label class="text-muted" for="phone">핸드폰 번호</label>
@@ -312,7 +313,7 @@
                   <div class="form-group">
                     <label> </label>
                     <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                      <input type="button" value="우편번호 찾기" onClick="changeSelectAddress()"/>
+                      <input type="button" id="zipcode" name="zipcode" value="우편번호 찾기" onClick="changeSelectAddress()"/>
                     </div>
                   </div>
                 </div>
@@ -331,9 +332,9 @@
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="text-muted" for="requirement">배송시 요청사항</label>
+                    <label class="text-muted" for="memo">배송시 요청사항</label>
                     <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                      <input type="text" name="requirement"/>
+                      <input type="text" name="memo"/>
                     </div>
                   </div>
               </div>
@@ -343,7 +344,7 @@
               	<option selected value="0">쿠폰적용 안함</option>
               	<c:if test="${couponList != null}">
 	              	<c:forEach var="coupon" items="${couponList}">
-	              	<option value="${coupon.getCoupon_price()}">${coupon.getCoupon_text()}(-${coupon.getCoupon_price()}원)</option>              	
+	              	<option value="${coupon.getCoupon_no()}">${coupon.getCoupon_text()}(-${coupon.getCoupon_price()}원)</option>              	
 	              	</c:forEach>
               </c:if>
               </select>
@@ -440,41 +441,54 @@
               <div class="ml-auto d-flex">
                 <p class="font-weight-bold" style="font-weight:bold;" id="payment_price">
                 	<fmt:formatNumber value="${total_price + deliver - discount}" type="number"/>원
+                	<input type="hidden" name="total_price" value="${total_price + deliver - discount}"/>
                 </p>
               </div>
             </div>
           </div>
+         
           <div class="row pt-lg-3 pt-2 buttons mb-sm-0 mb-2">
-              <button type="button" id="check_module" class="btn ml-3 mr-3 fas fa-solid fa-credit-card" style="background-color: #eee;">
+              <button type="button"  onClick="requestPay()" id="check_module" 
+              			class="btn ml-3 mr-3 fas fa-solid fa-credit-card" style="background-color: #eee;">
                 주문하기
               </button>
           </div>
         </section>
       </div>
-    </form>
+  </form>
     <!-- footer start -->
 	<%@ include file="../../component/footer.jsp" %>
     <!-- footer end -->
  	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript">
- 	  document.paymentForm.addEventListener("keydown", event => {
+  	  document.paymentForm.addEventListener("keydown", event => {
 		  if (event.code === "Enter") 
 		  event.preventDefault();
-		}); 
+		});
 	  
 	  let couponPrice = 0;   // 쿠폰할인금액
 	  let usePoint = 0;		 // 적립급 사용금액
+	  let price = ${total_price + deliver - discount};
 	  
 	  // 쿠폰 적용
 	  function changeSelectCoupon(value){
-		  couponPrice = value;
+		  if(value == 0){
+			  couponPrice = 0;
+		  } else{
+		  let coupon_text = $("#coupon_select option:checked").text();
+		  let startPoint = coupon_text.indexOf('(');
+		  let endPoint = coupon_text.indexOf('원');
+		  couponPrice = coupon_text.substring(startPoint+2, endPoint);
+		  }
+		  //alert(couponPrice);  
 		  let discountValue = (-couponPrice-usePoint);
 		  let discountTotal = discountValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원"
 		  $("#discount").text(discountTotal);
 		  
-		  let price  = ${total_price + deliver} + discountValue;
+		  price  = ${total_price + deliver} + discountValue;
 		  let total_price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원";
 		  $("#payment_price").text(total_price);
+		  
 		  //alert(${total_price + deliver}-Number(value));
 	  }
 	  
@@ -491,7 +505,7 @@
 			  let discountTotal = discountValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원";
 			  $("#discount").text(discountTotal);
 			  
-			  let price  = ${total_price + deliver} + discountValue;	
+			  price  = ${total_price + deliver} + discountValue;	
 			  let total_price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + "원";
 			  $("#payment_price").text(total_price);
 			  $('#pointBtn').addClass('btn-danger');
@@ -517,8 +531,8 @@
 		 	$('#pointBtn').text('적용');
 		 	
 		  }
-	})
-	  // 
+		})
+	  //사용가능 포인트 실시간 변경
 	  $("#point").on("propertychange change keyup paste input", function() {
 		  usePoint = $('#point').val();
 		  let memPoint = ${member.getMember_point()};
@@ -540,14 +554,9 @@
 	  function changeSelectAddress(){
 		   new daum.Postcode({
 	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		
 	                var addr = ''; // 주소 변수
-	                var extraAddr = ''; // 참고항목 변수
 
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 	                    addr = data.roadAddress;
 	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
@@ -562,7 +571,46 @@
 	            }
 	        }).open();
 		  }
- 	</script>
  	<!-- 카카오페이 -->
+    var IMP = window.IMP;
+    IMP.init("imp20253202");
+    
+    function requestPay() {
+    	let address = $("#address").val();
+    	let address2 = $("#address2").val();
+    	let phone = $("#phone").val();
+		let name = $("#buyer_name").val();
+		let zipcode = $("#zipcode").val();
+		
+        // IMP.request_pay(param, callback) 결제창 호출
+        IMP.request_pay({ // param
+            pg: "kakaopay",
+            pay_method: "kakaopay",
+            merchant_uid:  'merchant_' + new Date().getTime(),
+            name: 'worksout',
+            amount: price,
+            buyer_name: name,
+            buyer_tel: phone,
+            buyer_addr: address + " " + address2,
+            buyer_postcode: zipcode
+        }, function (rsp) { // callback
+            if (rsp.success) {
+				alert("결제성공");
+		        $('#paymentForm').submit();
+            } else {
+				alert(rsp.error_msg);
+				// 결제 실패 url 전송
+            }
+        });
+      }
+    function isSubmit(){
+    	return true;
+    }
+    
+    /*
+    */
+ 	</script>
+ 	
+    
   </body>
 </html>
