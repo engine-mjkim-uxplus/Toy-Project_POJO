@@ -158,7 +158,7 @@
     
     <%@ include file="./component/head.jsp" %>
     <div class="wrap">
-      <div class="row d-flex" style="height: 1000px;">
+      <div class="row d-flex">
 		<%@ include file="./component/side.jsp" %>
         <div class="col-md-10 content">
 
@@ -194,7 +194,7 @@
 			
 
 			<jsp:useBean id="time" class="com.vo.DateVO" />
-			<section class="w-100 bg-light d-flex flex-column mt-5 align-items-center">
+			<section class="w-100 bg-light d-flex flex-column mt-5 mb-5 align-items-center">
 				<div class="input-group mb-3 w-50">
 				  <a href="./memberListPayment.do?date=<jsp:getProperty name="time" property="threeMonthsAgo"/>" class="btn btn-outline-secondary" type="button">최근 3개월</a>
 				  <a href="./memberListPayment.do?date=<jsp:getProperty name="time" property="aMonthAgo"/>" class="btn btn-outline-secondary" type="button">최근 1개월</a>
@@ -220,7 +220,7 @@
 							    <c:forEach var="item" items="${orderList}">
 								  	<tr>
 								      <td scope="row">${item.get('ORDER_DATE')}</td>
-								      <td>${item.get('ORDER_NO')}</td>
+								      <td>${item.get('ORDER_NUMBER')}</td>
 									  <td>
 									  	<img src="${item.get('PRODUCT_IMG')}" style="width: 100px; height: auto;">
 									  	<span class="fs-5">${item.get('PRODUCT_NAME')}</span>

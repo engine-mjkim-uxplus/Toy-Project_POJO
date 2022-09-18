@@ -24,13 +24,13 @@ public class MemberDao {
 		sqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
 	}
 	
-	public List<Map<String,Object>> memberListPayment(String id) {
+	public List<Map<String,Object>> memberListPayment(Map<String,Object> pMap) {
 		logger.info("MemberDao: memberListPayment 호출 성공");
 		List<Map<String,Object>> orderList = null;
 		
 		try {
 			sqlSession = sqlSessionFactory.openSession();
-			orderList = sqlSession.selectList("getOrderList", id); 	
+			orderList = sqlSession.selectList("getOrderList", pMap); 	
 			// insert here
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());

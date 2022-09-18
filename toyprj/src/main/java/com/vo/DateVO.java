@@ -15,14 +15,12 @@ public class DateVO {
 	private String aMonthAgo =null;
 	private String threeMonthsAgo =null;
 	
-	
 	public DateVO() {
 		this.date = new Date();
 		this.format = new SimpleDateFormat("yyyy-MM-dd");
 	}
 	
-	
-	
+
 	public String getToday() {
 		today = format.format(date);      
 		return today;
@@ -52,7 +50,6 @@ public class DateVO {
 	public void setaMonthAgo(String aMonthAgo) {
 		this.aMonthAgo = aMonthAgo;
 	}
-
 
 
 	public String getThreeMonthsAgo() {
