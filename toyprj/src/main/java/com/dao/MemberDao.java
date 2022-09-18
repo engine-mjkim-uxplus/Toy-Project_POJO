@@ -187,4 +187,21 @@ public class MemberDao {
 
 	}
 
+	public int memberUpdateState(Map<String, Object> pMap) {
+		logger.info("MemberDao: memberUpdateState 호출 성공");
+		
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("UpdateState",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
 }
