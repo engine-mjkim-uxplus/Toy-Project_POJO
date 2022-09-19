@@ -150,6 +150,7 @@ public class MemberController implements Controller {
 			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
 			mav.addObject("member", mVO);
 			memberListCoupon = memberLogic.memberListCoupon(id);
+			mav.addObject("memberListCoupon", memberListCoupon);
 			mav.setViewName("mypage/couponpage");
 			path = mav;
 		}
