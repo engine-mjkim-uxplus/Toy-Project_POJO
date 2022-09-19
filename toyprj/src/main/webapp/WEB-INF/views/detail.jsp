@@ -111,10 +111,11 @@
 		function addCart(product_no, product_category,product_img,product_price, product_name){
 			let count = $("#inputQuantity").val();
 			alert("장바구니에 담았습니다.");
+			let url = "detail";
 			location.href=`/cart/cartInsert.do?product_no=${'${product_no}'}
 								&product_category=${'${product_category}'}&product_count=${'${count}'}
 								&product_img=${'${product_img}'}&product_price=${'${product_price}'}
-								&product_name=${'${product_name}'}
+								&product_name=${'${product_name}'}&url=${'${url}'}
 								`;
 		}
   	</script>

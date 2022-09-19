@@ -68,9 +68,11 @@
 			<when test="coupon > 0">
 				    member_coupon = member_coupon -1,
 				    member_point = member_point - #{point}
+				    WHERE member_id = #{mem_id}
 			</when>
 			<when test="coupon == 0">
 				    member_point = member_point - #{point}
+				    WHERE member_id = #{mem_id}
 			</when>
 		</choose>
 	</update>

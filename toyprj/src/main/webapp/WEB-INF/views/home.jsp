@@ -152,6 +152,21 @@
 				location.href = "./productInsertLike.do?page=productList.do&product_no="+no
 			}
 		}
+		function addCart(product_no, product_category,product_img,product_price, product_name){
+			alert("장바구니에 담았습니다.");
+			console.log("product_no = " + product_no);
+			console.log("product_category = " + product_category);
+			console.log("product_img = " + product_img);
+			console.log("product_price = " + product_price);
+			console.log("product_name = " + product_name);
+ 			let count = 1;
+ 			let url = "home";
+			location.href=`/cart/cartInsert.do?product_no=${'${product_no}'}
+								&product_category=${'${product_category}'}&product_count=${'${count}'}
+								&product_img=${'${product_img}'}&product_price=${'${product_price}'}
+								&product_name=${'${product_name}'}&url=${'${url}'}
+								`;
+		}
   	</script>
     <!-- nav start -->
 	<%@ include file="../../component/nav.jsp" %>
@@ -200,7 +215,7 @@
 			              	<a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
 			              </li>
 			              <li>
-			                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
+			                <a href="javascript:addCart(${item.getProduct_no()},'${item.getProduct_category()}','${item.getProduct_img()}',${item.getProduct_price()},'${item.getProduct_name()}')"><i class="fas fa-shopping-cart"></i></a>
 			              </li>
 			            </ul>
 			          </div>
@@ -232,7 +247,7 @@
 					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
 					              </li>
 					              <li>
-					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
+					               <a href="javascript:addCart(${item.getProduct_no()},'${item.getProduct_category()}','${item.getProduct_img()}',${item.getProduct_price()},'${item.getProduct_name()}')"><i class="fas fa-shopping-cart"></i></a>
 					              </li>
 					            </ul>
 					          </div>
@@ -265,7 +280,7 @@
 					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
 					              </li>
 					              <li>
-					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
+					                <a href="javascript:addCart(${item.getProduct_no()},'${item.getProduct_category()}','${item.getProduct_img()}',${item.getProduct_price()},'${item.getProduct_name()}')"><i class="fas fa-shopping-cart"></i></a>
 					              </li>
 					            </ul>
 					          </div>
@@ -298,7 +313,7 @@
 					                <a href="javascript:addLike(${item.getProduct_no()})" ><i class="fa fa-heart" style="color: red;"></i></a>
 					              </li>
 					              <li>
-					                <a href="javascript:alert('장바구니 담기')"><i class="fas fa-shopping-cart"></i></a>
+					                <a href="javascript:addCart(${item.getProduct_no()},'${item.getProduct_category()}','${item.getProduct_img()}',${item.getProduct_price()},'${item.getProduct_name()}')"><i class="fas fa-shopping-cart"></i></a>
 					              </li>
 					            </ul>
 					          </div>
