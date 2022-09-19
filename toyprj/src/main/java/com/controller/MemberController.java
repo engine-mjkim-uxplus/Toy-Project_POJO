@@ -50,7 +50,7 @@ public class MemberController implements Controller {
 		List<Map<String,Object>> orderList = null;
 		orderList = memberLogic.memberListPayment(pMap);
 		mav.addObject("orderList", orderList);
-		
+
 		return path;
 	}
 
