@@ -141,6 +141,16 @@
     </style>
   </head>
   <body>
+  <script type="text/javascript">
+  		function memberInsertC(){
+			const form 	= document.memberInsertCoupon;
+  			
+  			if(!form.coupon_no.value){
+  				alert('쿠폰번호를 입력하세요.');
+  				return false;
+  			}  			
+  		}
+  </script>
     <!-- nav start -->
 	<%@ include file="../../../component/nav.jsp" %>
     <!-- nav end -->
@@ -194,15 +204,16 @@
 				    	<h4 class="fw-bolder">✖️쿠폰 등록하기</h4>
 				    </div>
 				    <hr>
-				    <form action="./memberInsertCoupon.do" name="memberInsertCoupon" enctype="multipart/form-data" method="get">
+				    <form action="./memberInsertCoupon.do" name="memberInsertCoupon" method="post" onsubmit="return memberInsertC()">
 					    <div class="mb-3">
 					    	<label class="mb-3">쿠폰 번호: </label>
 					    	<div class="row">
 					    		<div class="col-6">
-						    	<input type="text" class="form-control" placeholder="쿠폰 번호 입력해주세요.">
+						    	<input type="text" class="form-control" name="coupon_no" placeholder="쿠폰 번호 입력해주세요.">
+						    	<input type="hidden" name="member_id" value="${mem_id}">
 					    		</div>
 					    		<div class="col-6">
-						    	<button class="btn btn-secondary">등록</button>
+						    	<button class="btn btn-secondary" type="submit">등록</button>
 					    		</div>
 					    	</div>
 					    </div>

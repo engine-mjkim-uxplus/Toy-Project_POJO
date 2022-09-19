@@ -100,5 +100,16 @@
 		         WHERE member_id = #{member_id}) Z
 		 WHERE C.COUPON_NO = Z.COUPON_NO
 	</select>
+	<!-- 쿠폰 등록하기 -->
+	<insert id="memberInsertCoupon" parameterType="map">
+		INSERT INTO COUPON_ZIP (member_id, coupon_no)
+		VALUES (#{member_id}, #{coupon_no})
+	</insert>
+	
+	<update id="memberUpdateCoupon" parameterType="String" >
+		UPDATE MEMBER 
+		   SET member_coupon = member_coupon + 1
+		 WHERE member_id = #{member_id}
+	</update>
 	
 </mapper>
