@@ -13,7 +13,7 @@ public class OrderLogic {
 	Logger logger = Logger.getLogger(OrderLogic.class);
 	OrderDao orderDao = new OrderDao();
 	
-	/****************** 멤버 쿠폰 조회(MemberLogig으로 옮겨야함)*******************/
+	/****************** 멤버 쿠폰 조회(MemberLogig으로 옮겨야함)******************/
 	public List<CouponVO> memberCoupon(String mem_id, Map<String,Object> rMap) {
 		logger.info("OrderLogic => memberCoupon 호출");
 		rMap.clear();
@@ -36,15 +36,36 @@ public class OrderLogic {
 		} 
 		return couponList; 
 	}
-
-	public void memOrder(Map<String, Object> pMap) {
-		logger.info("OrderLogic => memOrderInsert 호출");
-		int result = 0;
-		// 1. shopping order update
-		result = orderDao.orderMinsert(pMap);
-		
-		
-		
-	}
 	
+	/****************** 주문 결제******************/
+	public void memOrder(Map<String, Object> pMap) {
+		logger.info("OrderLogic => memOrder 호출");
+		
+		int result = 0;
+		// 1. shopping_order update
+		result = orderDao.orderMinsert(pMap);
+		// 2. cart 에서 제거
+		result = 0;
+		result = orderDao.cartMdelete(pMap);
+		// 3. 쿠폰을 사용 하였거나 point를 사용 하였다면 Update
+		
+		int coupon = (Integer)pMap.get("coupon");
+		int point = (Integer)pMap.get("point");
+		
+		// 쿠폰 및 포인트를 사용 하였을 경우만 업데이트
+		if(coupon > 0 || point > 0) {
+			result = 0;
+			result = orderDao.orderMupdate(pMap);
+			result = 0;
+			result = orderDao.couponDelete(pMap);
+		}
+	
+	}
+
+	public void noMemOrder(Map<String, Object> pMap) {
+		logger.info("OrderLogic => noMemOrder 호출");
+		int result = 0;
+		
+		result = orderDao.orderInsert(pMap);
+	}
 }

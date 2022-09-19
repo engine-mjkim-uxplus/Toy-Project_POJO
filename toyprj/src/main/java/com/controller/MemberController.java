@@ -14,6 +14,7 @@ import com.shopping.toyprj.Controller;
 import com.shopping.toyprj.MemberLogic;
 import com.util.HashMapBinder;
 import com.util.ModelAndView;
+import com.vo.CouponVO;
 import com.vo.MemberVO;
 import com.vo.ProductVO;
 
@@ -139,6 +140,7 @@ public class MemberController implements Controller {
 		logger.info(id);
 		
 		Object path = null;
+		List<CouponVO> memberListCoupon = null;
 		
 		if (id == null) {
 			path = "login/loginForm.do";
@@ -147,6 +149,7 @@ public class MemberController implements Controller {
 			MemberVO mVO = memberLogic.Login(id);
 			logger.info("ID :"+mVO.getMember_id()+", NAME: "+mVO.getMember_name());
 			mav.addObject("member", mVO);
+			memberListCoupon = memberLogic.memberListCoupon(id);
 			mav.setViewName("mypage/couponpage");
 			path = mav;
 		}
