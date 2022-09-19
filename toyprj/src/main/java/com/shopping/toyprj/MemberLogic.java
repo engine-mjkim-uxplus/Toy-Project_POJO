@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.dao.MemberDao;
 import com.vo.CartVO;
+import com.vo.CouponVO;
 import com.vo.MemberVO;
 import com.vo.ProductReviewVO;
 import com.vo.ProductVO;
@@ -33,10 +34,17 @@ public class MemberLogic {
 		int result = 0;
 		List<CartVO> cartList = new ArrayList<>();
 		List<ProductVO> likeList = new ArrayList<>();
+		List<ProductReviewVO> reviewList = new ArrayList<>();
+		List<Map<String,Object>> couponList = null;
 		logger.info("MemberLogic: 카트 목록 불러오기");
 		cartList = memberdao.getCartList(pMap);
 		likeList = memberdao.getLikeList(pMap);
+		reviewList = memberdao.getReviewList(pMap);
+		couponList = memberdao.getCouponList(pMap);
 		pMap.put("cartList", cartList);
+		pMap.put("likeList", likeList);
+		pMap.put("reviewList", reviewList);
+		pMap.put("couponList", couponList);
 		if(cartList.size() > 0 && cartList != null) {
 			logger.info("MemberLogic: 카트 삭제");
 			memberdao.deleteCart(pMap);
@@ -44,6 +52,14 @@ public class MemberLogic {
 		if(likeList.size() > 0 && cartList != null) {
 			logger.info("MemberLogic: 좋아요 삭제");
 			memberdao.deleteLike(pMap);
+		}
+		if(reviewList.size() > 0 && reviewList != null) {
+			logger.info("MemberLogic: 리뷰 삭제");
+			memberdao.deleteReview(pMap);
+		}
+		if(couponList.size() > 0 && couponList != null) {
+			logger.info("MemberLogic: 쿠폰 삭제");
+			memberdao.deleteCoupon(pMap);
 		}
 		result = memberdao.memberDelete(pMap);
 		return result;
@@ -69,6 +85,13 @@ public class MemberLogic {
 		memberListReview = memberdao.memberListReview(id);
 		return memberListReview;
 
+	}
+
+	public List<CouponVO> memberListCoupon(String id) {
+		logger.info("MemberLogic: memberListCoupon 호출");
+		List<CouponVO> memberListCoupon = new ArrayList<>();
+		memberListCoupon = memberdao.memberListCoupon(id);
+		return memberListCoupon;
 	}
 
 }

@@ -37,7 +37,7 @@ public class ProductController implements Controller {
 		if ( id != null ) {
 			pMap.put("member_id", id);
 			List<Integer> likeList = null;
-//			likeList = productLogic.likeList(pMap);
+			likeList = productLogic.likeList(pMap);
 			mav.addObject("likeList", likeList);
 		}
 		
@@ -66,7 +66,7 @@ public class ProductController implements Controller {
 		if ( id != null ) {
 			pMap.put("member_id", id);
 			List<Integer> likeList = null;
-//			likeList = productLogic.likeList(pMap);
+			likeList = productLogic.likeList(pMap);
 			mav.addObject("likeList", likeList);
 		}
 		
