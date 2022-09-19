@@ -109,5 +109,14 @@ public class MemberLogic {
 
 	}
 
+	public int memberInsertCoupon(Map<String, Object> pMap) {
+		logger.info("MemberLogic: memberInsertCoupon 호출");
+		int result = 0;
+		result = memberdao.memberInsertCoupon(pMap);
+		if(result > 0) {
+			memberdao.memberUpdateCoupon(pMap);
+		}
+		return result;
+	}
 
 }

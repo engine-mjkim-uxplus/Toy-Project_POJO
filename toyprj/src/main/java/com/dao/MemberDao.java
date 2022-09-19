@@ -284,6 +284,7 @@ public class MemberDao {
 		}
 	}
 
+
 	public void pointUpdate(Map<String, Object> pMap) {
 		logger.info("MemberDao: pointUpdate 호출 성공");
 		int result = 0;
@@ -293,6 +294,39 @@ public class MemberDao {
 			if (result == 1) {
 				sqlSession.commit();
 			}
+		}catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		}finally {
+			sqlSession.close();
+		}
+
+	}
+
+
+	public int memberInsertCoupon(Map<String, Object> pMap) {
+		logger.info("MemberDao: memberInsertCoupon 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("memberInsertCoupon",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+
+	public void memberUpdateCoupon(Map<String, Object> pMap) {
+		logger.info("MemberDao: memberUpdateCoupon 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("memberUpdateCoupon",pMap);
+			sqlSession.commit();
+
 			logger.info("result: "+ result);
 		} catch (Exception e) {
 			logger.info("Exception : " + e.toString());
@@ -300,6 +334,5 @@ public class MemberDao {
 			sqlSession.close();
 		}
 	}
-
 
 }

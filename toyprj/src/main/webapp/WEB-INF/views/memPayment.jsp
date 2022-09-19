@@ -287,11 +287,11 @@
           <div id="details" class="bg-white rounded pb-5">
             <section>
               <div class="form-group">
-                <label class="text-muted" for="name">이름</label>
+                <label class="text-muted" for="name">*이름</label>
                 <input type="text"  name="name" class="form-control" id="buyer_name" value="${member.getMember_name()}"/>
               </div>
               <div class="form-group">
-                <label class="text-muted" for="phone">핸드폰 번호</label>
+                <label class="text-muted" for="phone">*핸드폰 번호</label>
                 <div
                   class="d-flex jusify-content-start align-items-center rounded p-2"
                 >
@@ -302,7 +302,7 @@
               <div class="row">
                 <div class="col-lg-9">
                   <div class="form-group">
-                    <label class="text-muted" for="zipcode">우편번호</label>
+                    <label class="text-muted" for="zipcode">*우편번호</label>
                     <div class="d-flex jusify-content-start align-items-center rounded p-2">
                       <input type="text" id="zipcode" name="zipcode" value="${member.getMember_zipcode()}"/>
                       </input>
@@ -320,19 +320,19 @@
               </div>
               <div class="row">
                   <div class="form-group">
-                    <label class="text-muted" for="address">주소</label>
+                    <label class="text-muted" for="address">*주소</label>
                     <div class="d-flex jusify-content-start align-items-center rounded p-2">
                       <input type="text" id="address" name="address" value="${member.getMember_address()}"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="text-muted" for="address2">상세주소</label>
+                    <label class="text-muted" for="address2">*상세주소</label>
                     <div class="d-flex jusify-content-start align-items-center rounded p-2">
                       <input type="text" id="address2" name="address2" value="${member.getMember_address2()}"/>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label class="text-muted" for="memo">배송시 요청사항</label>
+                    <label class="text-muted" for="memo">(선택) 배송시 요청사항</label>
                     <div class="d-flex jusify-content-start align-items-center rounded p-2">
                       <input type="text" name="memo"/>
                     </div>
@@ -532,23 +532,28 @@
 		 	
 		  }
 		})
+		
 	  //사용가능 포인트 실시간 변경
 	  $("#point").on("propertychange change keyup paste input", function() {
 		  usePoint = $('#point').val();
 		  let memPoint = ${member.getMember_point()};
 		  $("#member_point").text(memPoint-usePoint);
-		  /* 
-		  discount
-		  payment_price
-			할인금액, 결제금액도 변경	  
-		  */
+		  
 		  if(memPoint < usePoint){
 			  alert('사용가능 금액을 초과합니다. 다시 입력하세요');
 			  $('#point').val(0);
 			  $("#member_point").text(memPoint);
+		  }if(isNaN(usePoint)){
+			  alert('숫자만 입력하세요.');
+			  $('#point').val(0);
+			  $("#member_point").text(memPoint);
 		  }
 	  });
-
+	 $("#point").focusout(function(){
+		 if($("#point")== "" && $("point") == null){
+		 	("#point").val(0);
+	 }
+	 })
 	  
 	  // 주소록 AIP
 	  function changeSelectAddress(){
@@ -576,34 +581,74 @@
     IMP.init("imp20253202");
     
     function requestPay() {
+    	if(formCheck()){
+    		if(pointCheck()){
+    		let address = $("#address").val();
+        	let address2 = $("#address2").val();
+        	let phone = $("#phone").val();
+    		let name = $("#buyer_name").val();
+    		let zipcode = $("#zipcode").val();
+    		
+            // IMP.request_pay(param, callback) 결제창 호출
+            IMP.request_pay({ // param
+                pg: "kakaopay",
+                pay_method: "kakaopay",
+                merchant_uid:  'merchant_' + new Date().getTime(),
+                name: 'worksout',
+                amount: price,
+                buyer_name: name,
+                buyer_tel: phone,
+                buyer_addr: address + " " + address2,
+                buyer_postcode: zipcode
+            }, function (rsp) { // callback
+                if (rsp.success) {
+    				alert("결제성공");
+    				$('#point').removeAttr('disabled');
+    		        $('#paymentForm').submit();
+                } else {
+    				alert(rsp.error_msg);
+    				// 결제 실패 url 전송
+                }
+            	});
+    		} 
+    		else alert("적립금을 사용하시려면 적용을 눌러주세요.");
+    	} 
+    	else alert("* 필수 사항을 모두 입력해주세요");
+      }
+    // 빈값 체크
+    function formCheck(){
+    	let isCheck = false;
     	let address = $("#address").val();
     	let address2 = $("#address2").val();
     	let phone = $("#phone").val();
 		let name = $("#buyer_name").val();
 		let zipcode = $("#zipcode").val();
-		
-        // IMP.request_pay(param, callback) 결제창 호출
-        IMP.request_pay({ // param
-            pg: "kakaopay",
-            pay_method: "kakaopay",
-            merchant_uid:  'merchant_' + new Date().getTime(),
-            name: 'worksout',
-            amount: price,
-            buyer_name: name,
-            buyer_tel: phone,
-            buyer_addr: address + " " + address2,
-            buyer_postcode: zipcode
-        }, function (rsp) { // callback
-            if (rsp.success) {
-				alert("결제성공");
-				$('#point').removeAttr('disabled');
-		        $('#paymentForm').submit();
-            } else {
-				alert(rsp.error_msg);
-				// 결제 실패 url 전송
-            }
-        });
-      }
+    	if(address == "" || address2 == "" || phone == "" || name == "" || zipcode == ""){
+    		return isCheck;
+    	} else{
+    		isCheck = true;
+    		return isCheck;
+    	}
+    }
+    // 포인트 체크
+    function pointCheck(){
+    	let isCheck = false;
+    	let point = $("#point").val();
+    	if(point == "" || point == null || point == 0){
+    		$("#point").val(0);
+    		isCheck = true;
+    		return isCheck;
+    	}
+    	else if(point > 0){
+	 		if(clickNum % 2 == 0){
+	 			isCheck = true;
+	 			return isCheck;
+	 			}
+	 		else{
+	 			return isCheck;
+	 		}
+    		}
+	  }
  	</script>
  	
     

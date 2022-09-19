@@ -60,7 +60,9 @@ public class CartController implements Controller {
 		String product_name = (String)pMap.get("product_name");
 		int product_count = Integer.valueOf((String) pMap.get("product_count"));
 		int product_price = Integer.valueOf((String)pMap.get("product_price"));
-		
+		String url = (String)pMap.get("url");
+		String path = "";
+
 		// 회원 장바구니 담기
 		if(mem_id != null) {
 			pMap.put("mem_id", mem_id);
@@ -70,11 +72,20 @@ public class CartController implements Controller {
 			// 기존에 장바구니에 있는 상품일 경우 수량 UPDATE
 			if(select != null) {
 				result = cartLogic.cartUpdate(pMap);
-			// 기존 장바구니에 없는 상품일 경우 CART 테이블에 INSERT
+				// 기존 장바구니에 없는 상품일 경우 CART 테이블에 INSERT
 			} else {
 				result = cartLogic.cartInsert(pMap);
-			}	
+			}
+			// 메인페이지에서 장바구니 담기
+			if(url.equals("home")) {
+				path = "product/productList.do";
+			}
+			// 상세페이지 장바구니 담기
+			else {
+				path = "product/productDetail.do?product_no=" + product_no + "&product_category=" + product_category;	
+			}
 		}
+		
 		// 비로그인 장바구니 담기
 		else if(mem_id == null) {
 			// 처음으로 장바구니 담을 시 cart생성
@@ -84,10 +95,19 @@ public class CartController implements Controller {
 				CartVO item= new CartVO(product_name,product_no,product_count,product_img,product_price,product_category);
 				sCartList.add(item);
 				session.setAttribute("cartList", sCartList);
+				// 메인페이지에서 장바구니 담기
+				if(url.equals("home")) {
+					path = "product/productList.do";
+				}
+				// 상세페이지 장바구니 담기
+				else if(url.equals("detail")) {
+					path = "product/productDetail.do?product_no=" + product_no + "&product_category=" + product_category;	
+					
+				}
 			} else {
 				// 기존 상품이 아니면 0, 기존 상품이면 1
 				int check = 0;
-
+				
 				for(CartVO cartList : sCartList) {
 					String sProduct_name = cartList.getProduct_name();
 					int sProduct_count = cartList.getProduct_count();
@@ -100,16 +120,21 @@ public class CartController implements Controller {
 					}
 				}				
 				if(check == 0) {
-				CartVO item= new CartVO(product_name,product_no,product_count,product_img,product_price,product_category);
-				sCartList.add(item);
-				session.setAttribute("cartList", sCartList);
-				} 
+					CartVO item= new CartVO(product_name,product_no,product_count,product_img,product_price,product_category);
+					sCartList.add(item);
+					session.setAttribute("cartList", sCartList);
+				}
+				// 메인페이지에서 장바구니 담기
+				if(url.equals("home")) {
+					path = "product/productList.do";
+				}
+				// 상세페이지 장바구니 담기
+				else if(url.equals("detail")) {
+					path = "product/productDetail.do?product_no=" + product_no + "&product_category=" + product_category;		
+				}
 			} // end of else
 		} // end of else if
-		
-		String prNo = (String) pMap.get("product_no");
-		String category = (String) pMap.get("product_category");
-		String path = "product/productDetail.do?product_no=" + prNo + "&product_category=" + category;
+			
 		return path;
 	}
 	
