@@ -39,7 +39,7 @@ public class OrderLogic {
 	
 	/****************** 주문 결제******************/
 	public void memOrder(Map<String, Object> pMap) {
-		logger.info("OrderLogic => memOrderInsert 호출");
+		logger.info("OrderLogic => memOrder 호출");
 		
 		int result = 0;
 		// 1. shopping_order update
@@ -52,6 +52,7 @@ public class OrderLogic {
 		int coupon = (Integer)pMap.get("coupon");
 		int point = (Integer)pMap.get("point");
 		
+		// 쿠폰 및 포인트를 사용 하였을 경우만 업데이트
 		if(coupon > 0 || point > 0) {
 			result = 0;
 			result = orderDao.orderMupdate(pMap);
@@ -59,5 +60,12 @@ public class OrderLogic {
 			result = orderDao.couponDelete(pMap);
 		}
 	
+	}
+
+	public void noMemOrder(Map<String, Object> pMap) {
+		logger.info("OrderLogic => noMemOrder 호출");
+		int result = 0;
+		
+		result = orderDao.orderInsert(pMap);
 	}
 }

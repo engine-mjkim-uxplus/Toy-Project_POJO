@@ -51,7 +51,7 @@ public class OrderDao {
 		
 		return couponList;
 	}
-	/************************ 결제 후 회원 주문 테이블에 결제건 등록***********************/
+	/************************ 결제 후 회원 주문 테이블 등록***********************/
 	public int orderMinsert(Map<String, Object> pMap) {
 		logger.info("OrderDao ===> orderMinsert 호출");
 		int result = 0;
@@ -108,6 +108,23 @@ public class OrderDao {
 			sqlSession = sqlSessionFactory.openSession();
 			result = sqlSession.delete("couponDelete", pMap);
 			logger.info("couponDelete 결과 : " + result);
+			sqlSession.commit();
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return result;
+	}
+	/************************** 결제후 비회원 주문 테이블 등록***************************/
+	public int orderInsert(Map<String, Object> pMap) {
+		logger.info("OrderDao ===> orderInsert 호출");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			logger.info(pMap.get("productList"));
+			result = sqlSession.insert("orderInsert", pMap);
+			logger.info("Insert 결과 : " + result);
 			sqlSession.commit();
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());

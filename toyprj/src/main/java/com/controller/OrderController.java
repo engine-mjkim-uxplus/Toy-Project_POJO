@@ -31,7 +31,7 @@ public class OrderController implements Controller {
 	OrderLogic orderLogic = new OrderLogic();
 	MemberLogic memberLogic = new MemberLogic();
 	
-	
+	/*********************  주문 페이지(회원, 비회원) ********************/
 	@Override
 	public Object orderList(HttpServletRequest req, HttpServletResponse res) {
 	logger.info("OrderController => order/orderList.do 호출 ");
@@ -41,7 +41,6 @@ public class OrderController implements Controller {
 	hmb.bind(pMap);
 	
 	// 상품이 한가지 품목만 넘어 왔을 경우, 여러 품목이 넘어 왔을 경우에 대해 분기처리
-	// pMap.get(key)값이 여러개면 ? pMap.get(key)값이 하나면?
 	List cartList = new ArrayList();
 	CartVO cartVO = null;
 	
@@ -65,6 +64,7 @@ public class OrderController implements Controller {
 								.mapToInt(Integer::parseInt).toArray();
 		int[] product_count = Arrays.stream((String[])pMap.get("product_count"))
 								.mapToInt(Integer::parseInt).toArray();
+		
 		// 상품정보 N건 VO를 통해 List에 담기
 		for(int i =0; i < product_name.length; i++) {
 			cartVO = new CartVO(product_name[i], product_img[i]
@@ -77,6 +77,7 @@ public class OrderController implements Controller {
 	String mem_id = (String)session.getAttribute("mem_id");
 	MemberVO member = null;
 	List<CouponVO> couponList = null;
+	
 	// 회원일 경우 회원테이블에서 주소 가져오기
 	if(mem_id != null) {
 		mv.setViewName("memPayment");
@@ -100,11 +101,13 @@ public class OrderController implements Controller {
 	// 비회원
 	} else if(mem_id == null) {
 		mv.setViewName("payment");
+		
 	}
 	mv.addObject("cartList", cartList);
 	return mv;
 	}
 	
+	/*********************  결제 완료 (회원, 비회원) ********************/
 	@Override
 	public Object orderInsert(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("OrderController => order/orderInsert.do 호출 ");
@@ -112,14 +115,10 @@ public class OrderController implements Controller {
 		HashMapBinder hmb = new HashMapBinder(req);
 		HttpSession session = req.getSession();
 		String mem_id = (String)session.getAttribute("mem_id");
+		session.removeAttribute(mem_id);
 		Map<String,Object> pMap = new HashMap<>();
 		hmb.bind(pMap);
-		
-		int coupon= Integer.valueOf((String)pMap.get("coupon"));
-		int point = Integer.valueOf((String)pMap.get("point"));
-		pMap.put("coupon", coupon);
-		pMap.put("point", point);
-		
+				
 		// 주문번호(날짜생성 ex.20220522)
 		String orderNumber = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -140,54 +139,98 @@ public class OrderController implements Controller {
 		pMap.put("order_date", strToday2); // 테이블에 저장할 날짜(yyyy-mm-dd)
 		logger.info(orderNumber);
 		
-		// 회원 주문
-		if(mem_id != null) {
-			List<Map<String,Object>> productList = null;
-			List<Map<String,Object>> product = null;
-			HashMap<String,Object> lMap = null;
-			// 상품이 단건일 경우
-			if(pMap.get("product_name") instanceof String) {
-				logger.info("상품이 하나 입니다");
-				orderLogic.memOrder(pMap);
-				
-			// pMap에 저장된 상품이 여러개일 경우(배열)	
-			} else {
-				logger.info("상품이 여러개 입니다");
-				try {
-					productList = new ArrayList<>();
-					String[] product_name = (String[])pMap.get("product_name");
-					String[] product_no = (String[])pMap.get("product_no");
-					int[] product_price = Arrays.stream((String[])pMap.get("product_price"))
-											.mapToInt(Integer::parseInt).toArray();
-					int[] product_count = Arrays.stream((String[])pMap.get("product_count"))
-											.mapToInt(Integer::parseInt).toArray();	
-					
-					for(int i = 0; i < product_name.length; i++) {
-						logger.info("여기타니");
-						lMap = new HashMap<>();
-						lMap.put("product_name", product_name[i]); 
-						lMap.put("product_no", product_no[i]); 
-						lMap.put("product_price", product_price[i]); 
-						lMap.put("product_count", product_count[i]); 
-						productList.add(lMap);
-					}
-					pMap.put("productList", productList);
-					orderLogic.memOrder(pMap);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-			}
+		// 주문 관련
+		List<Map<String,Object>> productList = new ArrayList<>();
+		HashMap<String,Object> lMap = new HashMap<>();
 			
+		// 상품의 종류가 단건일 경우
+		if(pMap.get("product_name") instanceof String) {
+			oneProductProcess(productList, lMap, pMap, mem_id,session);
+			
+		// 상품의 종류가 여러개일 경우(배열)	
+		} else {
+			ManyProductProcess(productList, lMap, pMap, mem_id,session);
 		} 
-		// 비회원 주문
-		else {
-			
-		}
 		
 		mv.setViewName("sucessPayment");
 		
 		return mv;
+	}
+	
+	// 단건 상품 가공 메소드 (회원,비회원)
+	public void oneProductProcess (List<Map<String,Object>> productList,HashMap<String,Object> lMap,
+									Map<String,Object> pMap, String mem_id, HttpSession session) {
+		logger.info("상품의 종류가 하나 입니다");
+		
+		String product_name = (String)pMap.get("product_name");
+		String product_no = (String)pMap.get("product_no");
+		int product_price = Integer.valueOf((String)pMap.get("product_price"));
+		int product_count = Integer.valueOf((String)pMap.get("product_count"));
+		
+		lMap.put("product_name", product_name); 
+		lMap.put("product_no", product_no); 
+		lMap.put("product_price", product_price); 
+		lMap.put("product_count", product_count); 
+		productList.add(lMap);
+		pMap.put("productList", productList);
+		// 회원 결제
+		if(mem_id != null) {
+			// 회원의 경우만 쿠폰, 포인트 사용
+			int coupon = Integer.valueOf((String)pMap.get("coupon"));
+			int point = Integer.valueOf((String)pMap.get("point"));
+			pMap.put("coupon", coupon);
+			pMap.put("point", point);
+			
+			orderLogic.memOrder(pMap);
+		}
+		// 비회원 결제
+		else {
+			orderLogic.noMemOrder(pMap);
+			session.removeAttribute("cartList");
+		}
+	}
+	// N건 상품 가공 메소드 (회원,비회원)
+	public void ManyProductProcess (List<Map<String,Object>> productList, HashMap<String,Object> lMap,
+									Map<String,Object> pMap, String mem_id,HttpSession session) {
+		logger.info("상품의 종류가 여러개 입니다");
+		
+		try {
+			String[] product_name = (String[])pMap.get("product_name");
+			String[] product_no = (String[])pMap.get("product_no");
+			int[] product_price = Arrays.stream((String[])pMap.get("product_price"))
+									.mapToInt(Integer::parseInt).toArray();
+			int[] product_count = Arrays.stream((String[])pMap.get("product_count"))
+									.mapToInt(Integer::parseInt).toArray();	
+			
+			for(int i = 0; i < product_name.length; i++) {
+				lMap = new HashMap<>();
+				lMap.put("product_name", product_name[i]); 
+				lMap.put("product_no", product_no[i]); 
+				lMap.put("product_price", product_price[i]); 
+				lMap.put("product_count", product_count[i]); 
+				productList.add(lMap);
+			}
+			pMap.put("productList", productList);
+			
+			// 회원 결제
+			if(mem_id !=null) {
+				// 회원의 경우만 쿠폰, 포인트 사용
+				int coupon = Integer.valueOf((String)pMap.get("coupon"));
+				int point = Integer.valueOf((String)pMap.get("point"));
+				pMap.put("coupon", coupon);
+				pMap.put("point", point);
+				
+				orderLogic.memOrder(pMap);
+			} 
+			// 비회원 결제
+			else {
+				orderLogic.noMemOrder(pMap);
+				session.removeAttribute("cartList");
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@Override

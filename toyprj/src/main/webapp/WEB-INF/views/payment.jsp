@@ -6,6 +6,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <title>Document</title>
 	<%@ include file="../../common/common.jsp" %>
     <style>
@@ -92,7 +94,6 @@
         font-size: 0.85rem;
         font-weight: 600;
       }
-      #address,
       #cart,
       #summary {
         padding: 20px 50px;
@@ -279,7 +280,7 @@
     </header>
     <!-- 비회원 주문 페이지 -->
     <c:set var ="total_price" value = "0" />
-    <form class="wrapper" name="paymentForm" action="./orderInsert.do" method="GET" >
+    <form class="wrapper" name="paymentForm" id="paymentForm" action="./orderInsert.do" method="POST" >
       <div class="h5 large">주문 결제</div>
       <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-10 offset-lg-0 offset-md-2 offset-sm-1">
@@ -288,14 +289,14 @@
          <section>
              <div class="form-group">
                <label class="text-muted" for="name">이름</label>
-               <input type="text"  name="name" value="" class="form-control" id="order_name" name="order_name"/>
+               <input type="text"  name="name" value="" class="form-control" id="buyer_name" name="order_name"/>
              </div>
              <div class="form-group">
                <label class="text-muted" for="phone">핸드폰 번호</label>
                <div
                  class="d-flex jusify-content-start align-items-center rounded p-2"
                >
-                 <input type="text"  name= "phone"value="" id="order_phone" name="order_phone" />
+                 <input type="text"  name="phone"  id="order_phone" value="" />
                </div>
              </div>
              <div class="row">
@@ -303,7 +304,7 @@
                  <div class="form-group">
                    <label class="text-muted" for="zipcode">우편번호</label>
                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                     <input type="text" name="zipcode" value="" />
+                     <input type="text"  id="zipcode" name="zipcode" value="" />
                    </div>
                  </div>
                </div>
@@ -311,30 +312,28 @@
                  <div class="form-group">
                    <label> </label>
                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                     <input type="button" value="우편번호 찾기" />
+                     <input type="button"  value="우편번호 찾기"  onClick="changeSelectAddress()"/>
                    </div>
                  </div>
                </div>
              </div>
              <div class="row">
-                 <div class="form-group">
-                   <label class="text-muted" for="address">주소</label>
-                   <div
-                     class="d-flex jusify-content-start align-items-center rounded p-2"
-                   >
-                     <input type="text" name="address" value="" />
-                   </div>
-                 </div>
+                   <div class="form-group">
+                    <label class="text-muted" for="address">주소</label>
+                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
+                      <input type="text" id="address" name="address" value=""/>
+                    </div>
+                  </div>
                  <div class="form-group">
                    <label class="text-muted" for="address2">상세주소</label>
                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                     <input type="text" name="address2" value="" />
+                     <input type="text" id="address2" name="address2" value="" />
                    </div>
                  </div>
                  <div class="form-group">
                    <label class="text-muted" for="requirement">배송시 요청사항</label>
                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
-                     <input type="text" name="requirement" value="" />
+                     <input type="text" name="memo" value="" />
                    </div>
                  </div>
              </div>
@@ -384,27 +383,32 @@
               <div class="display-5 me-2">배송비</div>
             <c:choose>
 	            <c:when test="${total_price ge 50000}">
-	            <div class="ml-auto" style="margin-left:35px;font-weight:bold;">0원</div>
+	            <div class="ml-auto" style="margin-left:35px;font-weight:bold;">
+	            	<fmt:formatNumber value="0" type="number" />원
+	            	<c:set var="deliver" value="0"></c:set>
+	            </div>
 	            </c:when>
 	            <c:when test="${total_price lt 50000}">
-	            <div class="ml-auto" style="margin-left:35px;font-weight:bold;">2500원</div>
+	            <div class="ml-auto" style="margin-left:35px;font-weight:bold;">
+	            	<fmt:formatNumber value="2500" type="number" />원
+	            	<c:set var="deliver" value="2500"></c:set>
+	            </div>
 	            </c:when>
             </c:choose>
             </div>
             <div class="d-flex align-items-center py-2">
               <p class="display-5 me-4">결제금액</p>
               <div class="ml-auto d-flex">
-                <p class="font-weight-bold" style="font-weight:bold;">
-                <c:choose>
-                <c:when test="">
-                </c:when>
-                </c:choose>
+                <p class="font-weight-bold" style="font-weight:bold;" id="payment_price">
+                	<fmt:formatNumber value="${total_price + deliver}" type="number"/>원
+                	<input type="hidden" name="total_price" value="${total_price + deliver}"/>
                 </p>
               </div>
             </div>
           </div>
           <div class="row pt-lg-3 pt-2 buttons mb-sm-0 mb-2">
-              <button type="submit" class="btn ml-3 mr-3 fas fa-solid fa-credit-card" style="background-color: #eee;">
+              <button type="button"  onClick="requestPay()" id="check_module" 
+              	class="btn ml-3 mr-3 fas fa-solid fa-credit-card" style="background-color: #eee;">
                 주문하기
               </button>
           </div>
@@ -419,6 +423,64 @@
 		  if (event.code === "Enter") 
 		  event.preventDefault();
 		});
+	  
+	  
+	  let price = ${total_price + deliver};
+	  
+	  // 주소록 AIP
+	  function changeSelectAddress(){
+		   new daum.Postcode({
+	            oncomplete: function(data) {
+		
+	                var addr = ''; // 주소 변수
+
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                $('#zipcode').val(data.zonecode);
+	                $('#address').val(addr);
+	                $('#address2').val('');
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("address2").focus();
+	            }
+	        }).open();
+		  }
+	  
+	 	<!-- 카카오페이 -->
+	    var IMP = window.IMP;
+	    IMP.init("imp20253202");
+	    
+	    function requestPay() {
+	    	let address = $("#address").val();
+	    	let address2 = $("#address2").val();
+	    	let phone = $("#phone").val();
+			let name = $("#buyer_name").val();
+			let zipcode = $("#zipcode").val();
+			
+	        // IMP.request_pay(param, callback) 결제창 호출
+	        IMP.request_pay({ // param
+	            pg: "kakaopay",
+	            pay_method: "kakaopay",
+	            merchant_uid:  'merchant_' + new Date().getTime(),
+	            name: 'worksout',
+	            amount: price,
+	            buyer_name: name,
+	            buyer_tel: phone,
+	            buyer_addr: address + " " + address2,
+	            buyer_postcode: zipcode
+	        }, function (rsp) { // callback
+	            if (rsp.success) {
+					alert("결제성공");
+					$('#paymentForm').submit();
+	            } else {
+					alert(rsp.error_msg);
+					// 결제 실패 url 전송
+	            }
+	        });
+	      }
  	</script>
   </body>
 </html>
