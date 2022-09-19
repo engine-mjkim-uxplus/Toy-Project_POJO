@@ -236,9 +236,35 @@
 								      	</button>
 								      </td>
 								      <td class="">
-								      	<button type="button" class="btn btn-primary mb-2">교환요청</button><br/>
-								      	<button type="button" class="btn btn-primary mb-2">구매확정</button><br/>
-								      	<button type="button" class="btn btn-primary">반품요청</button>
+								      <!-- default:주문완료 -> 구매확정/반품/교환 --> 
+								      	<c:if test="${item.get('BUYSTATE') eq '주문완료' }">
+									      	<button type="button" class="btn btn-primary mb-2" onclick="buystate()" data-bs-toggle="modal" data-bs-target="#StateModal" 
+									      	data-state="buy" 
+									      	data-ordernumber="${ item.get('ORDER_NUMBER')}" 
+									      	data-productno="${ item.get('PRODUCT_NO')}" 
+									      	>구매확정</button><br/>
+									      	
+									      	<button type="button" class="btn btn-primary mb-2" onclick="buystate()" data-bs-toggle="modal" data-bs-target="#StateModal"
+									      	data-state="exchange"
+									      	data-ordernumber="${ item.get('ORDER_NUMBER')}" 
+									      	data-productno="${ item.get('PRODUCT_NO')}" 
+									      	>교환요청</button><br/>
+									      	
+									      	<button type="button" class="btn btn-primary" onclick="buystate()" data-bs-toggle="modal" data-bs-target="#StateModal"
+									      	data-state="return"
+									      	data-ordernumber="${ item.get('ORDER_NUMBER')}" 
+									      	data-productno="${ item.get('PRODUCT_NO')}" 
+									      	>반품요청</button>
+								      	</c:if>
+								      	<c:if test="${item.get('BUYSTATE') eq '구매확정' }">
+											<div>구매확정</div>
+								      	</c:if>
+								      	<c:if test="${item.get('BUYSTATE') eq '반품' }">
+											<div>반품처리중입니다.</div>
+								      	</c:if>
+								      	<c:if test="${item.get('BUYSTATE') eq '교환' }">
+											<div>교환처리중입니다.</div>
+								      	</c:if>
 								      </td>
 								    </tr>
 						  		</c:forEach>
@@ -297,6 +323,22 @@
 	    </div>
 	  </div>
 	</div>
+	
+	 <div class="modal fade" id="StateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg modal-dialog-centered">
+	    <div class="modal-content border border-secondary rounded-3 border-opacity-50">
+	      <div class="modal-body d-flex justify-content-between align-items-center">
+			<div id="infoText"></div>
+			<div>
+				<a id="stateUpdate" class="btn btn-primary">확인</a>
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+			</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
     <!-- footer start -->
 	<%@ include file="../../../component/footer.jsp" %>
     <!-- footer end -->
@@ -314,7 +356,9 @@
 	 
 	tbody.addEventListener('click',function(e){
 		let address = e.target.dataset.address;
-		locationInfo = address.split(',');
+		if(address != null){
+			locationInfo = address.split(',');
+		}
 		<!-- ['백종국', '경기도 구리시 수택동', '빌라 마동 302호', '46978', '01033992301', '빨리 갖다주세요'] -->
 		
 		Name.value = locationInfo[0];
@@ -333,6 +377,33 @@
 			location.href="./memberListPayment.do?date="+selectDate;
 		}else {
 			alert('날짜를 입력해주세요.');
+		}
+	}
+	
+	function buystate(){
+		const text = document.getElementById('infoText');
+		const stateUpdate = document.getElementById('stateUpdate');
+		
+		const state = event.currentTarget.dataset.state;
+		const Onumber = event.currentTarget.dataset.ordernumber;
+		const Pno = event.currentTarget.dataset.productno;
+
+		switch(state) {
+		  case 'buy':  
+				text.innerText = "구매를 확정하시면 더이상 반품 및 교환이 불가합니다. 그래도 확정하시겠습니까?";
+				stateUpdate.setAttribute('href','./memberUpdateState.do?state=buy&order_number='+Onumber+'&product_no='+Pno);
+				break;
+		  case 'exchange': 
+				text.innerText = "교환을 신청하시겠습니까?";
+				stateUpdate.setAttribute('href','./memberUpdateState.do?state=exchange&order_number='+Onumber+'&product_no='+Pno);
+				break;
+		  case 'return':
+				text.innerText = "반품을 신청하시겠습니까?";
+				stateUpdate.setAttribute('href','./memberUpdateState.do?state=return&order_number='+Onumber+'&product_no='+Pno);
+				break;
+		  default:
+				text.innerText = "알수 없음";
+				break;
 		}
 	}
   </script>

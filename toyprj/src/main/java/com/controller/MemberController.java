@@ -222,8 +222,15 @@ public class MemberController implements Controller {
 
 	@Override
 	public Object memberUpdateState(HttpServletRequest req, HttpServletResponse res) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		
+		int result = 0;
+		result = memberLogic.memberUpdateState(pMap);
+		
+		
+		return "member/memberListPayment.do";
 	}
 
 	@Override

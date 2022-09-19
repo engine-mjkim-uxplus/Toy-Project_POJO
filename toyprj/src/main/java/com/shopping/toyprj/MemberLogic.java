@@ -87,11 +87,20 @@ public class MemberLogic {
 
 	}
 
+
+	public int memberUpdateState(Map<String, Object> pMap) {
+		logger.info("MemberLogic: memberUpdateState 호출");
+		int result = 0;
+		result = memberdao.memberUpdateState(pMap);
+		return result;
+	}
+
 	public List<CouponVO> memberListCoupon(String id) {
 		logger.info("MemberLogic: memberListCoupon 호출");
 		List<CouponVO> memberListCoupon = new ArrayList<>();
 		memberListCoupon = memberdao.memberListCoupon(id);
 		return memberListCoupon;
+
 	}
 
 	public int memberInsertCoupon(Map<String, Object> pMap) {

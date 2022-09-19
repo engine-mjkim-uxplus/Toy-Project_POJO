@@ -8,7 +8,7 @@
 	
 	<select id="getOrderList" parameterType="map" resultType="map">
 		SELECT b.order_number, b.order_date, b.order_name, b.order_address, b.order_address2,b.order_zipcode, b.order_phone, b.order_memo,
-		a.product_name, a.product_img, b.order_count, b.order_price
+		a.product_name, a.product_img, b.order_count, b.order_price, b.buystate, a.product_no
 		FROM PRODUCT a , SHOPPING_ORDER b
 		where member_id = #{member_id}
 		and a.product_no = b.product_no
@@ -16,6 +16,7 @@
 			and b.order_date BETWEEN TO_DATE(#{date}, 'YYYY-MM-DD') 
 	                   			 AND SYSDATE
 		</if>
+		order by b.order_date desc
 	</select>
 	
 	<update id="memberUpdateP" parameterType="map">
@@ -110,6 +111,21 @@
 		UPDATE MEMBER 
 		   SET member_coupon = member_coupon + 1
 		 WHERE member_id = #{member_id}
+	</update>
+	
+	<update id="UpdateState" parameterType="map">
+		UPDATE SHOPPING_ORDER
+		<if test="state == 'buy'">
+			SET BUYSTATE = '구매확정'
+		</if>
+		<if test="state == 'exchange'">
+			SET BUYSTATE = '교환'
+		</if>
+		<if test="state == 'return'">
+			SET BUYSTATE = '반품'
+		</if>
+		WHERE ORDER_NUMBER = #{order_number}
+		AND PRODUCT_NO = #{product_no}
 	</update>
 	
 </mapper>
