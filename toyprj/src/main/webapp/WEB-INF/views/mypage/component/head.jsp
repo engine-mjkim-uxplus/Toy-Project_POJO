@@ -36,6 +36,7 @@
 				return false;
 			} else if(form.member_pw.value == ${member.getMember_pw()}){
   				alert('비밀번호가 현재 비밀번호와 일지합니다. 다시 입력해주세요.');
+  				form.member_pw.value = "";
 				return false;
   			} else {
   				alert('비밀번호가 변경되었습니다.');
