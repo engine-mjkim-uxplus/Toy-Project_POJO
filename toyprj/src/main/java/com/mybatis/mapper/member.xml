@@ -128,4 +128,11 @@
 		AND PRODUCT_NO = #{product_no}
 	</update>
 	
+	<update id="updPoint" parameterType="map">
+		UPDATE MEMBER
+		SET MEMBER_POINT = MEMBER_POINT + #{point}
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	
 </mapper>

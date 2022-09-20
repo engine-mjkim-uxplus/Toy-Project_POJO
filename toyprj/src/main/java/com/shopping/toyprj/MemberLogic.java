@@ -92,6 +92,12 @@ public class MemberLogic {
 		logger.info("MemberLogic: memberUpdateState 호출");
 		int result = 0;
 		result = memberdao.memberUpdateState(pMap);
+		
+		if (pMap.get("state").equals("buy") ) {
+			logger.info("구매확정 선택");
+			memberdao.pointUpdate(pMap);
+		}
+		
 		return result;
 	}
 
