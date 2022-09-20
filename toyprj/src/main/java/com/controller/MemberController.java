@@ -182,8 +182,7 @@ public class MemberController implements Controller {
 			hmb.bind(pMap);
 			
 			result = memberLogic.memberInsertCoupon(pMap);
-			mav.setViewName("mypage/orderpage");
-			path = mav;
+			path = "member/memberListCoupon.do";
 		}
 		
 		return path;
@@ -213,8 +212,7 @@ public class MemberController implements Controller {
 			hmb.bind(pMap);
 			int result = 0;
 			result = memberLogic.memberUpdateP(pMap); 
-			mav.setViewName("mypage/orderpage"); // 마이페이지의 메인(결제내역)으로 이동하게 한다.
-			path = mav;
+			path = "member/memberListP.do";
 		}
 		
 		return path;
@@ -256,8 +254,7 @@ public class MemberController implements Controller {
 				path = "product/productList.do"; // 메인페이지로 이동한다. 
 			} else { // 회원탈퇴 실패한 경우 
 				ModelAndView mav = new ModelAndView(req);
-				mav.setViewName("mypage/orderpage");// 마이페이지의 메인으로 이동한다. 
-				path = mav;
+				path = "member/memberListP.do";
 			}
 			
 		}
