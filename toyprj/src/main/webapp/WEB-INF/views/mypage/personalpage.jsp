@@ -143,7 +143,7 @@
   <body>
   <script>
   function memUpdateP(){
-		alert('회원정보가 수정되었습니다. 마이페이지로 이동합니다.');
+		alert('회원정보가 수정되었습니다.');
 	  	$("#f_memform").submit();
 	}
   </script>
@@ -192,19 +192,7 @@
 			                        </div>
 								</div>
 							</div>
-	
-							<div class="row">
-								<div class="col-6 mb-3">
-									<label for="email">현재 비밀번호</label> <input type="text"
-										class="form-control" value="${member.getMember_pw()}"
-										readonly>
-								</div>
-								<div class="col-6 mb-3">
-									<label for="member_pw">변경할 비밀번호</label> <input type="password"
-										class="form-control" id="member_pw" name="member_pw" placeholder="변경할 비밀번호를 입력해주세요."
-										required>
-								</div>
-							</div>
+							<input type="hidden" name="member_pw" value="${member.getMember_pw()}">
 							
 							<div class="mb-3">
 								<label for="member_phone">전화번호</label> <input type="text"
@@ -253,10 +241,14 @@
 			let form = document.delform;
 			if(!form.member_pw.value) {
 				alert('비밀번호를 입력해주세요');
+				return false;
 			} else if(form.member_pw.value != ${member.getMember_pw()}){
   				alert('비밀번호가 틀렸습니다.');
+				return false;
   			} else {
   				alert('탈퇴되었습니다. 이용해주셔서 감사합니다.');
+  				window.close();
+				return true;
   			}
 		}
 	</script>
@@ -268,7 +260,7 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-			<form name="delform" enctype="multipart/form-data" role="search" action="./memberDelete.do" method="get">
+			<form name="delform" role="search" action="./memberDelete.do" method="post" onsubmit="memDel()">
 			 	<div class="box p-3">
 				 	<h5>탈퇴를 원하시면 비밀번호를 입력해주세요</h3>
 				    <hr />
@@ -277,7 +269,7 @@
 						<input type="hidden" class="form-control" name="member_id" id="member_id" value="${member.getMember_id()}">
 				        <input type="password" class="form-control" name="member_pw" id="member_pw" />
 				        
-				        <button class="btn btn-outline-secondary" type="submit" onclick="memDel()">탈퇴하기</button>
+				        <button class="btn btn-outline-secondary" type="submit">탈퇴하기</button>
 				    </div>
 			    </div>
 			</form>
