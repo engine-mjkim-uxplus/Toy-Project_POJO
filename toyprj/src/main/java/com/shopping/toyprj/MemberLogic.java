@@ -126,4 +126,11 @@ public class MemberLogic {
 		return result;
 	}
 
+	public List<Integer> myCouponList(String id) {
+		logger.info("MemberLogic: myCouponList 호출");
+		List<Integer> myCouponList = new ArrayList<>();
+		myCouponList = memberdao.myCouponList(id);
+		return myCouponList;
+	}
+
 }

@@ -141,19 +141,31 @@
     </style>
   </head>
   <body>
-  <script type="text/javascript">
-  		function memberInsertC(){
-			const form 	= document.memberInsertCoupon;
-  			
-  			if(!form.coupon_no.value){
-  				alert('쿠폰번호를 입력하세요.');
-  				return false;
-  			}  			
-  		}
-  </script>
     <!-- nav start -->
 	<%@ include file="../../../component/nav.jsp" %>
     <!-- nav end -->
+  <script type="text/javascript">
+  		function memberInsertC(){
+			const form 	= document.memberInsertCoupon;
+			let myCouponList = ${myCouponList == null ? []:myCouponList};
+			
+  			if(!form.coupon_no.value){
+  				alert('쿠폰번호를 입력하세요.');
+  				return false;
+  			} else if(myCouponList.length > 0) {
+  				for(var i=0;i<myCouponList.length;i++){
+  					if(myCouponList[i] == form.coupon_no.value){
+  						alert('이미 등록된 쿠폰입니다.');
+  						form.coupon_no.value ="";
+  						return false;
+  					}
+  				}
+  			} else {
+  				alert('쿠폰 등록이 완료되었습니다.');
+  				return true;
+  			}
+  		}
+  </script>
     
     <%@ include file="./component/head.jsp" %>
     <div class="wrap">
