@@ -310,6 +310,15 @@ public class HandlerMapping {
 					return (String)obj;
 				}
 			}
+			// 결제 성공페이지 요청
+			else if("orderSucess".equals(upmu[1])) {
+				obj = controller.orderSucess(req,res);
+				if(obj instanceof ModelAndView) {
+					return (ModelAndView)obj;
+				} else if(obj instanceof String) {
+					return (String)obj;
+				}
+			}
 		} // end of OrderController
 		///////////////////////////////////////////
 		// 카트 분기(CartController)

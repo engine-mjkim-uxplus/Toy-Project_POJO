@@ -254,4 +254,10 @@ public class RegisterController implements Controller {
 		return null;
 	}
 
+	@Override
+	public Object orderSucess(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
