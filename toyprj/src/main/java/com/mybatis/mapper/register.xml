@@ -4,9 +4,9 @@
 	<!-- 회원가입 -->
 	<insert id="registerInsert" parameterType="map">
 		INSERT INTO MEMBER (member_id, member_pw, member_name, member_phone, member_zipcode
-						  , member_address, member_address2, member_gender)
+						  , member_address, member_address2, member_gender, member_coupon)
      				VALUES (#{member_id}, #{member_pw}, #{member_name}, #{member_phone}, #{member_zipcode}
-     					  , #{member_address}, #{member_address2}, #{member_gender})
+     					  , #{member_address}, #{member_address2}, #{member_gender},0)
 	</insert>
 	<!-- ID중복체크 -->
 	<select id="registerSelect" parameterType="map" resultType="int">

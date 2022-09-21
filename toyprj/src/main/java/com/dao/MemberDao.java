@@ -366,4 +366,19 @@ public class MemberDao {
 		
 	}
 
+	public List<Integer> myCouponList(String id) {
+		logger.info("MemberDao: myCouponList 호출 성공");
+		List<Integer> myCouponList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			myCouponList = sqlSession.selectList("isCoupon",id);
+			logger.info(myCouponList.toString());
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return myCouponList;
+	}
+
 }
