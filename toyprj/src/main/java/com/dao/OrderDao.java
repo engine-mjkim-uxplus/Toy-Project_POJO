@@ -14,12 +14,12 @@ public class OrderDao {
 	Logger logger = Logger.getLogger(OrderDao.class);
 	SqlSessionFactory sqlSessionFactory = null;
 	
-	SqlSession sqlSession = null;
-	/************************** 쿠폰 존재여부 확인 *****************************/
+	public static SqlSession sqlSession = null; // 트랜잭션 처리를 위해 공유 자원으로 등록 
+	
 	public OrderDao() {
 		sqlSessionFactory = MyBatisCommonFactory.getSqlSessionFactory();
 	}
-	
+	/************************** 쿠폰 존재여부 확인 *****************************/
 	public int searchIsCoupon(String mem_id) {
 		logger.info("OrderDao ===> searchIsCoupon 호출");
 		int result = 0;
@@ -60,12 +60,9 @@ public class OrderDao {
 			logger.info(pMap.get("productList"));
 			result = sqlSession.insert("orderMinsert", pMap);
 			logger.info("Insert 결과 : " + result);
-			sqlSession.commit();
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
-		} finally {
-			sqlSession.close();
-		}
+		} 
 		return result;
 	}
 	/************************ 결제 후 결제상품 장바구니 삭제 ***********************/
@@ -73,15 +70,12 @@ public class OrderDao {
 		logger.info("OrderDao ===> orderMdelete 호출");
 		int result = 0;
 		try {
-			sqlSession = sqlSessionFactory.openSession();
+			//sqlSession = sqlSessionFactory.openSession();
 			result = sqlSession.delete("cartMdelete", pMap);
 			logger.info("delete 결과 : " + result);
-			sqlSession.commit();
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
-		} finally {
-			sqlSession.close();
-		}
+		} 
 		return result;
 	}
 	/************************ 결제 후 회원 쿠폰 / 포인트 사용시 업데이트 ***********************/
@@ -89,14 +83,11 @@ public class OrderDao {
 		logger.info("OrderDao ===> orderMupdate 호출");
 		int result = 0;
 		try {
-			sqlSession = sqlSessionFactory.openSession();
+			//sqlSession = sqlSessionFactory.openSession();
 			result = sqlSession.update("orderMupdate", pMap);
 			logger.info("update 결과 : " + result);
-			sqlSession.commit();
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
-		} finally {
-			sqlSession.close();
 		}
 		return result;
 	}
@@ -105,14 +96,11 @@ public class OrderDao {
 		logger.info("OrderDao ===> couponDelete 호출");
 		int result = 0;
 		try {
-			sqlSession = sqlSessionFactory.openSession();
+			//sqlSession = sqlSessionFactory.openSession();
 			result = sqlSession.delete("couponDelete", pMap);
 			logger.info("couponDelete 결과 : " + result);
-			sqlSession.commit();
 		} catch (Exception e) {
 			logger.info("Exception : "+e.toString());
-		} finally {
-			sqlSession.close();
 		}
 		return result;
 	}

@@ -82,9 +82,5 @@
 	DELETE FROM coupon_zip
     	WHERE member_id = #{mem_id}
        AND coupon_no = #{coupon}
-	</delete>	
-	
-	
-	
-	
+	</delete>		
 </mapper>
