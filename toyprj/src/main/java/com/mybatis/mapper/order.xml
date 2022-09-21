@@ -84,7 +84,36 @@
        AND coupon_no = #{coupon}
 	</delete>	
 	
+	<select id="unMemberList" parameterType="map" resultType="map">
+			SELECT b.order_number, b.order_date, b.order_name, b.order_address, b.order_address2,b.order_zipcode, b.order_phone, b.order_memo,
+			a.product_name, a.product_img, b.order_count, b.order_price, b.buystate, a.product_no
+			FROM PRODUCT a , UNMEMBER_ORDER b
+			where a.product_no = b.product_no
+			<if test="order_number == null and order_phone == null">
+				and b.order_number = '1asv'
+			</if>
+			<if test="order_number != null">
+				and b.order_number = #{order_number}
+			</if>
+			<if test="order_phone != null">
+				and b.order_phone = #{order_phone}
+			</if>
+			order by b.order_date desc
+	</select>
 	
-	
+	<update id="unmemberUpdateState" parameterType="map">
+		UPDATE UNMEMBER_ORDER
+		<if test="state == 'buy'">
+			SET BUYSTATE = '구매확정'
+		</if>
+		<if test="state == 'exchange'">
+			SET BUYSTATE = '교환'
+		</if>
+		<if test="state == 'return'">
+			SET BUYSTATE = '반품'
+		</if>
+		WHERE ORDER_NUMBER = #{order_number}
+		AND PRODUCT_NO = #{product_no}
+	</update>
 	
 </mapper>

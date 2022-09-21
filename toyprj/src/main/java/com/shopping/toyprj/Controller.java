@@ -49,6 +49,8 @@ public interface Controller {
 	public Object orderUpdateCoupon(HttpServletRequest req, HttpServletResponse res); 		// 쿠폰 사용 내역
 	public Object orderUpdatePoint(HttpServletRequest req, HttpServletResponse res);	 	// 적립금 차감  -- 미정.. 조인으로 쿠폰 & 적립금 업데이트 한번에 처리하기
 	public Object orderDelete(HttpServletRequest req, HttpServletResponse res);		 		// 장바구니에서 주문한 상품 제거
+	public Object orderUnmemberPage(HttpServletRequest req, HttpServletResponse res);		// 비회원 주문조회
+	public Object orderUnmemberSelect(HttpServletRequest req, HttpServletResponse res);		// 비회원 구매상태 변경
 	
 	// 카트
 	public Object cartList(HttpServletRequest req, HttpServletResponse res);	 			// 장바구니 페이지 조회

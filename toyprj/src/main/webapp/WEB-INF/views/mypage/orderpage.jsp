@@ -330,7 +330,6 @@
 			</form>
 	      </div>
 	      <div class="modal-footer">
-	        <button form="infoChange" type="button" class="btn btn-primary">수정하기</button>
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
       	  </div>
 	    </div>
@@ -387,7 +386,7 @@
 		const selectDate = date.value;
 		
 		if (selectDate != null && selectDate.length > 0){
-			location.href="./memberListPayment.do?date="+selectDate;
+			location.href="./memberListPayment.do?today="+selectDate;
 		}else {
 			alert('날짜를 입력해주세요.');
 		}

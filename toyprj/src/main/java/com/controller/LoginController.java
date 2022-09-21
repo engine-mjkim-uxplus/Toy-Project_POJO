@@ -257,4 +257,16 @@ public class LoginController implements Controller {
 		return null;
 	}
 
+	@Override
+	public Object orderUnmemberPage(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object orderUnmemberSelect(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

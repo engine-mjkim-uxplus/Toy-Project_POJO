@@ -16,6 +16,9 @@
 			and b.order_date BETWEEN TO_DATE(#{date}, 'YYYY-MM-DD') 
 	                   			 AND SYSDATE
 		</if>
+		<if test="today != null">
+			and b.order_date = #{today}
+		</if>
 		order by b.order_date desc
 	</select>
 	

@@ -234,6 +234,36 @@ public class OrderController implements Controller {
 	}
 	
 	@Override
+	public Object orderUnmemberPage(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("OrderController => orderUnmemberPage 호출 ");
+		ModelAndView mav = new ModelAndView(req);
+		mav.setViewName("unmember");
+		
+		HashMapBinder hmb = new HashMapBinder(req);
+		Map<String,Object> pMap = new HashMap<String, Object>();
+		hmb.bind(pMap);
+		
+		List<Map<String,Object>> unmemberList = null;
+		unmemberList = orderLogic.unmemberList(pMap);
+		mav.addObject("unmemberList", unmemberList);
+		
+		return mav;
+	}
+	
+	@Override
+	public Object orderUnmemberSelect(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("OrderController => orderUnmemberSelect 호출 ");
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		
+		int result = 0;
+		result = orderLogic.orderUnmemberSelect(pMap);
+
+		return "order/orderUnmemberPage.do?order_number="+pMap.get("order_number");
+	}
+	
+	@Override
 	public Object orderUpdateCoupon(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;

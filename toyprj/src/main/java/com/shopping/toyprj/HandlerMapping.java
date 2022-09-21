@@ -310,6 +310,24 @@ public class HandlerMapping {
 					return (String)obj;
 				}
 			}
+			// 비회원 조회 리스트
+			else if("orderUnmemberPage".equals(upmu[1])) {
+				obj = controller.orderUnmemberPage(req,res);
+				if(obj instanceof ModelAndView) {
+					return (ModelAndView)obj;
+				} else if(obj instanceof String) {
+					return (String)obj;
+				}
+			}
+			// 비회원 구매상태변경
+			else if("orderUnmemberSelect".equals(upmu[1])) {
+				obj = controller.orderUnmemberSelect(req,res);
+				if(obj instanceof ModelAndView) {
+					return (ModelAndView)obj;
+				} else if(obj instanceof String) {
+					return (String)obj;
+				}
+			}
 		} // end of OrderController
 		///////////////////////////////////////////
 		// 카트 분기(CartController)
