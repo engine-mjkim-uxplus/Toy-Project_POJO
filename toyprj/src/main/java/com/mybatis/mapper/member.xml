@@ -68,6 +68,15 @@
 		DELETE FROM coupon_zip
 		 WHERE member_id = #{member_id}
 	</delete>
+	<select id="getOrder" parameterType="map" resultType="map">
+		SELECT * FROM shopping_order
+		 WHERE member_id = #{member_id}
+	</select>
+	
+	<delete id="delOrder" parameterType="map">
+		DELETE FROM shopping_order
+		 WHERE member_id = #{member_id}
+	</delete>
 	<!-- [[ 회원 탈퇴할 때 무결성 제약조건 방지용 끝 ]] -->	
 	
 	<delete id="memberDelete" parameterType="map">
@@ -127,5 +136,12 @@
 		WHERE ORDER_NUMBER = #{order_number}
 		AND PRODUCT_NO = #{product_no}
 	</update>
+	
+	<update id="updPoint" parameterType="map">
+		UPDATE MEMBER
+		SET MEMBER_POINT = MEMBER_POINT + #{point}
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
 	
 </mapper>

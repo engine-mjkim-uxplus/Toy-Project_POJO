@@ -36,15 +36,18 @@ public class MemberLogic {
 		List<ProductVO> likeList = new ArrayList<>();
 		List<ProductReviewVO> reviewList = new ArrayList<>();
 		List<Map<String,Object>> couponList = null;
+		List<Map<String,Object>> orderList = new ArrayList<>();
 		logger.info("MemberLogic: 카트 목록 불러오기");
 		cartList = memberdao.getCartList(pMap);
 		likeList = memberdao.getLikeList(pMap);
 		reviewList = memberdao.getReviewList(pMap);
 		couponList = memberdao.getCouponList(pMap);
+		orderList = memberdao.getOrderList(pMap);
 		pMap.put("cartList", cartList);
 		pMap.put("likeList", likeList);
 		pMap.put("reviewList", reviewList);
 		pMap.put("couponList", couponList);
+		pMap.put("orderList", orderList);
 		if(cartList.size() > 0 && cartList != null) {
 			logger.info("MemberLogic: 카트 삭제");
 			memberdao.deleteCart(pMap);
@@ -60,6 +63,10 @@ public class MemberLogic {
 		if(couponList.size() > 0 && couponList != null) {
 			logger.info("MemberLogic: 쿠폰 삭제");
 			memberdao.deleteCoupon(pMap);
+		}
+		if(orderList.size() > 0 && orderList != null) {
+			logger.info("MemberLogic: 주문내역 삭제");
+			memberdao.deleteOrder(pMap);
 		}
 		result = memberdao.memberDelete(pMap);
 		return result;
@@ -92,6 +99,12 @@ public class MemberLogic {
 		logger.info("MemberLogic: memberUpdateState 호출");
 		int result = 0;
 		result = memberdao.memberUpdateState(pMap);
+		
+		if (pMap.get("state").equals("buy") ) {
+			logger.info("구매확정 선택");
+			memberdao.pointUpdate(pMap);
+		}
+		
 		return result;
 	}
 

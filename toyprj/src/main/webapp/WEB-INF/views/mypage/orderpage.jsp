@@ -152,6 +152,7 @@
     </style>
   </head>
   <body>
+
     <!-- nav start -->
 	<%@ include file="../../../component/nav.jsp" %>
     <!-- nav end -->
@@ -161,7 +162,19 @@
       <div class="row d-flex">
 		<%@ include file="./component/side.jsp" %>
         <div class="col-md-10 content">
-
+			
+			<c:forEach items="${orderList}" var="item">
+				<c:if test="${ item.get('BUYSTATE') eq '주문완료'}">
+					<c:set var="ing_count" value="${ing_count + 1}" />
+				</c:if>
+				<c:if test="${ item.get('BUYSTATE') eq '구매확정' }">
+					<c:set var="complete_count" value="${complete_count + 1}" />
+				</c:if>
+				<c:if test="${ item.get('BUYSTATE') eq '교환' || item.get('BUYSTATE') eq '반품'}">
+					<c:set var="cancel_count" value="${cancel_count + 1}" />
+				</c:if>
+			</c:forEach>
+			
 			<ol class="list-group d-flex flex-row justify-content-center mt-5">
 			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
 			    <div class="d-flex justify-content-center align-items-center flex-column">
@@ -169,7 +182,7 @@
 			      	<i class="fas fa-truck fs-1"></i>
 			      </div>
 			      <div class="fs-5 mb-2">배송중</div>
-			      <div class="badge bg-primary rounded-pill fs-5">${orderList.size()}</div>
+			      <div id="state_ing" class="badge bg-primary rounded-pill fs-5">${ empty ing_count ?0 :ing_count }</div>
 			    </div>
 			  </li>
 			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
@@ -178,7 +191,7 @@
 			      	<i class="fas fa-box fs-1"></i>
 			      </div>
 			      <div class="fs-5 mb-2">배송완료</div>
-			      <div class="badge bg-primary rounded-pill fs-5">0</div>
+			      <div id="state_complete" class="badge bg-primary rounded-pill fs-5">${ empty complete_count ?0 :complete_count }</div>
 			    </div>
 			  </li>
 			  <li class="list-group-item d-flex justify-content-center align-items-start col-3">
@@ -187,11 +200,10 @@
 			      	<i class="fas fa-undo-alt fs-1"></i>
 			      </div>
 			      <div class="fs-5 mb-2">취소/반품/교환</div>
-			      <div class="badge bg-primary rounded-pill fs-5">0</div>
+			      <div id="state_trade" class="badge bg-primary rounded-pill fs-5">${ empty cancel_count ?0 :cancel_count }</div>
 			    </div>
 			  </li>
 			</ol>
-			
 
 			<jsp:useBean id="time" class="com.vo.DateVO" />
 			<section class="w-100 bg-light d-flex flex-column mt-5 mb-5 align-items-center">
@@ -242,6 +254,7 @@
 									      	data-state="buy" 
 									      	data-ordernumber="${ item.get('ORDER_NUMBER')}" 
 									      	data-productno="${ item.get('PRODUCT_NO')}" 
+									      	data-price="${item.get('ORDER_PRICE')}"
 									      	>구매확정</button><br/>
 									      	
 									      	<button type="button" class="btn btn-primary mb-2" onclick="buystate()" data-bs-toggle="modal" data-bs-target="#StateModal"
@@ -387,11 +400,15 @@
 		const state = event.currentTarget.dataset.state;
 		const Onumber = event.currentTarget.dataset.ordernumber;
 		const Pno = event.currentTarget.dataset.productno;
-
+		const price = event.currentTarget.dataset.price;
+		const point = parseInt(price)/10;
+		const id = '${ mem_id }';
+		console.log(id);
+		
 		switch(state) {
 		  case 'buy':  
 				text.innerText = "구매를 확정하시면 더이상 반품 및 교환이 불가합니다. 그래도 확정하시겠습니까?";
-				stateUpdate.setAttribute('href','./memberUpdateState.do?state=buy&order_number='+Onumber+'&product_no='+Pno);
+				stateUpdate.setAttribute('href','./memberUpdateState.do?state=buy&order_number='+Onumber+'&product_no='+Pno+'&point='+point+'&member_id='+id);
 				break;
 		  case 'exchange': 
 				text.innerText = "교환을 신청하시겠습니까?";
@@ -404,7 +421,7 @@
 		  default:
 				text.innerText = "알수 없음";
 				break;
-		}
+		} 
 	}
   </script>
 </html>

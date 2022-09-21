@@ -195,6 +195,9 @@ public class MemberDao {
 		try {
 			sqlSession = sqlSessionFactory.openSession();
 			result = sqlSession.update("UpdateState",pMap);
+			if (result == 1) {
+				sqlSession.commit();
+			}
 		}catch (Exception e) {
 			logger.info("Exception : " + e.toString());
 		} finally {
@@ -271,7 +274,7 @@ public class MemberDao {
 		try {
 			sqlSession = sqlSessionFactory.openSession();
 			result = sqlSession.delete("delCoupon",pMap);
-
+			
 			sqlSession.commit();
 			logger.info("result: "+ result);
 		} catch (Exception e) {
@@ -280,6 +283,25 @@ public class MemberDao {
 			sqlSession.close();
 		}
 	}
+
+
+	public void pointUpdate(Map<String, Object> pMap) {
+		logger.info("MemberDao: pointUpdate 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("updPoint",pMap);
+			if (result == 1) {
+				sqlSession.commit();
+			}
+		}catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		}finally {
+			sqlSession.close();
+		}
+
+	}
+
 
 	public int memberInsertCoupon(Map<String, Object> pMap) {
 		logger.info("MemberDao: memberInsertCoupon 호출 성공");
@@ -304,12 +326,44 @@ public class MemberDao {
 			sqlSession = sqlSessionFactory.openSession();
 			result = sqlSession.update("memberUpdateCoupon",pMap);
 			sqlSession.commit();
+
 			logger.info("result: "+ result);
 		} catch (Exception e) {
 			logger.info("Exception : " + e.toString());
 		} finally {
 			sqlSession.close();
 		}
+	}
+
+	public List<Map<String, Object>> getOrderList(Map<String, Object> pMap) {
+		logger.info("MemberDao: getOrderList 호출 성공");
+		List<Map<String, Object>> orderList = null;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			orderList = sqlSession.selectList("getOrder",pMap);
+			logger.info(orderList);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		return orderList;
+	}
+
+	public void deleteOrder(Map<String, Object> pMap) {
+		logger.info("MemberDao: deleteOrder 호출 성공");
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.delete("delOrder",pMap);
+			sqlSession.commit();
+			logger.info("result: "+ result);
+		} catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		
 	}
 
 }
