@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,6 +142,7 @@ public class MemberController implements Controller {
 		
 		Object path = null;
 		List<CouponVO> memberListCoupon = null;
+		List<Integer> myCouponList = null;
 		
 		if (id == null) {
 			path = "login/loginForm.do";
@@ -151,6 +153,9 @@ public class MemberController implements Controller {
 			mav.addObject("member", mVO);
 			memberListCoupon = memberLogic.memberListCoupon(id);
 			mav.addObject("memberListCoupon", memberListCoupon);
+			myCouponList = memberLogic.myCouponList(id);
+			mav.addObject("myCouponList", myCouponList);
+			logger.info("myCouponList: "+myCouponList);
 			mav.setViewName("mypage/couponpage");
 			path = mav;
 		}
@@ -180,10 +185,8 @@ public class MemberController implements Controller {
 			Map<String,Object> pMap = new HashMap<>();
 			HashMapBinder hmb = new HashMapBinder(req);
 			hmb.bind(pMap);
-			
 			result = memberLogic.memberInsertCoupon(pMap);
-			mav.setViewName("mypage/orderpage");
-			path = mav;
+			path = "member/memberListCoupon.do";
 		}
 		
 		return path;
@@ -213,8 +216,7 @@ public class MemberController implements Controller {
 			hmb.bind(pMap);
 			int result = 0;
 			result = memberLogic.memberUpdateP(pMap); 
-			mav.setViewName("mypage/orderpage"); // 마이페이지의 메인(결제내역)으로 이동하게 한다.
-			path = mav;
+			path = "member/memberListP.do";
 		}
 		
 		return path;
@@ -256,8 +258,7 @@ public class MemberController implements Controller {
 				path = "product/productList.do"; // 메인페이지로 이동한다. 
 			} else { // 회원탈퇴 실패한 경우 
 				ModelAndView mav = new ModelAndView(req);
-				mav.setViewName("mypage/orderpage");// 마이페이지의 메인으로 이동한다. 
-				path = mav;
+				path = "member/memberListP.do";
 			}
 			
 		}
@@ -422,6 +423,11 @@ public class MemberController implements Controller {
 
 	@Override
 	public Object orderUnmemberSelect(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Object orderSucess(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
 	}

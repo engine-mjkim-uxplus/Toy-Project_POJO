@@ -408,6 +408,7 @@ public class CartController implements Controller {
 	}
 
 	@Override
+
 	public Object orderUnmemberPage(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
 		return null;
@@ -415,6 +416,12 @@ public class CartController implements Controller {
 
 	@Override
 	public Object orderUnmemberSelect(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Object orderSucess(HttpServletRequest req, HttpServletResponse res) {
+
 		// TODO Auto-generated method stub
 		return null;
 	}

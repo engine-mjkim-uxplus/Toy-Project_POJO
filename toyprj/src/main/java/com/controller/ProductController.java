@@ -358,5 +358,10 @@ public class ProductController implements Controller {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Object orderSucess(HttpServletRequest req, HttpServletResponse res) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

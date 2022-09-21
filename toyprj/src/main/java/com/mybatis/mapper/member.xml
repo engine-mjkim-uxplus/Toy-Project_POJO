@@ -71,6 +71,15 @@
 		DELETE FROM coupon_zip
 		 WHERE member_id = #{member_id}
 	</delete>
+	<select id="getOrder" parameterType="map" resultType="map">
+		SELECT * FROM shopping_order
+		 WHERE member_id = #{member_id}
+	</select>
+	
+	<delete id="delOrder" parameterType="map">
+		DELETE FROM shopping_order
+		 WHERE member_id = #{member_id}
+	</delete>
 	<!-- [[ 회원 탈퇴할 때 무결성 제약조건 방지용 끝 ]] -->	
 	
 	<delete id="memberDelete" parameterType="map">
@@ -109,6 +118,11 @@
 		INSERT INTO COUPON_ZIP (member_id, coupon_no)
 		VALUES (#{member_id}, #{coupon_no})
 	</insert>
+	<!-- 쿠폰 중복 등록 검사하기 -->
+	<select id="isCoupon" parameterType="String" resultType="Integer">
+		SELECT COUPON_NO FROM COUPON_ZIP
+		 WHERE member_id = #{member_id}
+	</select>
 	
 	<update id="memberUpdateCoupon" parameterType="String" >
 		UPDATE MEMBER 

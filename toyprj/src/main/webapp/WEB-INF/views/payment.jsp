@@ -288,11 +288,11 @@
           <div id="details" class="bg-white rounded pb-5">
          <section>
              <div class="form-group">
-               <label class="text-muted" for="name">이름</label>
+               <label class="text-muted" for="name">*이름</label>
                <input type="text"  name="name" value="" class="form-control" id="buyer_name" name="order_name"/>
              </div>
              <div class="form-group">
-               <label class="text-muted" for="phone">핸드폰 번호</label>
+               <label class="text-muted" for="phone">*핸드폰 번호</label>
                <div
                  class="d-flex jusify-content-start align-items-center rounded p-2"
                >
@@ -302,7 +302,7 @@
              <div class="row">
                <div class="col-lg-9">
                  <div class="form-group">
-                   <label class="text-muted" for="zipcode">우편번호</label>
+                   <label class="text-muted" for="zipcode">*우편번호</label>
                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
                      <input type="text"  id="zipcode" name="zipcode" value="" />
                    </div>
@@ -319,19 +319,19 @@
              </div>
              <div class="row">
                    <div class="form-group">
-                    <label class="text-muted" for="address">주소</label>
+                    <label class="text-muted" for="address">*주소</label>
                     <div class="d-flex jusify-content-start align-items-center rounded p-2">
                       <input type="text" id="address" name="address" value=""/>
                     </div>
                   </div>
                  <div class="form-group">
-                   <label class="text-muted" for="address2">상세주소</label>
+                   <label class="text-muted" for="address2">*상세주소</label>
                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
                      <input type="text" id="address2" name="address2" value="" />
                    </div>
                  </div>
                  <div class="form-group">
-                   <label class="text-muted" for="requirement">배송시 요청사항</label>
+                   <label class="text-muted" for="requirement">(선택) 배송시 요청사항</label>
                    <div class="d-flex jusify-content-start align-items-center rounded p-2">
                      <input type="text" name="memo" value="" />
                    </div>
@@ -454,6 +454,7 @@
 	    IMP.init("imp20253202");
 	    
 	    function requestPay() {
+	       if(formCheck()){
 	    	let address = $("#address").val();
 	    	let address2 = $("#address2").val();
 	    	let phone = $("#phone").val();
@@ -481,6 +482,23 @@
 	            }
 	        });
 	      }
+	    else alert("* 필수 사항을 모두 입력해주세요");
+	   }
+	    // 빈값 체크
+	    function formCheck(){
+	    	let isCheck = false;
+	    	let address = $("#address").val();
+	    	let address2 = $("#address2").val();
+	    	let phone = $("#phone").val();
+			let name = $("#buyer_name").val();
+			let zipcode = $("#zipcode").val();
+	    	if(address == "" || address2 == "" || phone == "" || name == "" || zipcode == ""){
+	    		return isCheck;
+	    	} else{
+	    		isCheck = true;
+	    		return isCheck;
+	    	}
+	    }
  	</script>
   </body>
 </html>

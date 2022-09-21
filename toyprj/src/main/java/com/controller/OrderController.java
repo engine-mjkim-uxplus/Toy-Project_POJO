@@ -1,5 +1,7 @@
 package com.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -120,6 +122,7 @@ public class OrderController implements Controller {
 		hmb.bind(pMap);
 				
 		// 주문번호(날짜생성 ex.20220522)
+		String path = "";
 		String orderNumber = "";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd");
@@ -131,8 +134,9 @@ public class OrderController implements Controller {
 		// 하이픈 제외
 		String resultUuid = uuid.toString().replaceAll("-", "");
 		orderNumber = strToday + resultUuid.substring(0,10);
-		mv.addObject("orderNumber", orderNumber);
-		mv.addObject("name", (String)pMap.get("name"));
+		String orderName = (String)pMap.get("name");
+		//mv.addObject("orderNumber", orderNumber);
+		//mv.addObject("name", (String)pMap.get("name"));
 		pMap.put("orderNumber", orderNumber);
 		pMap.put("mem_id", mem_id);
 		pMap.put("buyState", "주문완료");
@@ -151,9 +155,20 @@ public class OrderController implements Controller {
 		} else {
 			ManyProductProcess(productList, lMap, pMap, mem_id,session);
 		} 
-		
+		 try {
+			orderName = URLEncoder.encode(orderName, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		mv.setViewName("sucessPayment");
-		
+		path = "order/orderSucess.do?orderNumber="+ orderNumber + "&&name=" + orderName;
+		return path;
+	}
+	@Override
+	public Object orderSucess(HttpServletRequest req, HttpServletResponse res) {
+		logger.info("OrderController => order/orderSucess 호출");
+		ModelAndView mv = new ModelAndView(req);
+		mv.setViewName("sucessPayment");
 		return mv;
 	}
 	
@@ -459,5 +474,6 @@ public class OrderController implements Controller {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

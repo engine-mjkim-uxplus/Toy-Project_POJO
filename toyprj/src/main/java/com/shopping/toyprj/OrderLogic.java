@@ -41,25 +41,42 @@ public class OrderLogic {
 	public void memOrder(Map<String, Object> pMap) {
 		logger.info("OrderLogic => memOrder 호출");
 		
-		int result = 0;
-		// 1. shopping_order update
-		result = orderDao.orderMinsert(pMap);
-		// 2. cart 에서 제거
-		result = 0;
-		result = orderDao.cartMdelete(pMap);
-		// 3. 쿠폰을 사용 하였거나 point를 사용 하였다면 Update
-		
+		int insertResult = 0;
+		int cartDeleteResult = 0;
+		int mUpdateResult = 0;
+		int couponDeleteResult = 0;
 		int coupon = (Integer)pMap.get("coupon");
 		int point = (Integer)pMap.get("point");
-		
-		// 쿠폰 및 포인트를 사용 하였을 경우만 업데이트
+		// 1. shopping_order insert
+		insertResult = orderDao.orderMinsert(pMap);
+		// 2. cart 에서 제거
+		cartDeleteResult = orderDao.cartMdelete(pMap);
+		// 3. 쿠폰을 사용 하였거나 point를 사용 하였다면 Update
 		if(coupon > 0 || point > 0) {
-			result = 0;
-			result = orderDao.orderMupdate(pMap);
-			result = 0;
-			result = orderDao.couponDelete(pMap);
+			mUpdateResult = orderDao.orderMupdate(pMap);
+			couponDeleteResult = orderDao.couponDelete(pMap);
 		}
-	
+		// 트랜잭션 관련 
+		// 쿠폰을 사용하였을 경우
+		if(coupon > 0) {
+			if(insertResult > 0 && cartDeleteResult > 0 && mUpdateResult > 0 && couponDeleteResult > 0) {
+				OrderDao.sqlSession.commit();
+				OrderDao.sqlSession.close();
+			} else {
+				OrderDao.sqlSession.rollback();
+				OrderDao.sqlSession.close();
+			}
+		}
+		// 쿠폰을 사용하지 않았을 경우
+		else if(coupon == 0) {
+			if(insertResult > 0 && cartDeleteResult > 0 && mUpdateResult > 0 ) {
+				OrderDao.sqlSession.commit();
+				OrderDao.sqlSession.close();
+			} else {
+				OrderDao.sqlSession.rollback();
+				OrderDao.sqlSession.close();
+			}
+		}
 	}
 
 	public void noMemOrder(Map<String, Object> pMap) {
