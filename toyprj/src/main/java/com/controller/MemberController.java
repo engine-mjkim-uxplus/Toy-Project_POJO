@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,6 +142,7 @@ public class MemberController implements Controller {
 		
 		Object path = null;
 		List<CouponVO> memberListCoupon = null;
+		List<Integer> myCouponList = null;
 		
 		if (id == null) {
 			path = "login/loginForm.do";
@@ -151,6 +153,9 @@ public class MemberController implements Controller {
 			mav.addObject("member", mVO);
 			memberListCoupon = memberLogic.memberListCoupon(id);
 			mav.addObject("memberListCoupon", memberListCoupon);
+			myCouponList = memberLogic.myCouponList(id);
+			mav.addObject("myCouponList", myCouponList);
+			logger.info("myCouponList: "+myCouponList);
 			mav.setViewName("mypage/couponpage");
 			path = mav;
 		}
@@ -180,7 +185,6 @@ public class MemberController implements Controller {
 			Map<String,Object> pMap = new HashMap<>();
 			HashMapBinder hmb = new HashMapBinder(req);
 			hmb.bind(pMap);
-			
 			result = memberLogic.memberInsertCoupon(pMap);
 			path = "member/memberListCoupon.do";
 		}
