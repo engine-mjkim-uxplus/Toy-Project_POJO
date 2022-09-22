@@ -42,7 +42,15 @@
 		<h4 class="text-center mt-5"><i class="fas fa-truck fs-1"></i><b> 주문 번호 : </b> ${param.orderNumber}</h4>
 	</div>
 	<div class="text-center">
-		<button class="btn btn-danger col-6" onClick="/">주문내역 조회</button>
+		<!-- 비회원인 경우 -->
+		<c:if test="${ empty mem_id}">
+			<a class="btn btn-danger col-6" href="/order/orderUnmemberPage.do?order_number=${orderNumber}">주문내역 조회</a>
+		</c:if>
+		
+		<!-- 회원인 경우 -->
+		<c:if test="${ !empty mem_id}">
+			<a class="btn btn-danger col-6" href="/member/memberListPayment.do">주문내역 조회</a>
+		</c:if>
 		<button class="btn btn-secondary col-6" onClick="location.href='/product/productList.do';">메인으로</button> 
 	</div>
 </section>

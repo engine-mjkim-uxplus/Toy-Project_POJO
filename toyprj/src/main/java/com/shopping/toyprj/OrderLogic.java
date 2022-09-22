@@ -85,4 +85,19 @@ public class OrderLogic {
 		
 		result = orderDao.orderInsert(pMap);
 	}
+
+	public List<Map<String, Object>> unmemberList(Map<String, Object> pMap) {
+		logger.info("OrderLogic => unmemberList 호출");
+		List<Map<String,Object>> unmemberList = null;
+		unmemberList = orderDao.unmemberList(pMap);
+		return unmemberList;
+	}
+
+	public int orderUnmemberSelect(Map<String, Object> pMap) {
+		logger.info("MemberLogic: orderUnmemberSelect 호출");
+		int result = 0;
+		result = orderDao.orderUnmemberSelect(pMap);
+		
+		return result;
+	}
 }

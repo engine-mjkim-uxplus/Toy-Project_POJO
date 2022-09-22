@@ -4,6 +4,7 @@
 <!-- nav start -->
 <c:set var="loginOutLink" value="${sessionScope.mem_id == null ? '/login/loginForm.do' : '/login/logout.do' }"/>
 <c:set var="loginOut" value="${sessionScope.mem_id == null ? '로그인' : '로그아웃' }"/>
+<c:set var="orderLink" value="${sessionScope.mem_id == null ?'javascript:pageMove()' :'/member/memberListPayment.do' }"/>
 <nav
   class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-bottom border-secondary"
 >
@@ -33,6 +34,9 @@
       <a href="/cart/cartList.do" class="nav-link px-2 text-muted">장바구니</a>
     </li>
     <li class="nav-item">
+      <button class="nav-link px-2 text-muted border-0" data-bs-toggle="modal" data-bs-target="#orderModal">주문내역</button>
+    </li>
+    <li class="nav-item">
       <a href="/member/memberListPayment.do" class="nav-link px-2 text-muted">마이페이지</a>
     </li>
     <li class="nav-item">
@@ -56,3 +60,33 @@
   </div>
 </div>
 <!-- Modal -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="orderModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <div class="modal-header">
+		<div>주문내역 확인하기</div>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+      <div class="modal-body">
+	 	<main class="d-flex justify-content-center align-items-center" style="height: 200px">
+	 		<a href="${orderLink}" type="button" class="btn btn-primary btn-lg me-5">회원 주문내역</a>
+	 		<a href="/order/orderUnmemberPage.do" type="button" class="btn btn-danger btn-lg">비회원 주문내역</a>
+	 	</main>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+
+<script>
+	function pageMove(){
+		alert('로그인이 필요합니다.');
+		location.href='/login/loginForm.do';
+	}
+</script>

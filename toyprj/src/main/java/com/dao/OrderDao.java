@@ -121,6 +121,44 @@ public class OrderDao {
 		}
 		return result;
 	}
+
+	public List<Map<String, Object>> unmemberList(Map<String, Object> pMap) {
+		logger.info("OrderDao ===> unmemberList 호출");
+		
+		List<Map<String,Object>> unmemberList = null;
+		
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			logger.info(pMap.get("productList"));
+			unmemberList = sqlSession.selectList("unMemberList", pMap);
+			sqlSession.commit();
+		} catch (Exception e) {
+			logger.info("Exception : "+e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		
+		return unmemberList;
+	}
+
+	public int orderUnmemberSelect(Map<String, Object> pMap) {
+		logger.info("OrderDao ===> orderUnmemberSelect 호출");
+		
+		int result = 0;
+		try {
+			sqlSession = sqlSessionFactory.openSession();
+			result = sqlSession.update("unmemberUpdateState",pMap);
+			if (result == 1) {
+				sqlSession.commit();
+			}
+		}catch (Exception e) {
+			logger.info("Exception : " + e.toString());
+		} finally {
+			sqlSession.close();
+		}
+		
+		return result;
+	}
 	
 }
 
