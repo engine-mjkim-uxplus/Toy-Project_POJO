@@ -1,1 +1,1 @@
-# Servlet & Jsp를 이용한 쇼핑몰
+## Toy-Project 쇼핑몰(POJO)
