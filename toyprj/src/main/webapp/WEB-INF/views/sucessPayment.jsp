@@ -44,7 +44,7 @@
 	<div class="text-center">
 		<!-- 비회원인 경우 -->
 		<c:if test="${ empty mem_id}">
-			<a class="btn btn-danger col-6" href="/order/orderUnmemberPage.do?order_number=${orderNumber}">주문내역 조회</a>
+			<a class="btn btn-danger col-6" href="/order/orderUnmemberPage.do?order_number=${param.orderNumber}">주문내역 조회</a>
 		</c:if>
 		
 		<!-- 회원인 경우 -->
