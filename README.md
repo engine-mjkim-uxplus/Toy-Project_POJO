@@ -23,6 +23,9 @@
 * Visual Studio Code
 * Apache Tomcat 9
 
+## 📒계획단계
+[Notion Page로 이동](https://translucent-albacore-8f4.notion.site/c72284ee431741d69d9db903414eec07?v=ace69db26ca346be9524e34ecf063845)
+
 ## 🏠메인화면
 ![home](https://user-images.githubusercontent.com/104042566/204463119-52664a8e-b458-4271-8fda-e409e056fcbe.jpg)
 
